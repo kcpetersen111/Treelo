@@ -1,0 +1,23 @@
+{
+  "name": "productivityapp",
+  "version": "1.0.0",
+  "description": "The productivity app for code school",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kcpetersen111/productivityApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kcpetersen111/productivityApp/issues"
+  },
+  "homepage": "https://github.com/kcpetersen111/productivityApp#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "typescript": "^4.7.4"
+  }
+}
