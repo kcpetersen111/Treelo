@@ -39,6 +39,7 @@ build/Release
 
 # Dependency directories
 node_modules/
+/frontend/node_modules/
 jspm_packages/
 
 # TypeScript v1 declaration files
@@ -106,4 +107,7 @@ dist
 
 
 # These are the custom things that were added to the git ignore
-build
+build/
+server-build/
+frontend-build/
+
