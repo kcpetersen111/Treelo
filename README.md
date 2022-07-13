@@ -18,7 +18,7 @@ Our current plan for the stack is to use vuedify for the front end and node with
 
 # Resources:
 ## Users:
-        First Name, Last Name, email, phone number
+        email, username, phone number
 ## events: 
         name, date, priority, done, location, category, time
 

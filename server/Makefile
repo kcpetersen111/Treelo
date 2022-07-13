@@ -4,7 +4,7 @@ build:
 	npx tsc
 
 run:
-	node build/index.js
+	node server-build/index.js
 
 clean:
 	rm -r build
