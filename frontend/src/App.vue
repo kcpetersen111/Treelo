@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-main>
+      <Helloworld />
       <Calendar />
     </v-main>
   </v-app>
@@ -8,6 +9,7 @@
 
 <script lang="ts">
 import Vue from "vue";
+import Helloworld from "./components/Helloworld.vue";
 import Calendar from "./components/Calendar.vue";
 
 export default Vue.extend({
@@ -15,6 +17,7 @@ export default Vue.extend({
 
   components: {
     Calendar,
+    Helloworld,
   },
 
   data: () => ({
