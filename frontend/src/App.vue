@@ -1,6 +1,8 @@
 <template>
   <v-app>
     <v-main>
+      this doesnt blow
+      {{ page }}
       <Calendar />
     </v-main>
   </v-app>
@@ -18,6 +20,7 @@ export default Vue.extend({
   },
 
   data: () => ({
+    page: "test1",
     //
   }),
 });
