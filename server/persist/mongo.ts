@@ -1,8 +1,8 @@
-// let mongoose = require('mongoose');
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
+// import totallyNotMongoose from "mongoose";
 const db = mongoose.connection;
 
-function configureHandlers(callback:Function){
+export const configureHandlers = function (callback:Function){
     db.once("connecting",()=>{
         console.log("connecting to the database");
     });
@@ -13,23 +13,25 @@ function configureHandlers(callback:Function){
         console.log("connection to the database is open");
         callback();
     });
-    db.once("error",(err)=>{
+    db.once("error",(err:Error)=>{
         console.log("error connecting to the database", err);
     });
 };
 
-function connect(user:string,password:string,host:string,port:string,db_name:string){
+export const connect = function (user:string,password:string,host:string,port:string,db_name:string){
     // password = encodeURI(password);
     // const connectionString = `mongodb+srv://kcpetersen:${password}@cluster0.crhdmiu.mongodb.net/?retryWrites=true&w=majority`;
     const connectionString:string = encodeURI(`mongodb://${user}:${password}@${host}:${port}/${db_name}`);
     console.log(connectionString);
     mongoose.connect(connectionString,{
+        // these options are now default
         // useNewUrlParser: true,
         // useUnifiedTopology: true,
     });
 }
 
-module.exports = {
-    configureHandlers,
-    connect,
-}
+// export{};
+// module.exports = {
+//     configureHandlers,
+//     connect,
+// }
