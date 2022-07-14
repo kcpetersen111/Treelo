@@ -5,7 +5,7 @@ const session = require("express-session");
 // import config from "../config"
 const sessionPass:string = "secretPassword"
 
-const setUpSessionStore = function(app:any){
+export const setUpSessionStore = function(app:any){
     app.use(
         session({
             secret:sessionPass,
@@ -14,4 +14,4 @@ const setUpSessionStore = function(app:any){
     }));
 }
 
-module.exports = setUpSessionStore;
+// module.exports = setUpSessionStore;
