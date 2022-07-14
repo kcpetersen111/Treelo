@@ -1,11 +1,11 @@
 <template>
   <v-app>
+    <v-parallax 
+    height="1000"
+      src='https://wallpapercave.com/wp/wp3014778.jpg'
+    >
     <v-main>
       <!-- registartion page -->
-      <v-parallax height="800"
-      dark
-      src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
-      >
       <v-card width="200" 
         class="mx-auto ma-16"
         elevation="14"
@@ -14,10 +14,12 @@
           Sign up!
         </v-card-title>
       </v-card>
-      <v-card class="mx-auto my-4" width="200" height="300" color="#BDBDBD">
-          <v-text-field v-model="registerUsername"
+      <v-card class="mx-auto my-4 px-7 pt-7 " width="400" height="325" color="transparent" flat>
+          <v-text-field id="register-user" v-model="registerUsername"
             label="Username"
-            outlined
+            background-color="white"
+            rounded
+            color="black"
           ></v-text-field>
           <v-text-field v-model="registerPassword"
             label="Password"
@@ -36,8 +38,8 @@
             </v-btn>
           </v-card-actions>
       </v-card>
-      </v-parallax>
     </v-main>
+    </v-parallax>
   </v-app>
 </template>
 
