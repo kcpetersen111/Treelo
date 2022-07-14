@@ -29,8 +29,21 @@
     </v-main>
 
     <v-footer>
-      <!--  -->
-    </v-footer>
+      <!-- 
+        height="75"
+        dark 
+      -->
+      
+
+      <router-link to="/contact">
+        <v-card>
+          <v-card-title>
+            contact us.
+          </v-card-title>
+        </v-card>
+      </router-link>
+
+      </v-footer>
   </v-app>
 </template>
 

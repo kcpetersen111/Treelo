@@ -37,14 +37,6 @@
           </v-card-actions>
       </v-card>
       </v-parallax>
-      <v-footer 
-      height="75"
-      dark
-      >
-        <a id="contact-us-btn" v-on:click="buttonTest">
-          Contact us.
-        </a>
-      </v-footer>
     </v-main>
   </v-app>
 </template>
