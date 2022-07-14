@@ -1,10 +1,10 @@
 <template>
-  <h1>About page</h1>
+  <h1>Board page</h1>
 </template>
 
 <script>
 export default {
-  name: "AboutComponent",
+  name: "BoardComponent",
   props: {
     //
   },
