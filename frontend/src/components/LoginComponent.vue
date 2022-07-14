@@ -8,7 +8,7 @@
             <v-text-field label="password" v-model="passwordInput"></v-text-field>
             <v-card-actions>
                 <v-btn @click="Login()">
-                    Submit
+                   Login 
                 </v-btn>
                 <v-btn @click="gotoRegister()">
                     Register
