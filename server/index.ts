@@ -1,5 +1,9 @@
-const app = require('./server/server');
+// const app = require('./server/server');
+
 const db = require('./persist/mongo');
+// import * as db from "./persist/mongo"
+import {app} from "./server/server";
+// import app from "./server/server";
 const config = require("./config");
 // let test :string = "hello world";
 // console.log(test);

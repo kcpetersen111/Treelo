@@ -1,13 +1,17 @@
 // const express = require('express');
 // const express from
-import express from "express";
+// import express from "express";
+const express = require("express");
 // import db from "model";
-const db = require("../persist/model");
-const app = express();
+import * as db from "../persist/model";
+// const db = require("../persist/model");
+export const app = express();
 
-app.post("/test",(req,res)=>{
+app.post("/test",(req:any,res:any)=>{
+    let garbage =  db;
     console.log("test");
     res.status(200).json("success");
 });
 
-module.exports = app;
+// module.exports = app;
+// export app;
