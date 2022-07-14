@@ -7,9 +7,10 @@ import * as db from "../persist/model";
 // const db = require("../persist/model");
 
 export const app = express();
-const cors = require ('cors');
 
-app.use(cors());
+// const cors = require ("cors");
+
+// app.use(cors());
 app.use(express.json());
 
 app.use(express.static(`${__dirname}/../frontend-build`));
