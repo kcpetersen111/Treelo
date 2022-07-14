@@ -2,8 +2,7 @@ all: build packages run
 
 packages:
 	cp package.json ../server-build/package.json
-	cd ../server-build
-	npm install
+	cd ../server-build && npm install
 
 build:
 	npx tsc
