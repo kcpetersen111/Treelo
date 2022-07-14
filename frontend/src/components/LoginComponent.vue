@@ -12,7 +12,7 @@
                         <v-btn @click="Login()">
                             Login 
                         </v-btn>
-                        <v-btn @click="gotoRegister()">
+                        <v-btn @click="gotoRegister()" :to="/../registration">
                             Register
                         </v-btn>
                     </v-card-actions>
