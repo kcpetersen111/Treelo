@@ -7,6 +7,9 @@ run:
 	node ../server-build/index.js
 
 clean:
+<<<<<<< HEAD
+	rm -r ../server-build/ ./node_modules ./package-lock.json
+=======
 	rm -r build
 
 createMongo:
@@ -14,3 +17,4 @@ createMongo:
 
 mongo:
 	docker start productivityApp-mongo
+>>>>>>> origin

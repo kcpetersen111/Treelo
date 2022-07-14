@@ -25,39 +25,35 @@
     </v-app-bar>
 
     <v-main>
-<<<<<<< HEAD
-      <Helloworld />
-      <Calendar />
-=======
       <router-view :key="$route.path" />
->>>>>>> origin/main
     </v-main>
 
     <v-footer>
-      <!--  -->
-    </v-footer>
+      <!-- 
+        height="75"
+        dark 
+      -->
+      
+
+      <router-link to="/contact">
+        <v-card>
+          <v-card-title>
+            contact us.
+          </v-card-title>
+        </v-card>
+      </router-link>
+
+      </v-footer>
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-<<<<<<< HEAD
-import Helloworld from "./components/Helloworld.vue";
-import Calendar from "./components/Calendar.vue";
-=======
->>>>>>> origin/main
 
 export default Vue.extend({
   name: "App",
 
-<<<<<<< HEAD
-  components: {
-    Calendar,
-    Helloworld,
-  },
-=======
   components: {},
->>>>>>> origin/main
 
   data: () => ({
     drawer: true,
