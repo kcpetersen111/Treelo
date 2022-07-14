@@ -16,6 +16,12 @@ Our current plan for the stack is to use vuedify for the front end and node with
 ## make clean
         delete the compiled files
 
+## make createMongo
+        creates a new mongodb instance
+
+## make mongo
+        starts up a mongodb 
+
 # Resources:
 ## Users:
         email, username, phone number
