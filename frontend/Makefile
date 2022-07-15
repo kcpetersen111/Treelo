@@ -21,6 +21,10 @@ ifdef branch
 	@printf 'archiving branch: $(branch)'
 	@printf '\n\nPulling...\n'
 	git pull
+	@printf '\n\nChecking out branch...\n'
+	git checkout $(branch)
+	@printf '\n\nSwitching back to main...\n'
+	git checkout origin/main
 	@printf '\n\nApplying archive tag to $(branch)...\n'
 	git tag archive/$(branch) $(branch)
 	@printf '\n\ndeleting local copy of $(branch)...\n'
