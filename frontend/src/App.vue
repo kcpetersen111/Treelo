@@ -66,11 +66,6 @@ export default Vue.extend({
         icon: "mdi-account-circle",
       },
       {
-        title: "Registration",
-        link: "/registration",
-        icon: "mdi-bookshelf",
-      },
-      {
         title: "Budget Trello Board",
         link: "/board",
         icon: "mdi-hammer",
