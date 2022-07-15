@@ -18,7 +18,6 @@
           <v-text-field id="register-user" v-model="registerUsername"
             label="Username"
             background-color="white"
-            rounded
             color="black"
           ></v-text-field>
           <v-text-field v-model="registerPassword"
