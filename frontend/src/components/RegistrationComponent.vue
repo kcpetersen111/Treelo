@@ -5,7 +5,7 @@
       src='https://cdn.shopify.com/s/files/1/0326/7189/articles/General_Sherman_tree_2000x.jpg?v=1627936731'
     >
     <v-main>
-      <!-- registartion page -->
+      <!-- registration page -->
       <v-card width="200" 
         class="mx-auto ma-16 rounded-xl"
         flat
@@ -19,16 +19,19 @@
             label="Username"
             outlined
             color="black"
+            :rules="[rules.requiredUserName]"
           ></v-text-field>
           <v-text-field class="rounded-pill" v-model="registerPassword"
             label="Password"
             color = "black"
             outlined
+            :rules="[rules.requiredPassWord]"
           ></v-text-field>
           <v-text-field class="rounded-pill" v-model="registerEmail"
             label="Email"
             color="black"
             outlined
+            :rules="[rules.requiredEmail,rules.email]"
           ></v-text-field>
           <v-card-actions>
             <v-btn id="registration-button" class="ml-auto mr-10 mb-2 mt-n4" >
@@ -62,13 +65,23 @@ export default Vue.extend({
     registerPassword: "",
     registerEmail: "",
 
+    rules: {
+      requiredEmail: (value:any) => !!value || 'Valid Email Required.',
+      requiredUserName: (value:any) => !!value || 'Valid Username Required.',
+      requiredPassWord: (value:any) => !!value || 'Valid Password Required.',
+      email: (value:any) => {
+            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            return pattern.test(value) || 'Invalid e-mail.'
+    }
+    },
     //
   }),
   methods:{
     goToLogin(){
       window.location.href = "/login";
     }
-  }
+  },
+
 });
 </script>
 
