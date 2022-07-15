@@ -22,8 +22,8 @@
                         >
                         <v-card max-width="200px" @click="AboutInfo(card)">
                             <v-img 
-                                src="https://img.freepik.com/free-vector/tree_1308-36471.jpg?w=2000"
-                                class="white--text"
+                                :src="card.image"
+                                class="white--text BW"
                                 max-width="200px"
                             >
                                 <v-card-title v-text="card.name" class="justify-center mt-7"></v-card-title>
@@ -53,10 +53,26 @@ export default {
       GitHub:"",
       about: false,
       cards: [
-      {name: "Chaz", about: "Chaz is pretty cool", github: "https://github.com/chaz-cox",},
-      {name: "Kendall", about: "Kendall is pretty cool too", github: "https://github.com/kendallbaker12",},
-      {name: "Kaleb", about: "Kaleb is pretty cool too", github: "https://github.com/kcpetersen111",},
-      {name: "Jake", about: "Jake is pretty cool too", github: "https://github.com/Legac3e",},
+      {name: "Chaz", 
+        about: "Chaz is pretty cool", 
+        github: "https://github.com/chaz-cox",
+        image:"https://upload.wikimedia.org/wikipedia/commons/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg",
+        },
+      {name: "Kendall", 
+        about: "Kendall is pretty cool too", 
+        github: "https://github.com/kendallbaker12",
+        image:"https://theedinburghreporter.co.uk/wp-content/uploads/2020/12/TREES-Tree-hugger-David-Knott-Curator-of-the-Living-Collection-RBGE.jpg",
+    },
+      {name: "Kaleb", 
+        about: "Kaleb is pretty cool too", 
+        github: "https://github.com/kcpetersen111",
+        image:"http://cdn.shopify.com/s/files/1/0062/8532/8445/products/Norfolk_Island_Pine_5_BB_grande.jpg?v=1607375158",
+    },
+      {name: "Jake", 
+        about: "Jake is pretty cool too", 
+        github: "https://github.com/Legac3e",
+        image: "https://cdn.britannica.com/92/142292-004-459092B7.jpg",
+    },
       ],
     //
   }),
@@ -71,3 +87,10 @@ export default {
   },
 };
 </script>
+
+<style>
+    .BW{
+        -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+        filter: grayscale(100%);
+    }
+</style>
