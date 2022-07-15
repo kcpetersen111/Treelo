@@ -18,7 +18,7 @@ clean:
 
 archive:
 ifdef branch
-	@printf 'archiving branch: $(branch)'
+	@printf 'archiving branch: $(branch)\n'
 	@printf '\n\nPulling...\n'
 	git pull
 	@printf '\n\nChecking out branch...\n'
