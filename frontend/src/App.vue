@@ -9,7 +9,7 @@
                 <v-icon>{{ item.icon }}</v-icon>
               </v-list-item-icon>
 
-              <v-list-item-title class="text-left text-button">
+              <v-list-item-title class="text-left text-button font-weight-bold">
                 {{ item.title }}
               </v-list-item-title>
             </router-link>
