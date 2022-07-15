@@ -3,16 +3,17 @@
     <v-navigation-drawer v-model="drawer" app>
       <v-list dense nav>
         <v-list-item v-for="item in items" :key="item.title" link>
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
+          <v-list-item-content style="flex-wrap: nowrap">
+            <router-link :to="item.link" style="display: flex">
+              <!--  justify-content: space-between" -->
+              <v-list-item-icon class="mr-6">
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-item-icon>
 
-          <v-list-item-content>
-            <v-list-item-title>
-              <router-link :to="item.link">
+              <v-list-item-title class="text-left text-button">
                 {{ item.title }}
-              </router-link>
-            </v-list-item-title>
+              </v-list-item-title>
+            </router-link>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -29,21 +30,17 @@
     </v-main>
 
     <v-footer>
-      <!-- 
+      <!--
         height="75"
-        dark 
+        dark
       -->
-      
 
       <router-link to="/contact">
         <v-card>
-          <v-card-title>
-            contact us.
-          </v-card-title>
+          <v-card-title> contact us. </v-card-title>
         </v-card>
       </router-link>
-
-      </v-footer>
+    </v-footer>
   </v-app>
 </template>
 
