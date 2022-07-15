@@ -8,11 +8,11 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-              <router-link :to="item.link">
             <v-list-item-title>
+              <router-link :to="item.link">
                 {{ item.title }}
-            </v-list-item-title>
               </router-link>
+            </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
