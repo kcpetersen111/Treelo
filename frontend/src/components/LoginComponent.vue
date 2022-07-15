@@ -6,8 +6,8 @@
                     <v-card-title style="display: block">
                         <b>Sign in</b> 
                     </v-card-title>
-                    <v-text-field class="rounded-pill" label="Username" outlined color="black" v-model="usernameInput"></v-text-field>
-                    <v-text-field class="rounded-pill" label="Password" outlined color="black" v-model="passwordInput"></v-text-field>
+                    <v-text-field class="rounded-pill" label="Email" outlined color="black" v-model="usernameInput" :rules="[rules.requiredEmail,rules.email]"></v-text-field>
+                    <v-text-field class="rounded-pill" label="Password" outlined color="black" v-model="passwordInput" :rules="[rules.requiredPassWord]"></v-text-field>
                     <v-card-actions>
                         <v-btn id="login-button" class="mr-auto ml-10 mb-2 mt-n4 rounded-sm" elevation="12" @click="Login()">
                             Login 
@@ -31,6 +31,15 @@
         data: () => ({
             usernameInput: "",
             passwordInput: "",
+            
+            rules:{
+                requiredEmail: (value:any) => !!value || 'Valid Email Required.',
+                requiredPassWord: (value:any) => !!value || 'Valid Password Required.',
+                email: (value:any) => {
+                        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                        return pattern.test(value) || 'Invalid e-mail.'
+                }
+            },
         }),
         methods: {
             gotoRegister(){
