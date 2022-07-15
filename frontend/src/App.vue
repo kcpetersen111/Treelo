@@ -5,7 +5,6 @@
         <v-list-item v-for="item in items" :key="item.title" link>
           <v-list-item-content style="flex-wrap: nowrap">
             <router-link :to="item.link" style="display: flex">
-              <!--  justify-content: space-between" -->
               <v-list-item-icon class="mr-6">
                 <v-icon>{{ item.icon }}</v-icon>
               </v-list-item-icon>
@@ -22,7 +21,9 @@
     <v-app-bar app>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Budget Trello</v-toolbar-title>
+      <v-toolbar-title class="blue--text lighten-1 text-h4 font-weight-bold">
+        Budget Trello
+      </v-toolbar-title>
     </v-app-bar>
 
     <v-main>
@@ -30,14 +31,9 @@
     </v-main>
 
     <v-footer>
-      <!--
-        height="75"
-        dark
-      -->
-
       <router-link to="/contact">
         <v-card>
-          <v-card-title> contact us. </v-card-title>
+          <v-card-title> Contact us. </v-card-title>
         </v-card>
       </router-link>
     </v-footer>
@@ -56,19 +52,19 @@ export default Vue.extend({
     drawer: true,
     items: [
       {
-        title: "About us",
-        link: "/about",
-        icon: "mdi-account-circle",
-      },
-      {
         title: "Login",
         link: "/login",
         icon: "mdi-account-circle",
       },
       {
-        title: "Budget Trello Board",
+        title: "My Board",
         link: "/board",
         icon: "mdi-hammer",
+      },
+      {
+        title: "About us",
+        link: "/about",
+        icon: "mdi-account-group",
       },
       {
         title: "Contact us",
