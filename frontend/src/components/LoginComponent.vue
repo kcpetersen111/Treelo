@@ -12,7 +12,7 @@
                         <v-btn @click="Login()">
                             Login 
                         </v-btn>
-                        <v-btn @click="gotoRegister()" :to="/../registration">
+                        <v-btn @click="gotoRegister()">  
                             Register
                         </v-btn>
                     </v-card-actions>
@@ -24,7 +24,10 @@
 
 <script lang="ts">
     export default{
-        name: "LoginPage",
+        name: "LoginComponent",
+        props: {
+            //
+        },
         data: () => ({
             usernameInput: "",
             passwordInput: "",
@@ -32,6 +35,8 @@
         methods: {
             gotoRegister(){
                 console.log("GO to Register page!");
+                window.location.href = "/registration";
+                //make this a route later??
             },
             Login(){
                 this.usernameInput =  "";
