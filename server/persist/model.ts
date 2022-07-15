@@ -1,8 +1,10 @@
+// import mongoose, { Mongoose } from "mongoose";
+
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema(
     {
-        email:{
+        username:{
             type: String,
             match:[
                 /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
@@ -11,9 +13,9 @@ const userSchema = mongoose.Schema(
             require:true,
             unique: true,
         },
-        username:{
+        name:{
             type: String,
-            require:true,
+            require:false,
         },
         password:{
             type: String,
@@ -45,12 +47,16 @@ const eventSchema = mongoose.Schema(
             type:String,
             require:true,
         },
+        ownerID:{
+            type: mongoose.Schema.Types.ObjectId,
+            required:true,
+        }
 
     }
 );
 
-export const Events:any = mongoose.model("Events",eventSchema);
-export const User:any = mongoose.model("User",userSchema);
+export const Events = mongoose.model("Events",eventSchema);
+export const User = mongoose.model("User",userSchema);
 
 // module.exports = {
 //     Events,
