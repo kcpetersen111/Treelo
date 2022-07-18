@@ -46,25 +46,25 @@ app.post("/users", async (req:any ,res:any)=>{
         });
     }
 });
-
+// the line below is a lie
 //will need to be able to get all events
-app.get("/events", async (req:Request, res:Response)=>{
-    // console.log(typeof req.user);
-    if(!req.user){
-        res.status(401).json({message:"unauthed"});
-        return;
-    }
-    let list:Array<Object>;
-    try {
-        list = await Events.find({ownerID: req.user.id}, "-password");
-    } catch (error) {   
-        console.log("error in retiving all events by a user ",error);
-        res.status(500).json(error);
-        return;
-    }
-
-    res.status(200).json(list);
-});
+//fundemently broken but kept as an example to look at
+// app.get("/events", async (req:Request, res:Response)=>{
+//     // console.log(typeof req.user);
+//     if(!req.user){
+//         res.status(401).json({message:"unauthed"});
+//         return;
+//     }
+//     let list:Array<Object>;
+//     try {
+//         list = await Events.find({ownerID: req.user.id}, "-password");
+//     } catch (error) {   
+//         console.log("error in retiving all events by a user ",error);
+//         res.status(500).json(error);
+//         return;
+//     }
+//     res.status(200).json(list);
+// });
 
 //will need to be able to get events by id
 
@@ -72,6 +72,8 @@ app.get("/events", async (req:Request, res:Response)=>{
 
 //will need to be able to delete events by id
 
+
+//needs to be reworked
 //will need to create an event
 app.post("/events", async (req:Request, res:Response)=>{
     if(!req.user){
@@ -100,13 +102,62 @@ app.post("/events", async (req:Request, res:Response)=>{
 //will need to get container by id
 //will need to update container by id
 //will need to delete container by id
-//will need to create container
+//will need to create container on a board id
+app.post("/board/:boardID",async (req:Request, res:Response)=>{
+    const id = req.params.boardID;
+    if(!req.user){
+        res.status(401).json({message:"unauthed"});
+        return;
+    }
+    let board;
+    try {
+        board = await Boards.findByIdAndUpdate(
+            id,
+            {
+                $push:{
+                    container:{
+                        createorID: req.user.id,
+                        containerName: req.body.containerName,
+                        description: req.body.description,
+                        events: [],
+                    }
+                }
+            }
+            );
+    } catch (error) {
+        res.status(500).json(error);
+        return;
+    }
+
+
+});
 
 
 //will need to get all boards that were created by a user 
 //will need to update board
 //will need to delete board
 //will need to create board
+
+app.post("/board", async (req:Request, res:Response)=>{
+    if(!req.user){
+        res.status(401).json({message:"unauthed"});
+        return;
+    }
+    try {
+        let board = await Boards.create({
+            creatorID: req.user.id,
+            boardName: req.body.boardName,
+            description: req.body.description,
+            container: [],
+        });
+        res.status(201).json(board);
+    } catch (error) {
+        res.status(500).json({
+            message:"Internal server error, could not create board",
+            error:error,
+        });
+    }
+});
 
 
 

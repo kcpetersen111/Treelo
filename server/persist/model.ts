@@ -64,7 +64,7 @@ const eventSchema = mongoose.Schema(
     }
 );
 
-const containerSchema = mongoose.schema({
+const containerSchema = mongoose.Schema({
     //this probably should not matter or should be changed to an array
     creatorID:{
         type:mongoose.Schema.Types.ObjectId,
@@ -82,7 +82,7 @@ const containerSchema = mongoose.schema({
     },
 });
 
-const boardSchema = mongoose.schema({
+const boardSchema = mongoose.Schema({
     creatorID:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
@@ -91,7 +91,7 @@ const boardSchema = mongoose.schema({
     boardName:{
         type:String,required:true,default:"",
     },
-    descriptionName:{
+    description:{
         type:String,required:true,default:"",
     },
     container:{
