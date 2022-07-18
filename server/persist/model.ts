@@ -31,7 +31,7 @@ const eventSchema = mongoose.Schema(
         },
         date:{
             type:Date,
-            default: Date.now(),            
+            default: Date.now(),
         },
         done:{
             type:Boolean,
@@ -49,10 +49,24 @@ const eventSchema = mongoose.Schema(
     }
 );
 
-const Events = mongoose.model("Events",eventSchema);
-const User = mongoose.model("User",userSchema);
+export const Events:any = mongoose.model("Events",eventSchema);
+export const User:any = mongoose.model("User",userSchema);
 
-module.exports = {
-    Events,
-    User,
-};
+// module.exports = {
+//     Events,
+//     User,
+// };
+
+// export const Events; 
+
+// declare module "model" {
+//     export = {
+//             Events,
+//             User,
+//     }
+// }
+
+// declare module "Events" {
+//     const Events:any;
+//     export
+// }
