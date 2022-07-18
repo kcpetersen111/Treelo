@@ -1,43 +1,50 @@
 <template>
   <v-app>
+    <v-parallax 
+    height="1000"
+      src='https://cdn.shopify.com/s/files/1/0326/7189/articles/General_Sherman_tree_2000x.jpg?v=1627936731'
+    >
     <v-main>
-      <!-- registartion page -->
-      <v-parallax height="800"
-      dark
-      src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
-      >
+      <!-- registration page -->
       <v-card width="200" 
-        class="mx-auto ma-16"
-        elevation="14"
-        disabled>
+        class="mx-auto ma-16 rounded-xl"
+        flat
+        >
         <v-card-title class="mx-10">
           Sign up!
         </v-card-title>
       </v-card>
-      <v-card class="mx-auto my-4" width="200" height="300" color="#BDBDBD">
-          <v-text-field v-model="registerUsername"
+      <v-card class="mx-auto my-4 px-7 pt-7 rounded-xl " width="400" height="325" color="rgba(255,255,255,.7)" flat >
+          <v-text-field class="rounded-pill" v-model="registerUsername"
             label="Username"
             outlined
+            color="black"
+            :rules="[rules.requiredUserName]"
           ></v-text-field>
-          <v-text-field v-model="registerPassword"
+          <v-text-field class="rounded-pill" v-model="registerPassword"
             label="Password"
+            color = "black"
             outlined
+            :rules="[rules.requiredPassWord]"
           ></v-text-field>
-          <v-text-field v-model="registerEmail"
+          <v-text-field class="rounded-pill" v-model="registerEmail"
             label="Email"
+            color="black"
             outlined
+            :rules="[rules.requiredEmail,rules.email]"
           ></v-text-field>
           <v-card-actions>
-            <v-btn id="registration-button" class="ml-2 mb-2 mt-n4">
-              Sign Up.
+            <v-btn id="registration-button" class="ml-auto mr-10 mb-2 mt-n4" >
+              Sign Up
             </v-btn>
-            <v-btn id="login-button" class="mr-2 mb-2 mt-n4">
-              login.
+
+            <v-btn id="login-button" class="mr-auto ml-10 mb-2 mt-n4" @click="goToLogin()">
+              Login
             </v-btn>
           </v-card-actions>
       </v-card>
-      </v-parallax>
     </v-main>
+    </v-parallax>
   </v-app>
 </template>
 
@@ -58,13 +65,23 @@ export default Vue.extend({
     registerPassword: "",
     registerEmail: "",
 
+    rules: {
+      requiredEmail: (value:any) => !!value || 'Valid Email Required.',
+      requiredUserName: (value:any) => !!value || 'Valid Username Required.',
+      requiredPassWord: (value:any) => !!value || 'Valid Password Required.',
+      email: (value:any) => {
+            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            return pattern.test(value) || 'Invalid e-mail.'
+    }
+    },
     //
   }),
   methods:{
-    buttonTest: function(){
-      console.log("it works")
+    goToLogin(){
+      window.location.href = "/login";
     }
-  }
+  },
+
 });
 </script>
 
