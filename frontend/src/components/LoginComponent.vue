@@ -6,7 +6,7 @@
                     <v-card-title style="display: block">
                         <b>Sign in</b> 
                     </v-card-title>
-                    <v-text-field class="rounded-pill" label="Email" outlined color="black" v-model="usernameInput" :rules="[rules.requiredEmail,rules.email]"></v-text-field>
+                    <v-text-field class="rounded-pill" label="Email" outlined color="black" v-model="usernameInput" :rules="[rules.requiredEmail,rules.email]" autofocus></v-text-field>
                     <v-text-field class="rounded-pill" label="Password" outlined color="black" v-model="passwordInput" :rules="[rules.requiredPassWord]"></v-text-field>
                     <v-card-actions>
                         <v-btn id="login-button" class="mr-auto ml-10 mb-2 mt-n4 rounded-sm" elevation="12" @click="Login()">
