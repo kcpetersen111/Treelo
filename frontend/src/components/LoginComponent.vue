@@ -9,7 +9,7 @@
                     <v-text-field label="username" v-model="usernameInput"></v-text-field>
                     <v-text-field label="password" v-model="passwordInput"></v-text-field>
                     <v-card-actions>
-                        <v-btn @click="Login()">
+                        <v-btn @click="postSession()">
                             Login 
                         </v-btn>
                         <v-btn @click="gotoRegister()">  
@@ -23,6 +23,7 @@
 </template>
 
 <script lang="ts">
+    URL = "localhost:8080"
     export default{
         name: "LoginComponent",
         props: {
@@ -38,7 +39,18 @@
                 window.location.href = "/registration";
                 //make this a route later??
             },
-            Login(){
+            postSession: async function(){
+                let loginCredentials = {username: this.usernameInput, password: this.passwordInput};
+
+                let response = await fetch(URL + "/session", {
+                    method: "POST",
+                    body: JSON.stringify(loginCredentials),
+                    header: {
+                        "Content-Type": "application/json"
+                    },
+                    credentials: "include"
+                });
+
                 this.usernameInput =  "";
                 this.passwordInput =  "";
                 console.log("Login in");
