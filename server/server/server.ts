@@ -2,7 +2,7 @@
 // const express = require("express");
 import express, {Request, Response} from 'express';
 
-import {User, Events} from "../persist/model";
+import {User, Events, Containers, Boards} from "../persist/model";
 // const db = require("../persist/model");
 
 export const app = express();
@@ -94,6 +94,21 @@ app.post("/events", async (req:Request, res:Response)=>{
     res.status(201).json(post);
 });
 //will need to mark an event as complete by id
+
+
+//will need to get all containers from a board
+//will need to get container by id
+//will need to update container by id
+//will need to delete container by id
+//will need to create container
+
+
+//will need to get all boards that were created by a user 
+//will need to update board
+//will need to delete board
+//will need to create board
+
+
 
 // module.exports = app;
 // export app;

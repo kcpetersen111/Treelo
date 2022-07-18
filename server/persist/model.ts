@@ -23,6 +23,14 @@ const userSchema = mongoose.Schema(
         }
     }
 );
+// //container schema
+// // similar to the forum app 
+// //a
+
+// board-> container -> event
+// a board will be a more genral consept like a group project or a school class
+// a container will be a more specific subsection of the board think working on blank or completed assignments
+// an event will be a specific item think assignment 4 or building a specific resource
 
 const eventSchema = mongoose.Schema(
     {
@@ -47,7 +55,8 @@ const eventSchema = mongoose.Schema(
             type:String,
             require:true,
         },
-        ownerID:{
+        //I think this is unNeeded
+        creatorID:{
             type: mongoose.Schema.Types.ObjectId,
             required:true,
         }
@@ -55,7 +64,44 @@ const eventSchema = mongoose.Schema(
     }
 );
 
+const containerSchema = mongoose.schema({
+    //this probably should not matter or should be changed to an array
+    creatorID:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
+        required:true,
+    },
+    containerName:{
+        type: String,required:true,default:"",
+    },
+    description:{
+        type:String,required:true,default:"",
+    },
+    events:{
+        type:[eventSchema],required: true,default:[],
+    },
+});
+
+const boardSchema = mongoose.schema({
+    creatorID:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
+        required:true,
+    },
+    boardName:{
+        type:String,required:true,default:"",
+    },
+    descriptionName:{
+        type:String,required:true,default:"",
+    },
+    container:{
+        type:[containerSchema],required:true,default:[],
+    },
+});
+
 export const Events = mongoose.model("Events",eventSchema);
+export const Containers = mongoose.model("Containers",containerSchema);
+export const Boards = mongoose.model("Boards",boardSchema);
 export const User = mongoose.model("User",userSchema);
 
 // module.exports = {
