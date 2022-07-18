@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-    URL = "localhost:8080"
+    let URL = "http://localhost:8080"
     export default{
         name: "LoginComponent",
         props: {
@@ -51,9 +51,21 @@
                     credentials: "include"
                 });
 
-                this.usernameInput =  "";
-                this.passwordInput =  "";
-                console.log("Login in");
+                let body = response.json();
+                console.log(body);
+                
+                if(response.status == 201){
+                    console.log("success");
+                    this.usernameInput =  "";
+                    this.passwordInput =  "";
+
+                }else if (response.status == 401){
+                    console.log("Unsuccessful");
+                    this.passwordInput = "";
+
+                }else{
+                    console.log("Error", response.status, response);
+                }
             },
         },
     }
