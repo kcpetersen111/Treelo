@@ -12,7 +12,7 @@ export const boardSetUp = function(app:any){
         }
         let boards:[typeof Boards];
         try {
-            boards = Boards.find({creatorId:req.user.id})
+            boards = await Boards.find({creatorId:req.user.id})
         } catch (error) {
             res.status(500).json({
                 message:"Internal server error, could not create board",
