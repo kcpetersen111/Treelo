@@ -25,10 +25,14 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app>
+    <v-app-bar
+      app
+      dark
+      src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
+    >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title class="blue--text lighten-1 text-h4 font-weight-bold">
+      <v-toolbar-title class="text-h4 font-weight-bold">
         Budget Trello
       </v-toolbar-title>
     </v-app-bar>
@@ -96,11 +100,16 @@ export default Vue.extend({
   opacity: 60%;
 }
 
+.v-toolbar__image {
+  opacity: 80%;
+}
+
 a {
   text-decoration: none;
 }
 
-.nav-list-title {
+.nav-list-title,
+.v-toolbar__title {
   color: #ffffff;
 }
 
