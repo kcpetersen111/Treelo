@@ -1,6 +1,6 @@
 import express, {Request, Response} from 'express';
 
-import {User, Events, Containers, Boards} from "../persist/model";
+import {User, Cards, Containers, Boards} from "../persist/model";
 
 export const containerSetUp = function(app:any){
 
@@ -23,7 +23,7 @@ export const containerSetUp = function(app:any){
             res.status(403).json({"message":"you are not authorized to view that board"});
             return;
         }
-        res.status(201).json(board.events);
+        res.status(201).json(board.cards);
 
     });
     //will need to get container by id
@@ -40,14 +40,14 @@ export const containerSetUp = function(app:any){
     //         container = await Containers.findById(req.params.id);
     //     }catch (err){
     //         res.status(500).json({
-    //             message: `failed to delete event`,
+    //             message: `failed to delete card`,
     //             error: err,
     //         });
     //         return;
     //     }
-    //     if( event == null){
+    //     if( card == null){
     //         res.status(404).json({
-    //             message: `cannot find event`,
+    //             message: `cannot find card`,
     //             container_id: req.params.container,
     //         });
     //         //console.log("cannot find it");
@@ -72,7 +72,7 @@ export const containerSetUp = function(app:any){
                             createorID: req.user.id,
                             containerName: req.body.containerName,
                             description: req.body.description,
-                            events: [],
+                            cards: [],
                         }
                     }
                 });

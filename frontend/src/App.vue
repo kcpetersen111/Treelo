@@ -1,6 +1,11 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" app>
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      dark
+      src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
+    >
       <v-list dense nav>
         <v-list-item v-for="item in items" :key="item.title" link>
           <v-list-item-content style="flex-wrap: nowrap">
@@ -9,7 +14,9 @@
                 <v-icon>{{ item.icon }}</v-icon>
               </v-list-item-icon>
 
-              <v-list-item-title class="text-left text-button font-weight-bold">
+              <v-list-item-title
+                class="text-left text-button font-weight-bold nav-list-title"
+              >
                 {{ item.title }}
               </v-list-item-title>
             </router-link>
@@ -18,10 +25,14 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app>
+    <v-app-bar
+      app
+      dark
+      src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
+    >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title class="blue--text lighten-1 text-h4 font-weight-bold">
+      <v-toolbar-title class="text-h4 font-weight-bold">
         Budget Trello
       </v-toolbar-title>
     </v-app-bar>
@@ -85,15 +96,25 @@ export default Vue.extend({
   color: #2c3e50;
 }
 
-nav {
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    text-decoration: none;
+.v-navigation-drawer__image {
+  opacity: 60%;
+}
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.v-toolbar__image {
+  opacity: 80%;
+}
+
+a {
+  text-decoration: none;
+}
+
+.nav-list-title,
+.v-toolbar__title {
+  color: #ffffff;
+}
+
+.router-link-exact-active > .nav-list-title {
+  // color: #42b983;
+  color: #00ff8c;
 }
 </style>

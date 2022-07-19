@@ -1,6 +1,6 @@
 import express, {Request, Response} from 'express';
 
-import {User, Events, Containers, Boards} from "../persist/model";
+import {User, Cards, Containers, Boards} from "../persist/model";
 
 export const boardSetUp = function(app:any){
     //will need to get all boards that were created by a user 
@@ -23,7 +23,9 @@ export const boardSetUp = function(app:any){
         res.status(201).json(boards);
     });
     //will need to update board
-    // app.patch("/board",async(req:Request, res:Request))
+    app.patch("/board",async(req:Request, res:Request)=>{
+
+    });
     //will need to delete board
 
     //will need to create board

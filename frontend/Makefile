@@ -10,8 +10,11 @@ serve: setup
 buildProject:
 	npm run build
 
-build: buildProject
+build: buildProject # this is so that the project is built before we fix the index.html file with sed.
+# both of the bellow sed commands are changing absolute file paths to relative ones for src and href.
+# ex: src="/js" -> src="./js"
 	sed -i 's/src="\//src=".\//g' ../frontend-build/index.html
+# ex: href="/favicon" -> href="./favicon"
 	sed -i 's/href="\//href=".\//g' ../frontend-build/index.html
 
 lint:

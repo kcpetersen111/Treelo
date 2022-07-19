@@ -2,7 +2,7 @@
 // const express = require("express");
 import express, {Request, Response} from 'express';
 
-import {User, Events, Containers, Boards} from "../persist/model";
+import {User, Cards, Containers, Boards} from "../persist/model";
 // const db = require("../persist/model");
 
 export const app = express();
@@ -29,7 +29,7 @@ app.post("/users", async (req:Request,res:Response)=>{
         let user = await User.create({
             name:    req.body.name,
             username: req.body.username,
-            password: req.body.password,  
+            password: req.body.password,
         });
         res.status(201).json(user);
     }catch(err){
@@ -40,8 +40,8 @@ app.post("/users", async (req:Request,res:Response)=>{
     }
 });
 
-import {eventSetUp} from "./events";
-eventSetUp(app);
+import {cardSetUp} from "./cards";
+cardSetUp(app);
 
 import {containerSetUp} from "./container";
 containerSetUp(app);
