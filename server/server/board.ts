@@ -23,6 +23,7 @@ export const boardSetUp = function(app:any){
         res.status(201).json(boards);
     });
     //will need to update board
+    // app.patch("/board",async(req:Request, res:Request))
     //will need to delete board
 
     //will need to create board
@@ -34,7 +35,7 @@ export const boardSetUp = function(app:any){
         try {
             let board = await Boards.create({
                 creatorID: req.user.id,
-                boardName: req.body.boardName,
+                name: req.body.name,
                 description: req.body.description,
                 container: [],
             });

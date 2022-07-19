@@ -71,7 +71,7 @@ const containerSchema = mongoose.Schema({
         ref:"User",
         required:true,
     },
-    containerName:{
+    name:{
         type: String,required:true,default:"",
     },
     description:{
@@ -89,7 +89,7 @@ const boardSchema = mongoose.Schema({
         ref:"User",
         required:true,
     },
-    boardName:{
+    name:{
         type:String,required:true,default:"",
     },
     description:{
