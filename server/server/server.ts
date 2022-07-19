@@ -27,7 +27,7 @@ setUpAuth(app);
 //     res.status(200).json("success");
 // });
 
-app.post("/users", async (req:any ,res:any)=>{
+app.post("/users", async (req:Request,res:Response)=>{
     if(req.body.username == undefined || req.body.password == undefined){
         res.status(400).json({message:"Email and password must be defined"});
         return;
@@ -71,6 +71,32 @@ app.post("/users", async (req:any ,res:any)=>{
 //will need to be able to update events by id
 
 //will need to be able to delete events by id
+app.delete("/event/:id", async (req:Request, res:Response)=>{
+    //fix this later
+    if (!req.user){
+        res.status(404).json({ message: "unauthed"});
+        return;
+    }
+    let event;
+    try{
+        event = await Events.findById(req.params.id);
+    }catch (err){
+        res.status(500).json({
+            message: `failed to delete event`,
+            error: err,
+        });
+        return;
+    }
+    if( event == null){
+        res.status(404).json({
+            message: `cannot find event`,
+            event_id: req.params.event_id,
+        });
+        //console.log("cannot find it");
+        return;
+    }
+    if( event.user_id)
+
 
 
 //needs to be reworked
@@ -102,6 +128,32 @@ app.post("/events", async (req:Request, res:Response)=>{
 //will need to get container by id
 //will need to update container by id
 //will need to delete container by id
+app.delete("/container/:id", async (req:Request, res:Response)=>{
+    //fix later
+    if (!req.user){
+        res.status(404).json({ message: "unauthed"});
+        return;
+    }
+    let container;
+    try{
+        container = await Containers.findById(req.params.id);
+    }catch (err){
+        res.status(500).json({
+            message: `failed to delete event`,
+            error: err,
+        });
+        return;
+    }
+    if( event == null){
+        res.status(404).json({
+            message: `cannot find event`,
+            container_id: req.params.container,
+        });
+        //console.log("cannot find it");
+        return;
+    }
+    if( container.user_id)
+
 //will need to create container on a board id
 app.post("/board/:boardID",async (req:Request, res:Response)=>{
     const id = req.params.boardID;
