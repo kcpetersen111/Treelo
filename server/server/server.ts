@@ -1,16 +1,15 @@
-// const express = require('express');
-// const express from
-// import express from "express";
-const express = require("express");
-// import db from "model";
-import {User, Events} from "../persist/model";
+
+// const express = require("express");
+import express, {Request, Response} from 'express';
+
+import {User, Events, Containers, Boards} from "../persist/model";
 // const db = require("../persist/model");
 
 export const app = express();
 
-// const cors = require ("cors");
+const cors = require ("cors");
 
-// app.use(cors());
+app.use(cors());
 app.use(express.json());
 
 app.use(express.static(`${__dirname}/../frontend-build`));
@@ -21,16 +20,14 @@ import { setUpSessionStore} from "./session"
 setUpSessionStore(app);
 setUpAuth(app);
 
-// app.post("/test",(req:any,res:any)=>{
-//     let garbage =  db;
-//     console.log("test");
-//     res.status(200).json("success");
-// });
-
-app.post("/users", async (req:any ,res:any)=>{
+app.post("/users", async (req:Request,res:Response)=>{
+    if(req.body.username == undefined || req.body.password == undefined){
+        res.status(400).json({message:"Email and password must be defined"});
+        return;
+    }
     try {
         let user = await User.create({
-            email:    req.body.email,
+            name:    req.body.name,
             username: req.body.username,
             password: req.body.password,  
         });
@@ -42,6 +39,16 @@ app.post("/users", async (req:any ,res:any)=>{
         });
     }
 });
+
+import {eventSetUp} from "./events";
+eventSetUp(app);
+
+import {containerSetUp} from "./container";
+containerSetUp(app);
+
+import { boardSetUp } from "./board";
+boardSetUp(app);
+
 
 // module.exports = app;
 // export app;

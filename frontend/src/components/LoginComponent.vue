@@ -7,9 +7,9 @@
                         <b>Sign in</b> 
                     </v-card-title>
                     <v-text-field class="rounded-pill" label="Email" outlined color="black" v-model="usernameInput" :rules="[rules.requiredEmail,rules.email]" autofocus></v-text-field>
-                    <v-text-field class="rounded-pill" label="Password" outlined color="black" v-model="passwordInput" :rules="[rules.requiredPassWord]"></v-text-field>
+                    <v-text-field class="rounded-pill" label="Password" outlined color="black" type="password" v-model="passwordInput" :rules="[rules.requiredPassWord]"></v-text-field>
                     <v-card-actions>
-                        <v-btn id="login-button" class="mr-auto ml-10 mb-2 mt-n4 rounded-sm" elevation="12" @click="Login()">
+                        <v-btn id="login-button" class="mr-auto ml-10 mb-2 mt-n4 rounded-sm" elevation="12" @click="postSession()">
                             Login 
                         </v-btn>
                         <v-btn id="registration-button" class="mr-8 ml-14 mb-2 mt-n4 rounded-sm" elevation="12" @click="gotoRegister()">  
@@ -23,6 +23,7 @@
 </template>
 
 <script lang="ts">
+    let URL = "http://localhost:8080"
     export default{
         name: "LoginComponent",
         props: {
@@ -47,10 +48,33 @@
                 window.location.href = "/registration";
                 //make this a route later??
             },
-            Login(){
-                this.usernameInput =  "";
-                this.passwordInput =  "";
-                console.log("Login in");
+            postSession: async function(){
+                let loginCredentials = {username: this.usernameInput, password: this.passwordInput};
+
+                let response = await fetch(URL + "/session", {
+                    method: "POST",
+                    body: JSON.stringify(loginCredentials),
+                    header: {
+                        "Content-Type": "application/json"
+                    },
+                    credentials: "include"
+                });
+
+                let body = response.json();
+                console.log(body);
+                
+                if(response.status == 201){
+                    console.log("success");
+                    this.usernameInput =  "";
+                    this.passwordInput =  "";
+
+                }else if (response.status == 401){
+                    console.log("Unsuccessful");
+                    this.passwordInput = "";
+
+                }else{
+                    console.log("Error", response.status, response);
+                }
             },
         },
     }
