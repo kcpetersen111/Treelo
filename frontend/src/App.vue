@@ -1,6 +1,11 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" app>
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      dark
+      src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
+    >
       <v-list dense nav>
         <v-list-item v-for="item in items" :key="item.title" link>
           <v-list-item-content style="flex-wrap: nowrap">
@@ -9,7 +14,9 @@
                 <v-icon>{{ item.icon }}</v-icon>
               </v-list-item-icon>
 
-              <v-list-item-title class="text-left text-button font-weight-bold">
+              <v-list-item-title
+                class="text-left text-button font-weight-bold nav-list-title"
+              >
                 {{ item.title }}
               </v-list-item-title>
             </router-link>
@@ -85,15 +92,20 @@ export default Vue.extend({
   color: #2c3e50;
 }
 
-nav {
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    text-decoration: none;
+.v-navigation-drawer__image {
+  opacity: 60%;
+}
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+a {
+  text-decoration: none;
+}
+
+.nav-list-title {
+  color: #ffffff;
+}
+
+.router-link-exact-active > .nav-list-title {
+  // color: #42b983;
+  color: #00ff8c;
 }
 </style>
