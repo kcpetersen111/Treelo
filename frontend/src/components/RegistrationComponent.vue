@@ -22,6 +22,7 @@
             :rules="[rules.requiredUserName]"
           ></v-text-field>
           <v-text-field class="rounded-pill" v-model="registerPassword"
+            type="password"
             label="Password"
             color = "black"
             outlined
