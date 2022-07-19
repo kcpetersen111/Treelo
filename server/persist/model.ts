@@ -135,7 +135,7 @@ const boardSchema = mongoose.Schema({
     },
     container:{
         //a list of container ids
-        type:[mongoose.Types.ObjectId],required:true,default:[],
+        type:[containerSchema],required:true,default:[],
     },
 });
 

@@ -3,6 +3,7 @@ import express, {Request, Response} from 'express';
 import {User, Cards, Containers, Boards} from "../persist/model";
 
 export const boardSetUp = function(app:any){
+    
     //will need to get all boards that were created by a user 
     app.get("/board", async (req:Request, res:Response)=>{
         if (!req.user){

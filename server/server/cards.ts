@@ -60,14 +60,14 @@ export const cardSetUp = function(app:any){
     //needs to be reworked
     //will need to create an card
     app.post("/cards/:boardId/:containerId", async (req:Request, res:Response)=>{
+        
         const boardID = req.params.boardId;
         const containerId = req.params.containerId;
+        
         if(!req.user){
             res.status(401).json({message:"unauthed"});
             return;
         }
-
-
     });
     //will need to mark an card as complete by id
 
