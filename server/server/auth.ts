@@ -1,9 +1,20 @@
 //this file is the one that will manage authentication
 
-const passport = require("passport");
+import mongoose from "mongoose";
+// import * as passport from "passport";
+import passport from "passport";
+// import * from "@types/passport"
+// const passport = require("passport");
+
 const LocalStrategy = require('passport-local');
 // const { password } = require("../config");
 const {User} = require("../persist/model");
+
+// export type userType = {
+//     email?: string;
+//     username?: string;
+//     id?: mongoose.Schema.Types.ObjectId;
+// }
 
 passport.use(
     new LocalStrategy( async (username:string,password:string,done:Function)=>{
@@ -28,7 +39,7 @@ export const setUpAuth = function(app:any){
     app.use(passport.authenticate("session"));
 
     passport.serializeUser(function(user:any, cb:Function){
-        cb(null,{id:user._id, email:user.email});
+        cb(null,{id:user._id, name:user.name,username:user.username});
     });
     
     passport.deserializeUser(function(user:any,cb:Function){

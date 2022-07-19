@@ -1,8 +1,10 @@
+// import mongoose, { Mongoose } from "mongoose";
+
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema(
     {
-        email:{
+        username:{
             type: String,
             match:[
                 /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
@@ -11,9 +13,9 @@ const userSchema = mongoose.Schema(
             require:true,
             unique: true,
         },
-        username:{
+        name:{
             type: String,
-            require:true,
+            require:false,
         },
         password:{
             type: String,
@@ -21,6 +23,14 @@ const userSchema = mongoose.Schema(
         }
     }
 );
+// //container schema
+// // similar to the forum app 
+// //a
+
+// board-> container -> event
+// a board will be a more genral consept like a group project or a school class
+// a container will be a more specific subsection of the board think working on blank or completed assignments
+// an event will be a specific item think assignment 4 or building a specific resource
 
 const eventSchema = mongoose.Schema(
     {
@@ -45,12 +55,56 @@ const eventSchema = mongoose.Schema(
             type:String,
             require:true,
         },
+        //I think this is unNeeded
+        creatorID:{
+            type: mongoose.Schema.Types.ObjectId,
+            required:true,
+        }
 
     }
 );
 
-export const Events:any = mongoose.model("Events",eventSchema);
-export const User:any = mongoose.model("User",userSchema);
+const containerSchema = mongoose.Schema({
+    //this probably should not matter or should be changed to an array
+    creatorID:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
+        required:true,
+    },
+    containerName:{
+        type: String,required:true,default:"",
+    },
+    description:{
+        type:String,required:true,default:"",
+    },
+    events:{
+        //a list of event ids
+        type:[mongoose.Types.ObjectId],required: true,default:[],
+    },
+});
+
+const boardSchema = mongoose.Schema({
+    creatorID:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
+        required:true,
+    },
+    boardName:{
+        type:String,required:true,default:"",
+    },
+    description:{
+        type:String,required:true,default:"",
+    },
+    container:{
+        //a list of container ids
+        type:[mongoose.Types.ObjectId],required:true,default:[],
+    },
+});
+
+export const Events = mongoose.model("Events",eventSchema);
+export const Containers = mongoose.model("Containers",containerSchema);
+export const Boards = mongoose.model("Boards",boardSchema);
+export const User = mongoose.model("User",userSchema);
 
 // module.exports = {
 //     Events,

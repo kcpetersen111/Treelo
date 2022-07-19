@@ -1,6 +1,6 @@
 
 
-const user:string = 'new_user';
+const mongoUser:string = 'new_user';
 const password:string = 'password';
 const host:string = 'localhost';
 const mongo_port:string = '27017';
@@ -9,7 +9,7 @@ const httpPort:number = 8080;
 // const session:string = "secretpassword";
 
 module.exports = {
-    user,
+    mongoUser,
     password,
     host,
     mongo_port,
