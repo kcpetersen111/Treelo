@@ -7,8 +7,12 @@ serve: setup
 	clear
 	npm run serve
 
-build:
+buildProject:
 	npm run build
+
+build: buildProject
+	sed -i 's/src="\//src=".\//g' ../frontend-build/index.html
+	sed -i 's/href="\//href=".\//g' ../frontend-build/index.html
 
 lint:
 	npm run lint
