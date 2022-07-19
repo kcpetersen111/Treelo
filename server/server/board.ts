@@ -1,9 +1,9 @@
 import express, {Request, Response} from 'express';
 
-import {User, Events, Containers, Boards} from "../persist/model";
+import {User, Cards, Containers, Boards} from "../persist/model";
 
 export const boardSetUp = function(app:any){
-    //will need to get all boards that were created by a user 
+    //will need to get all boards that were created by a user
     //will need to update board
     //will need to delete board
     //will need to create board

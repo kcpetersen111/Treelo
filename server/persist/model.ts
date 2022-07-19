@@ -24,15 +24,53 @@ const userSchema = mongoose.Schema(
     }
 );
 // //container schema
-// // similar to the forum app 
+// // similar to the forum app
 // //a
 
-// board-> container -> event
+// board -> container -> card
 // a board will be a more genral consept like a group project or a school class
 // a container will be a more specific subsection of the board think working on blank or completed assignments
-// an event will be a specific item think assignment 4 or building a specific resource
+// an card will be a specific item think assignment 4 or building a specific resource
 
-const eventSchema = mongoose.Schema(
+
+const boardSchema = mongoose.Schema({
+    creatorID:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
+        required:true,
+    },
+    boardName:{
+        type:String,required:true,default:"",
+    },
+    description:{
+        type:String,required:true,default:"",
+    },
+    container:{
+        // a list of container ids
+        type:[mongoose.Types.ObjectId], required:true, default:[],
+    },
+});
+
+const containerSchema = mongoose.Schema({
+    //this probably should not matter or should be changed to an array
+    creatorID:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
+        required:true,
+    },
+    containerName:{
+        type: String,required:true,default:"",
+    },
+    description:{
+        type:String,required:true,default:"",
+    },
+    cards:{
+        //a list of card ids
+        type:[mongoose.Types.ObjectId],required: true,default:[],
+    },
+});
+
+const cardSchema = mongoose.Schema(
     {
         name:{
             type:String,
@@ -64,63 +102,26 @@ const eventSchema = mongoose.Schema(
     }
 );
 
-const containerSchema = mongoose.Schema({
-    //this probably should not matter or should be changed to an array
-    creatorID:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"User",
-        required:true,
-    },
-    containerName:{
-        type: String,required:true,default:"",
-    },
-    description:{
-        type:String,required:true,default:"",
-    },
-    events:{
-        //a list of event ids
-        type:[mongoose.Types.ObjectId],required: true,default:[],
-    },
-});
-
-const boardSchema = mongoose.Schema({
-    creatorID:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"User",
-        required:true,
-    },
-    boardName:{
-        type:String,required:true,default:"",
-    },
-    description:{
-        type:String,required:true,default:"",
-    },
-    container:{
-        //a list of container ids
-        type:[mongoose.Types.ObjectId],required:true,default:[],
-    },
-});
-
-export const Events = mongoose.model("Events",eventSchema);
+export const Cards = mongoose.model("Cards",cardSchema);
 export const Containers = mongoose.model("Containers",containerSchema);
 export const Boards = mongoose.model("Boards",boardSchema);
 export const User = mongoose.model("User",userSchema);
 
 // module.exports = {
-//     Events,
+//     Cards,
 //     User,
 // };
 
-// export const Events; 
+// export const Cards;
 
 // declare module "model" {
 //     export = {
-//             Events,
+//             Cards,
 //             User,
 //     }
 // }
 
-// declare module "Events" {
-//     const Events:any;
+// declare module "Cards" {
+//     const Cards:any;
 //     export
 // }
