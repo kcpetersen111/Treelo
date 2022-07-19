@@ -122,12 +122,13 @@ app.post("/board/:boardID",async (req:Request, res:Response)=>{
                         events: [],
                     }
                 }
-            }
-            );
+            });
+        res.status(201).json(board);
     } catch (error) {
         res.status(500).json(error);
         return;
     }
+
 
 
 });
