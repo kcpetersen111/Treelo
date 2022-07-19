@@ -99,6 +99,26 @@ app.post("/events", async (req:Request, res:Response)=>{
 
 
 //will need to get all containers from a board
+app.get("/container/:boardId", async (req:Request, res:Response)=>{
+    const id = req.params.boardId;
+    if(!req.user){
+        res.status(401).json({message:"unauthed"});
+        return;
+    }
+    let board:typeof Boards;
+    try {
+        board = await Boards.findById(id);
+    } catch (error) {
+        res.status(500).json(error);
+        return;
+    }
+    if(board.ownerID != req.user.id){
+        res.status(403).json({"message":"you are not authorized to view that board"});
+        return;
+    }
+    res.status(201).json(board.events);
+
+});
 //will need to get container by id
 //will need to update container by id
 //will need to delete container by id
