@@ -78,7 +78,8 @@ const containerSchema = mongoose.Schema({
         type:String,required:true,default:"",
     },
     events:{
-        type:[eventSchema],required: true,default:[],
+        //a list of event ids
+        type:[mongoose.Types.ObjectId],required: true,default:[],
     },
 });
 
@@ -95,7 +96,8 @@ const boardSchema = mongoose.Schema({
         type:String,required:true,default:"",
     },
     container:{
-        type:[containerSchema],required:true,default:[],
+        //a list of container ids
+        type:[mongoose.Types.ObjectId],required:true,default:[],
     },
 });
 

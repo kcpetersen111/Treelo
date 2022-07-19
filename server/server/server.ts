@@ -75,25 +75,15 @@ app.post("/users", async (req:any ,res:any)=>{
 
 //needs to be reworked
 //will need to create an event
-app.post("/events", async (req:Request, res:Response)=>{
+app.post("/events/:boardId/:containerId", async (req:Request, res:Response)=>{
+    const boardID = req.params.boardId;
+    const containerId = req.params.containerId;
     if(!req.user){
         res.status(401).json({message:"unauthed"});
         return;
     }
-    let post;
-    try{
-        post = await Events.create({
-            name: req.body.name,
-            date: req.body.date,
-            done: req.body.done,
-            category: req.body.category,
-            ownerID: req.user.id,
-        });
-    } catch(err){
-        res.status(500).json(err);
-        return;
-    }
-    res.status(201).json(post);
+    
+    
 });
 //will need to mark an event as complete by id
 
