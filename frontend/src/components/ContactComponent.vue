@@ -11,34 +11,47 @@
           <!-- </v-card-text> -->
         <!-- </v-card> -->
 
-        <v-card elevation="24" class="mx-auto mr-2 rounded-xl white--text" img="https://media.istockphoto.com/vectors/abstract-geometric-background-mosaic-with-triangle-patterns-brown-vector-id1223873773?k=20&m=1223873773&s=612x612&w=0&h=JWs86Y6dHrbLQGhl1Grp9j18bWiCPHclWEZDOKR4EW4=" style="display:inline-block; width: 40%;">
+        <v-card elevation="24" class="mx-auto mb-9 rounded-xl white--text" img="https://media.istockphoto.com/vectors/abstract-geometric-background-mosaic-with-triangle-patterns-brown-vector-id1223873773?k=20&m=1223873773&s=612x612&w=0&h=JWs86Y6dHrbLQGhl1Grp9j18bWiCPHclWEZDOKR4EW4=" style=" width: 50%;">
           <!-- width="475" height="450" -->
           <v-card-title class="flex justify-center text-h4">Contact Us</v-card-title>
-          <v-card-subtitle class="white--text subtitle-1">Here at budget trello!</v-card-subtitle>
-          <v-text-field id="first-name" class="px-7 my-5 mx-auto rounded-pill"
-          style="width:50%; display: inline-block; color:black;" 
-          outlined
+          <v-card-subtitle class="white--text subtitle-1">Here at Budget Trello we value your feedback <br>We would love to hear back from you to better improve our product.<br>Feel free to contact us! </v-card-subtitle>
+          <v-text-field id="first-name" class="px-7 my-5 mx-auto mr-5"
+          style="width:40%; display: inline-block; border: 2px solid black; border-radius: 100px 20px ;" 
           dense
-          prefix="First Name"
+          label="First Name"
+          hint="First Name"
           color="black"
+          full-width
+          v-ripple
           ></v-text-field>
-          <v-text-field id="last-name" class="px-7 mx-auto rounded-pill " 
-          style="width:200px; display: inline-block;"
+          <v-text-field id="last-name" class="px-7 mx-auto ml-5  " 
+          style="width:40%; display: inline-block; border: 2px solid black; border-radius: 20px 100px ;"
           label="Last Name"
+          hint="Last Name"
           dense
-          outlined
+          full-width
+          color="black"
+          v-ripple
           ></v-text-field>
-          <v-text-field id="email-text" class="px-7 rounded-pill"
+          <v-text-field id="email-text" class="px-9 mb-5  mx-auto"
+          style="border: 2px solid black; border-radius: 100px ; width:60%"
           dense
-          outlined
-          prefix="Email"
+          label="Email"
+          full-width
+          hint="Email"
+          color="black"
+          v-ripple
           ></v-text-field>
-          <v-textarea id="text-area" class="px-7"
+          <v-textarea id="text-area" class="px-7 mx-auto"
+          style="width:80%"
           dense
+          v-ripple
           clearable
+          color="black"
+          full-width
           label="What can we help you with?"></v-textarea>
-          <v-card-actions style="display:inline-block" class="mb-4">
-            <v-btn id="contact-button">Contact Us!</v-btn>
+          <v-card-actions style="display:inline-block;" class="mb-4">
+            <v-btn id="contact-button" v-ripple style="background-color:black; color:white">Contact Us!</v-btn>
           </v-card-actions>
         </v-card>
       <!-- </v-card> -->
@@ -63,7 +76,7 @@ export default Vue.extend({
   text-align: center;
   color: black;
   background-image: url(https://media.istockphoto.com/vectors/abstract-geometric-background-mosaic-with-triangle-patterns-brown-vector-id1223873773?k=20&m=1223873773&s=612x612&w=0&h=JWs86Y6dHrbLQGhl1Grp9j18bWiCPHclWEZDOKR4EW4=);
-  opacity: 0.5;
+  opacity: 0.6;
 }
 video {
   object-fit: cover;
