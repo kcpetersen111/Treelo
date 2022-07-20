@@ -115,7 +115,7 @@ const containerSchema = mongoose.Schema({
     description:{
         type:String,required:true,default:"",
     },
-    events:{
+    cards:{
         //a list of event ids
         type:[mongoose.Types.ObjectId],required: true,default:[],
     },
@@ -135,7 +135,7 @@ const boardSchema = mongoose.Schema({
     },
     container:{
         //a list of container ids
-        type:[containerSchema],required:true,default:[],
+        type:[mongoose.Types.ObjectId],required:true,default:[],
     },
 });
 

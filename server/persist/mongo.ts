@@ -20,8 +20,8 @@ export const configureHandlers = function (callback:Function){
 
 export const connect = function (user:string,password:string,host:string,port:string,db_name:string){
     // password = encodeURI(password);
-    // const connectionString = `mongodb+srv://kcpetersen:${password}@cluster0.crhdmiu.mongodb.net/?retryWrites=true&w=majority`;
-    const connectionString:string = encodeURI(`mongodb://${user}:${password}@${host}:${port}/${db_name}`);
+     const connectionString = `mongodb+srv://chaz-cox:chaz-cox@cluster0.s04ylrn.mongodb.net/?retryWrites=true&w=majority`;
+    //const connectionString:string = encodeURI(`mongodb://${user}:${password}@${host}:${port}/${db_name}`);
     console.log(connectionString);
     mongoose.connect(connectionString,{
         // these options are now default

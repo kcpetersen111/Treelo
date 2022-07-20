@@ -27,6 +27,36 @@ export const containerSetUp = function(app:any){
 
     });
     //will need to get container by id
+    app.get("/container/:containerId", async (req:Request, res:Response)=>{
+        if (!req.user){
+            res.status(401).json({message:"unauthed"});
+            return;
+        }
+        const containerId = req.params.containerId;
+        let container;
+        try{
+            container= await Containers.findOne({creatorId:req.user.id}).populate({
+                path:"events"
+            });
+         } catch (err){
+            res.status(500).json({
+                message: `error when finding board`,
+                error: err,
+            });
+            return;
+         }
+
+         if (!container){
+            res.status(404).json({
+                message: `not found`,
+                container_id: containerId,
+            })
+            return;
+         }
+         res.status(200).json(container);
+         return;
+        
+    })
     //will need to update container by id
     //will need to delete container by id
     // app.delete("/container/:id", async (req:Request, res:Response)=>{
@@ -56,24 +86,25 @@ export const containerSetUp = function(app:any){
     //     if( container.user_id)
 
     //will need to create container on a board id
-    app.post("/board/:boardID",async (req:Request, res:Response)=>{
+    app.post("/board/:boardID/container",async (req:Request, res:Response)=>{
         const id = req.params.boardID;
         if(!req.user){
             res.status(401).json({message:"unauthed"});
             return;
         }
+        let container = await Containers.create({
+            "creatorID": req.user.id,
+            "name": req.body.containerName,
+            "description": req.body.description,
+            "cards": [],
+        });
         let board;
         try {
             board = await Boards.findByIdAndUpdate(
                 id,
                 {
                     $push:{
-                        container:{
-                            createorID: req.user.id,
-                            containerName: req.body.containerName,
-                            description: req.body.description,
-                            cards: [],
-                        }
+                        ID: container._id,
                     }
                 });
             res.status(201).json(board);
