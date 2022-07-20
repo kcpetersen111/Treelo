@@ -3,6 +3,7 @@
     <v-navigation-drawer
       v-model="drawer"
       app
+      fixed
       dark
       src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
     >
@@ -37,7 +38,7 @@
       </v-toolbar-title>
     </v-app-bar>
 
-    <v-main>
+    <v-main class="px-0">
       <router-view :key="$route.path" />
     </v-main>
 
