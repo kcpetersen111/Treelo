@@ -1,4 +1,5 @@
 import express, {Request, Response} from 'express';
+import mongoose from 'mongoose';
 
 import {User, Cards, Containers, Boards} from "../persist/model";
 
@@ -59,8 +60,7 @@ export const cardSetUp = function(app:any){
 
     //needs to be reworked
     //will need to create an card
-    app.post("/cards/:boardId/:containerId", async (req:Request, res:Response)=>{
-        
+    app.post("/cards/board/:boardId/container/:containerId/card", async (req:Request, res:Response)=>{
         const boardID = req.params.boardId;
         const containerId = req.params.containerId;
         
