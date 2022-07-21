@@ -123,7 +123,7 @@ export const containerSetUp = function(app:any){
         res.status(201).json(container);    
     });
     //will need to delete container by id
-    app.delete("/board/:boardId/container/:id", async (req:Request, res:Response)=>{
+    app.delete("/board/:boardId/container/:containerId", async (req:Request, res:Response)=>{
         if (!req.user){
             res.status(401).json({ message: "unauthed"});
             return;
@@ -134,23 +134,52 @@ export const containerSetUp = function(app:any){
         try{
             board = await Boards.findOne({
                 _id : req.params.boardId,
-                "container"
-            })
-        }
-        try{
-            container = await Containers.findById(req.params.id);
-            if (!container){
+            });
+            console.log(board);
+            if (!board){
                 res.status(404).json({
                     message: `couldnt find it`,
                 });
                 return;
                 }
-            if( container.creatorID != req.user.id){
+            let isSameUser: Boolean = false;
+            try{
+                await board.populate("container");
+            }
+            catch{
+                console.log("something happend")
+                return;
+            }
+            console.log(board.populated("container"));
+            for (let k in board.container){
+                if (board.container[k]._id == req.params.containerId){
+                    container = board.container[k];
+                    console.log(board.container[k].creatorID);
+                    console.log(board.container[k]);
+                    if (board.container[k].creatorID == req.user.id){
+                        isSameUser = true;
+                    }
+                }
+            }
+            console.log("board.container[k] ", container.creatorID, " userID: ", req.user.id);
+            if(!isSameUser){
                 res.status(403).json({
                     message: `not authorized to delete container`,
                 })
                 return;
             }
+        }catch(err){
+            console.log(err);
+            res.status(500).json({message: `err`, error: err})
+        }
+        try{
+            await Boards.findByIdAndUpdate(req.params.BoardId,{
+                $pull: {
+                    container:{
+                        _id: req.params.id,
+                    },
+                },
+            });
         }catch (err){
             res.status(500).json({
                 message: `failed to delete container`,
@@ -159,7 +188,6 @@ export const containerSetUp = function(app:any){
             return;
         }
         res.status(201).json(container);
-        return;
     });
 
     //will need to create container on a board id
@@ -169,8 +197,9 @@ export const containerSetUp = function(app:any){
             res.status(401).json({message:"unauthed"});
             return;
         }
+        let container;
         try{
-            let container = await Containers.create({
+            container = await Containers.create({
                 "creatorID": req.user.id,
                 "name": req.body.containerName,
                 "description": req.body.description,
