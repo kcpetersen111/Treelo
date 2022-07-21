@@ -185,6 +185,8 @@
         - 403 == User unauthorized
         - 404 == Page not found
         - 500 == Any other issue
+    - Return value
+        - the container that was edited
 
 ## put "board/:boardId/container/:containerId/card/:cardId"
     will edit a card on a board and container
