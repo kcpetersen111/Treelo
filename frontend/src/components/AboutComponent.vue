@@ -1,7 +1,8 @@
 <template>
     <div>
         <v-app>
-                <v-card class="green py-10 ">
+            <video src="https://static.videezy.com/system/resources/previews/000/036/687/original/18_015_06.mp4" autoplay loop playsinline muted></video>
+                <v-card class="green py-10 mx-auto" width="80%">
                     <v-card-title class="justify-center">
                         <h1>ABOUT US</h1>
                     </v-card-title>
@@ -10,7 +11,7 @@
                         We enjoy our trees.
                     </v-card-text>
                 </v-card>
-                <v-card class="black pa-12 my-10">
+                <v-card class="pa-12 my-10 mx-auto" width="90%" style="background-image: url('https://media.istockphoto.com/photos/snowstorm-texture-bokeh-lights-and-falling-snow-on-a-black-background-picture-id814528100?k=20&m=814528100&s=612x612&w=0&h=2AugqAD4SQ0Dj5SxyCc35Urt88YFZlE_RsUSMfl47y8='); background-repeat: no-repeat; background-size: 100%; opacity: 0.9;">
                     <v-card-title class="white--text">
                         <b>Our Team</b>
                     </v-card-title>
@@ -20,18 +21,19 @@
                             v-for="card in cards"
                             :key="card.name"
                         >
-                        <v-card max-width="200px" @click="AboutInfo(card)">
+                        <v-card max-width="200px" @click="AboutInfo(card)" >
                             <v-img 
                                 :src="card.image"
                                 class="white--text BW"
                                 max-width="200px"
+                                height="200px"
                             >
                                 <v-card-title v-text="card.name" class="justify-center mt-7"></v-card-title>
                             </v-img>
                         </v-card>
                         </v-col>
                         </v-row>
-                    </v-container>
+                    </v-container>  
                 </v-card>
                 <v-card v-show="about" class="red lighten-4 pb-16">
                     <v-card-text>{{AboutTxt}}</v-card-text>
