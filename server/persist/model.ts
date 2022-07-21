@@ -1,5 +1,7 @@
 // import mongoose, { Mongoose } from "mongoose";
 
+import { any } from "webidl-conversions";
+
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema(
@@ -138,6 +140,21 @@ const boardSchema = mongoose.Schema({
         type:[mongoose.Types.ObjectId],required:true,default:[],
     },
 });
+//middle ware
+boardSchema.pre('remove',function(this:any,next:Function){
+    
+    this.populate('container');
+    this.container.forEach((element:any) => {
+        element.populate('cards')
+        element.cards.forEach((card:any)=>{
+            card.remove();
+        });
+        element.remove();
+    });
+
+    next();
+});
+
 
 export const Cards = mongoose.model("Cards",cardSchema);
 export const Containers = mongoose.model("Containers",containerSchema);

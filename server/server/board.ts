@@ -5,6 +5,7 @@ import {User, Cards, Containers, Boards} from "../persist/model";
 export const boardSetUp = function(app:any){
     
     //will need to get all boards that were created by a user 
+    //broken
     app.get("/board", async (req:Request, res:Response)=>{
         if (!req.user){
             res.status(401).json({message:"unauthed"});
@@ -101,7 +102,7 @@ export const boardSetUp = function(app:any){
         }
 
         try {
-            board = await Boards.findByIdAndDelete(id);
+            board.remove();
             // console.log(`${req.user.username} deleted the board ${board.name}`);            
         } catch (error) {
             res.status(500).json({message:"Error in deleting the board",
