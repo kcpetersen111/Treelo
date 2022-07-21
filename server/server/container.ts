@@ -135,7 +135,6 @@ export const containerSetUp = function(app:any){
             board = await Boards.findOne({
                 _id : req.params.boardId,
             });
-            console.log(board);
             if (!board){
                 res.status(404).json({
                     message: `couldnt find it`,
@@ -144,24 +143,33 @@ export const containerSetUp = function(app:any){
                 }
             let isSameUser: Boolean = false;
             try{
-                await board.populate("container");
+                await board.populated("container");
             }
             catch{
                 console.log("something happend")
                 return;
             }
-            console.log(board.populated("container"));
+            //console.log(board.populate("container"));
             for (let k in board.container){
                 if (board.container[k]._id == req.params.containerId){
-                    container = board.container[k];
-                    console.log(board.container[k].creatorID);
-                    console.log(board.container[k]);
-                    if (board.container[k].creatorID == req.user.id){
+                    try{
+                        container = await Containers.findById(board.container[k]);
+                    }catch(err){
+                        res.status(500).json({message: 'no container', error: err})
+                    }
+                    }
+                    else{
+                        continue;
+                    }
+                    console.log(container);
+                    //console.log(board.container[k].creatorID);
+                    //console.log(board.container[k]._id);
+                    //console.log(board.container[k]);
+                    if (container.creatorID == req.user.id){
                         isSameUser = true;
                     }
                 }
-            }
-            console.log("board.container[k] ", container.creatorID, " userID: ", req.user.id);
+            //console.log("board.container[k] ", container.creatorID, " userID: ", req.user.id);
             if(!isSameUser){
                 res.status(403).json({
                     message: `not authorized to delete container`,
@@ -173,11 +181,9 @@ export const containerSetUp = function(app:any){
             res.status(500).json({message: `err`, error: err})
         }
         try{
-            await Boards.findByIdAndUpdate(req.params.BoardId,{
+            await Boards.findByIdAndUpdate(req.params.boardId,{
                 $pull: {
-                    container:{
-                        _id: req.params.id,
-                    },
+                    container: req.params.containerId, 
                 },
             });
         }catch (err){
