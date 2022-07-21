@@ -89,11 +89,6 @@ export default Vue.extend({
         link: "/contact",
         icon: "mdi-card-account-mail",
       },
-      {
-        title: "Settings",
-        link: "/settings",
-        icon: "mdi-cog"
-      },
     ],
   }),
   methods: {
