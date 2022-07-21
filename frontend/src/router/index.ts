@@ -5,6 +5,7 @@ import BoardView from '../views/BoardView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegistrationView from '../views/RegistrationView.vue'
 import ContactView from '../views/ContactView.vue'
+import SettingsView from '../views/SettingsView.vue'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes: Array<RouteConfig> = [
     name: "Contact us",
     path: "/contact",
     component: ContactView
+  },
+  {
+    name: "Settings",
+    path: "/settings",
+    component: SettingsView
   }
 ]
 

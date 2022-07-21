@@ -16,6 +16,7 @@
                             Register
                         </v-btn>
                     </v-card-actions>
+                    <v-alert v-show="show" type="error" dense transition="scale-transition" dismissible style="border-radius:25px; border:2px solid black">Login Unsuccessful</v-alert>
                 </v-card>
             </v-main>
         </v-parallax>
@@ -23,7 +24,7 @@
 </template>
 
 <script lang="ts">
-    let URL = "http://localhost:8080"
+    let URL = "http://localhost:8081"
     export default{
         name: "LoginComponent",
         props: {
@@ -32,6 +33,7 @@
         data: () => ({
             usernameInput: "",
             passwordInput: "",
+            show: false,
             
             rules:{
                 requiredEmail: (value:any) => !!value || 'Valid Email Required.',
@@ -48,13 +50,35 @@
                 window.location.href = "/registration";
                 //make this a route later??
             },
+            getSession: async function(){
+                let response = await fetch(URL + "/session",{
+                    method: "GET",
+                    credentials: "include"
+                });
+                //asks if we are logged in 
+                if (response.status == 200){
+                    // log in succesful!
+                    console.log("logged in");
+                    window.location.href = "/board";
+                    return;
+                }else if (response.status == 401){
+                    // log in was not succesfull
+                    console.log("not logged in")
+                }else{
+                    console.log("There was an error when getting /session",response.status,response);
+                }
+            },
             postSession: async function(){
-                let loginCredentials = {username: this.usernameInput, password: this.passwordInput};
+                this.show = false;
+                let loginCredentials = {
+                    username: this.usernameInput, 
+                    password: this.passwordInput
+                    };
 
                 let response = await fetch(URL + "/session", {
                     method: "POST",
                     body: JSON.stringify(loginCredentials),
-                    header: {
+                    headers: {
                         "Content-Type": "application/json"
                     },
                     credentials: "include"
@@ -64,13 +88,14 @@
                 console.log(body);
                 
                 if(response.status == 201){
-                    console.log("success");
-                    this.usernameInput =  "";
-                    this.passwordInput =  "";
+                    console.log(" login was a success");
+                    window.location.href = "/board";
 
                 }else if (response.status == 401){
                     console.log("Unsuccessful");
                     this.passwordInput = "";
+                    this.usernameInput= "";
+                    this.show = true;
 
                 }else{
                     console.log("Error", response.status, response);

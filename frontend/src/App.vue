@@ -36,6 +36,11 @@
       <v-toolbar-title class="text-h4 font-weight-bold">
         Budget Trello
       </v-toolbar-title>
+        <v-btn color="indigo" fab class="mx-auto mr-3" @click="goToSettings()">
+          <v-icon color="green">
+            mdi-pine-tree
+          </v-icon>
+        </v-btn>
     </v-app-bar>
 
     <v-main class="px-0">
@@ -62,6 +67,7 @@ export default Vue.extend({
 
   data: () => ({
     drawer: true,
+    userCard: true,
     items: [
       {
         title: "Login",
@@ -83,8 +89,18 @@ export default Vue.extend({
         link: "/contact",
         icon: "mdi-card-account-mail",
       },
+      {
+        title: "Settings",
+        link: "/settings",
+        icon: "mdi-cog"
+      },
     ],
   }),
+  methods: {
+    goToSettings(){
+      window.location.href = "/settings";
+    }
+  }
 });
 </script>
 
