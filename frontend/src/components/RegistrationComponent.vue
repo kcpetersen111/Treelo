@@ -35,7 +35,7 @@
             :rules="[rules.requiredEmail,rules.email]"
           ></v-text-field>
           <v-card-actions>
-            <v-btn id="registration-button" class="ml-auto mr-10 mb-2 mt-n4" >
+            <v-btn id="registration-button" class="ml-auto mr-10 mb-2 mt-n4" @click="postUser()">
               Sign Up
             </v-btn>
 
@@ -43,6 +43,7 @@
               Login
             </v-btn>
           </v-card-actions>
+          <v-alert v-show="show" tpye="error" dismissible>Test</v-alert>
       </v-card>
     </v-main>
     </v-parallax>
@@ -50,6 +51,7 @@
 </template>
 
 <script lang="ts">
+const URL = "http://localhost:8081";
 import Vue from "vue";
 //import Calendar from "./components/Calendar.vue";
 
@@ -65,6 +67,7 @@ export default Vue.extend({
     registerUsername: "",
     registerPassword: "",
     registerEmail: "",
+    show: false,
 
     rules: {
       requiredEmail: (value:any) => !!value || 'Valid Email Required.',
@@ -80,6 +83,38 @@ export default Vue.extend({
   methods:{
     goToLogin(){
       window.location.href = "/login";
+    },
+    // creating a new user to the database.
+    postUser: async function(){
+      this.show = false;
+      let newUser = {
+        username: this.registerEmail,
+        password: this.registerPassword,
+        name: this.registerUsername
+      }
+      let response = await fetch(URL + "/users",{
+        method: "POST",
+        body: JSON.stringify(newUser),
+        headers:{
+          "Content-Type": "application/json"
+        },
+        credentials: "include"
+      });
+
+      if (response.status == 201){
+        // The User has been successfully created
+        this.registerEmail = "";
+        this.registerPassword = "";
+        this.registerUsername = "";
+        
+        //send the user to the login page to log in.
+        window.location.href = "/login";
+      } else{
+        this.registerPassword = "";
+        this.registerEmail = "";
+        this.registerUsername = "";
+        this.show = true;
+      }
     }
   },
 

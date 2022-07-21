@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <video src="https://static.videezy.com/system/resources/previews/000/012/663/original/Nature_54_-_30s_-_4k_res.mp4" autoplay loop playsinline muted></video>
-    <v-main>
       <!-- <v-card style="width: 70%"> -->
         <!-- <v-card class="mx-auto mr-10 rounded-xl pa-8"> -->
         <!--   width="475" height="450" style="display:inline-block" -->
@@ -55,7 +54,6 @@
           </v-card-actions>
         </v-card>
       <!-- </v-card> -->
-    </v-main>
   </v-app>
 </template>
 
