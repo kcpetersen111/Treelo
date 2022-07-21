@@ -56,7 +56,8 @@
     will update the board of given id
 
     - Body arguments
-        -The field to update (any fields that are left null or not passed in will be disregarded)  
+        - 'name' is the name of the board (optional)
+        - 'description' is the description of the board (optional)
     - Success code
         - 200
     - Error code
@@ -91,4 +92,124 @@
         - 201
     - Error code
         - 401 == User unauthenticated
+        - 500 == Any other issue
+    - Return value
+        - the created board
+# Container resources
+
+## get "container/board/:boardId"
+    Gets all of the containers from a board
+
+    -Body arguments
+        - N/A
+    - Success code
+        - 201
+    - Error code
+        - 401 == User unauthenticated
+        - 403 == User unauthorized
+        - 404 == Page not found
+        - 500 == Any other issue
+    - Return value 
+        - an array of containers that belong to that board
+
+## get "container/:containerId"
+    gets a container by by its id
+
+    - Body arguments
+        - N/A
+    - Success code
+        - 200
+    - Error code
+        - 401 == User unauthenticated
+        - 403 == User unauthorized
+        - 404 == Page not found
+        - 500 == Any other issue
+    - Return value
+        - a container
+
+## post "board/:boardId/container"
+    posts a new container on a board
+
+    - Body arguments
+        - 'containerName' == the name of the container
+        - 'description' == a description of the container being made
+    - Success code
+        - 201
+    - Error codes
+        - 401 == User unauthenticated
+        - 404 == Page not found
+        - 500 == Any other issue
+    - Return value
+        - the board the container was added to 
+
+
+# Card resources
+
+## get "card/:cardId"
+    gets a card by id
+    
+    - Body arguments 
+        - N/A
+    - Success code
+        - 200
+    - Error codes
+        - 401 == User unauthenticated
+        - 403 == User unauthorized
+        - 404 == Page not found
+        - 500 == Any other issue
+
+## get "board/:boardId/container/:containerId/card"
+    gets all of the cards on a container
+
+    - Body arguments 
+        - N/A
+    - Success code
+        - 200
+    - Error codes
+        - 401 == User unauthenticated
+        - 403 == User unauthorized
+        - 404 == Page not found
+        - 500 == Any other issue
+
+## post "board/:boardId/container/:containerId/card"
+    will create a card on a board and container
+
+    - Body arguments 
+        - 'name' == the name on the card
+        - 'date' == the date finished (optional)
+        - 'category' == what category is this card
+    - Success code
+        - 201
+    - Error codes
+        - 401 == User unauthenticated
+        - 403 == User unauthorized
+        - 404 == Page not found
+        - 500 == Any other issue
+
+## put "board/:boardId/container/:containerId/card/:cardId"
+    will edit a card on a board and container
+
+    - Body arguments 
+        - 'name' == the name on the card (optional)
+        - 'date' == the date finished (optional)
+        - 'category' == what category is this card (optional)
+    - Success code
+        - 200
+    - Error codes
+        - 401 == User unauthenticated
+        - 403 == User unauthorized
+        - 404 == Page not found
+        - 500 == Any other issue
+
+## delete "board/:boardId/container/:containerId/card/:cardId"
+    will delete a card 
+
+    - Body arguments 
+        - N/A
+    - Success code
+        - 200
+    - Error codes
+        - 401 == User unauthenticated
+        - 403 == User unauthorized
+        - 404 == Page not found
         - 500 == Any other issue
