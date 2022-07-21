@@ -35,11 +35,13 @@
                         </v-row>
                     </v-container>  
                 </v-card>
-                <v-card v-show="about" class="red lighten-4 pb-16">
-                    <v-card-text>{{AboutTxt}}</v-card-text>
-                    <a :href=GitHub target="_blank" style="text-decoration: none;"><v-btn class="mx-2"><v-icon>mdi-github</v-icon></v-btn></a>
-                    <a :href=LinkedIn target="_blank" style="text-decoration: none;"><v-btn><v-icon>mdi-linkedin</v-icon></v-btn></a>
-                </v-card>
+                <v-expand-transition>
+                    <v-card  v-show="about" class="red lighten-4 mx-auto mb-8 pb-8" width="60%" height="200px">
+                        <v-card-text>{{AboutTxt}}</v-card-text>
+                        <a :href=GitHub target="_blank" style="text-decoration: none;"><v-btn class="mx-2"><v-icon>mdi-github</v-icon></v-btn></a>
+                        <a :href=LinkedIn target="_blank" style="text-decoration: none;"><v-btn><v-icon>mdi-linkedin</v-icon></v-btn></a>
+                    </v-card>
+                </v-expand-transition>
         </v-app>
     </div>
 
