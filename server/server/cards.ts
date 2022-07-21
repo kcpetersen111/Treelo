@@ -114,7 +114,24 @@ export const cardSetUp = function(app:any){
             res.status(500).json(err);
             return;
         }
-        
+       
+        if(!card){
+            res.status(404).json({message:"Not found"});
+            return;
+        }
+        if(req.user.id != card.creatorId){
+            res.status(403).json({message:"You are not allowed to do that"});
+            return;
+        }
+        card = Cards.findByIdAndUpdate(cardId,
+                                {
+                                    name: req.body.name,
+                                    date: req.body.date,
+                                    category: req.body.category,
+                                }
+                                    ,{new:true});
     });
+
+
 
 }
