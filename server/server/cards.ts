@@ -25,7 +25,7 @@ export const cardSetUp = function(app:any){
             res.status(404).json({message:"Container not found"});
             return;
         }
-        if(container.creatorID != User.id){
+        if(container.creatorID != req.user.id){
             res.status(403).json({message:"User is not autherized to create a card on this container"});
             return;
         }
