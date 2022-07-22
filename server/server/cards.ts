@@ -37,10 +37,22 @@ export const cardSetUp = function(app:any){
             creatorID: req.user.id,
             done: false,
         }
+        let newCardIndb;
+        try {
+            newCardIndb = await Cards.create(card);
+        } catch (error) {
+            res.status(500).json(error);
+            return
+        }
         let newCard;
         try {
-            newCard = await Containers.findByIdAndUpdate(containerId,
-                card,
+            newCard = await Containers.findByIdAndUpdate(
+                containerId,
+                {
+                    $push:{
+                        cards:newCardIndb._id,
+                    }
+                },
                 {new:true});
         } catch (err) {
             res.status(500).json(err);
