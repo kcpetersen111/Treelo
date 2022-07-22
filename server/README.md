@@ -157,6 +157,8 @@
         - 403 == User unauthorized
         - 404 == Page not found
         - 500 == Any other issue
+    - Return value
+        - a card
 
 ## get "board/:boardId/container/:containerId/card"
     gets all of the cards on a container
@@ -170,6 +172,8 @@
         - 403 == User unauthorized
         - 404 == Page not found
         - 500 == Any other issue
+    - Return value
+        - an array of cards that belong to that container
 
 ## post "board/:boardId/container/:containerId/card"
     will create a card on a board and container

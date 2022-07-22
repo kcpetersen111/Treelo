@@ -141,11 +141,11 @@ const boardSchema = mongoose.Schema({
     },
 });
 //middle ware
-boardSchema.pre('remove',function(this:any,next:Function){
+boardSchema.pre('remove',async function(this:any,next:Function){
     
-    this.populate('container');
-    this.container.forEach((element:any) => {
-        element.populate('cards')
+    await this.populate('container');
+    this.container.forEach(async (element:any) => {
+        await element.populate('cards')
         element.cards.forEach((card:any)=>{
             card.remove();
         });

@@ -1,5 +1,6 @@
 import express, {Request, Response} from 'express';
 import mongoose from 'mongoose';
+import { reduceEachTrailingCommentRange } from 'typescript';
 
 import {User, Cards, Containers, Boards} from "../persist/model";
 
@@ -49,7 +50,103 @@ export const cardSetUp = function(app:any){
                             
 
     });
-    //will need to mark an card as complete by id
+    
+    app.get("/card/:cardId", async (req:Request, res:Response) => {
+       const id = req.params.cardId;
+       if(!req.user){
+            res.status(401).json({message:"User unauthorized"});
+            return;
+       } 
+       let card;
+       try {
+            card = Cards.findById(id);
+       } catch (error) {
+            res.status(500).json(error);
+            return;
+       }
+       if(!card){
+        res.status(404).json({message:"page does not exist"});
+        return;
+       }
+       if(card.creatorID != req.user.id){
+            res.status(403).json({message:"User is not allowed to get that card"});
+            return;
+       }
+       res.status(200).json(card);
+    });
+
+    app.get("board/:boardId/container/:containerId/card",async (req:Request, res:Response) => {
+        const boardId = req.params.boardId;
+        const containerId = req.params.containerId;
+
+        if(!req.user){
+            res.status(401).json({message:"User is unauthenticated"});
+            return;
+        }
+        let container;
+        try {
+            container = Containers.findById(containerId);
+        } catch (error) {
+            res.status(500).json(error);
+            return;
+        }
+        if(!container){
+            res.status(404).json({message:"page not found"});
+            return;
+        }
+        if(container.creatorID != req.user.id){
+            res.status(403).json({message:"User is not unauthorized to get this"});
+            return;
+        }
+        res.status(200).json(container.cards);
+    });
+
+    app.put("/board/:boardId/container/:containerId/card/:cardId",async (req:Request,res:Response) => {
+        if(!req.user){
+            res.status(401).json({message:"User is not logged in"});
+            return;
+        }
+        const cardId = req.params.cardId;
+        let card;
+        try {
+            card = Cards.findById(cardId);
+        } catch (err) {
+            res.status(500).json(err);
+            return;
+        }
+       
+        if(!card){
+            res.status(404).json({message:"Not found"});
+            return;
+        }
+        if(req.user.id != card.creatorId){
+            res.status(403).json({message:"You are not allowed to do that"});
+            return;
+        }
+        try {
+            card = Cards.findByIdAndUpdate(cardId,
+                {
+                    name: req.body.name,
+                    date: req.body.date,
+                    category: req.body.category,
+                }
+                    ,{new:true});
+        } catch (error) {
+            res.status(500).json(error);
+            return;
+        }
+        res.status(200).json(card);
+        
+        
+    });
+
+    // app.delete("/board/:boardId/container/:containerId/card/:cardId", async (req:Request, res:Response) => {
+    //     if(!req.user){
+    //         res.status(401).json({message:"You are not logged."});
+    //         return;
+    //     }
+    // });
+
 
 
 }
