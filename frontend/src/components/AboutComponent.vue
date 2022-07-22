@@ -35,11 +35,14 @@
                         </v-row>
                     </v-container>  
                 </v-card>
-                <v-card v-show="about" class="red lighten-4 pb-16" href="/about">
-                    <v-card-text>{{AboutTxt}}</v-card-text>
-                    <a :href=GitHub target="_blank" style="text-decoration: none;"><v-btn class="mx-2"><v-icon>mdi-github</v-icon></v-btn></a>
-                    <a :href=LinkedIn target="_blank" style="text-decoration: none;"><v-btn><v-icon>mdi-linkedin</v-icon></v-btn></a>
-                </v-card>
+                <v-fab-transition>
+                    <v-card v-show="about" class="red lighten-4 pb-16 mx-auto" width=" 70%" href="about">
+                        <v-card-text>{{AboutTxt}}</v-card-text>
+                        <v-img :src="picture" class="mx-auto" width="200"></v-img>
+                        <a :href=GitHub target="_blank" style="text-decoration: none;"><v-btn class="mx-2 mt-2"><v-icon>mdi-github</v-icon></v-btn></a>
+                        <a :href=LinkedIn target="_blank" style="text-decoration: none;"><v-btn class="mt-2"><v-icon>mdi-linkedin</v-icon></v-btn></a>
+                    </v-card>
+                </v-fab-transition>
         </v-app>
     </div>
 
@@ -59,7 +62,7 @@ export default {
       about: false,
       cards: [
       {name: "Chaz", 
-        about: "Chaz is pretty cool", 
+        about: "My name is Chaz Cox and I am a full stack Web Developer for Treelo. I am an accomplished coder and programmer, and I enjoy using my skills to contribute to the exciting technological advances that happen every day at Treelo. I graduated from the Utah Tech University in 2024 with a bachelor's degree in computer science. While in school, I earned the 2022 The Great Binary Search TREE Award for my exemplary academic performance and leadership skills.", 
         github: "https://github.com/chaz-cox",
         linkedin: "https://www.linkedin.com/in/chaz-cox-b108a9236/",
         image:"https://upload.wikimedia.org/wikipedia/commons/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg",
@@ -74,7 +77,42 @@ export default {
 
     },
       {name: "Kaleb", 
-        about: "Kaleb is pretty cool too", 
+        about: `Kaleb Petersen
+        (435) 703 3652 • Kcpetersen111@gmail.com • github.com/kcpetersen111
+        Skills
+        Languages: Python, Java, Go, C++, SQL, Perl
+        Tools & Frameworks: Git, LATEX, Pandas, Numpy, SkLearn, Tensorflow
+        Education
+        Utah Tech University Saint George, UT
+        Bachelor of Science in Computer Science Expected: May 2023
+        Honors: Dean’s List (Fall 2021, Spring 2022)
+        Related Coursework: Software Engineering, Distributed Systems, and Computer Networks
+        Awards: 2nd Place 2022 ACM Programming Competition
+        Utah Tech University Saint George, UT
+        Associate of Science in General Sciences May 2020
+        Experience
+        Freelance Saint George, UT
+        Freelance Data Scientist April 2022 - Present
+        • Format and clean data about blockchains
+        • Done with bash scripts, python, pandas, etheriumETL, and web3py.
+        • Working under experienced data scientists.
+        Utah Tech University Saint George, UT
+        Undergraduate Researcher January 2022 - Present
+        • Researched approaches to university time tabling.
+        • Working to create such a system for my university.
+        • Working in a small team guided by multiple professors.
+        SUCCESS Academy Saint George, UT
+        Tutor July 2019 - May 2020
+        • Math and Computer Science Tutor.
+        • Credited as the only reason multiple students were able to pass.
+        • Hired by the school to tutor.
+        Achievements
+        Sterling Scholar 2020
+        Success Academy High School
+        Michael F. Peterson Youth Leadership Camp 2019
+        Dixie Power Electric
+        Eagle Scout 2016
+        Boy Scouts of America`, 
         github: "https://github.com/kcpetersen111",
         linkedin: "https://www.linkedin.com/in/kaleb-petersen-92bb19237/",
         image:"http://cdn.shopify.com/s/files/1/0062/8532/8445/products/Norfolk_Island_Pine_5_BB_grande.jpg?v=1607375158",
