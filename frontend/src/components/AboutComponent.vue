@@ -21,30 +21,25 @@
                             v-for="card in cards"
                             :key="card.name"
                         >
-                        <router-link :to="about-div">
-                            <v-card max-width="200px" @click="AboutInfo(card)" >
-                                <v-img 
-                                    :src="card.image"
-                                    class="white--text BW"
-                                    max-width="200px"
-                                    height="200px"
-                                >
-                                    <v-card-title v-text="card.name" class="justify-center mt-7"></v-card-title>
-                                </v-img>
-                            </v-card>
-                        </router-link>
+                        <v-card max-width="200px" @click="AboutInfo(card)" to="/about" >
+                            <v-img 
+                                :src="card.image"
+                                class="white--text BW"
+                                max-width="200px"
+                                height="200px"
+                            >
+                                <v-card-title v-text="card.name" class="justify-center mt-7"></v-card-title>
+                            </v-img>
+                        </v-card>
                         </v-col>
                         </v-row>
                     </v-container>  
                 </v-card>
-                <v-fab-transition mode="in-out" tags="about-div">
-                    <v-card  v-show="about" class="red lighten-4 mx-auto mb-8 pb-8" width="60%" height="400px">
-                        <v-card-text>{{AboutTxt}}</v-card-text>
-                        <v-img :src="picture" class="" width="40%" height="200"></v-img>
-                        <a :href=GitHub target="_blank" style="text-decoration: none;"><v-btn class="mx-2"><v-icon>mdi-github</v-icon></v-btn></a>
-                        <a :href=LinkedIn target="_blank" style="text-decoration: none;"><v-btn><v-icon>mdi-linkedin</v-icon></v-btn></a>
-                    </v-card>
-                </v-fab-transition>
+                <v-card v-show="about" class="red lighten-4 pb-16" href="/about">
+                    <v-card-text>{{AboutTxt}}</v-card-text>
+                    <a :href=GitHub target="_blank" style="text-decoration: none;"><v-btn class="mx-2"><v-icon>mdi-github</v-icon></v-btn></a>
+                    <a :href=LinkedIn target="_blank" style="text-decoration: none;"><v-btn><v-icon>mdi-linkedin</v-icon></v-btn></a>
+                </v-card>
         </v-app>
     </div>
 
