@@ -25,8 +25,9 @@ export const cardSetUp = function(app:any){
             res.status(404).json({message:"Container not found"});
             return;
         }
-        if(container.creatorID != User.id){
+        if(container.creatorID != req.user.id){
             res.status(403).json({message:"User is not autherized to create a card on this container"});
+            return;
         }
 
         let card = {
@@ -59,7 +60,7 @@ export const cardSetUp = function(app:any){
        } 
        let card;
        try {
-            card = Cards.findById(id);
+            card = await Cards.findById(id);
        } catch (error) {
             res.status(500).json(error);
             return;
@@ -85,7 +86,7 @@ export const cardSetUp = function(app:any){
         }
         let container;
         try {
-            container = Containers.findById(containerId);
+            container = await Containers.findById(containerId);
         } catch (error) {
             res.status(500).json(error);
             return;
@@ -109,7 +110,7 @@ export const cardSetUp = function(app:any){
         const cardId = req.params.cardId;
         let card;
         try {
-            card = Cards.findById(cardId);
+            card = await Cards.findById(cardId);
         } catch (err) {
             res.status(500).json(err);
             return;
@@ -124,7 +125,7 @@ export const cardSetUp = function(app:any){
             return;
         }
         try {
-            card = Cards.findByIdAndUpdate(cardId,
+            card = await Cards.findByIdAndUpdate(cardId,
                 {
                     name: req.body.name,
                     date: req.body.date,
@@ -140,12 +141,60 @@ export const cardSetUp = function(app:any){
         
     });
 
-    // app.delete("/board/:boardId/container/:containerId/card/:cardId", async (req:Request, res:Response) => {
-    //     if(!req.user){
-    //         res.status(401).json({message:"You are not logged."});
-    //         return;
-    //     }
-    // });
+    app.delete("/board/:boardId/container/:containerId/card/:cardId", async (req:Request, res:Response) => {
+        if(!req.user){
+            res.status(401).json({message:"You are not logged."});
+            return;
+        }
+        const cardId = req.params.cardId;
+        const containerId = req.params.containerId;
+        let card;
+        try {
+            card = await Cards.findById(cardId);
+        } catch (error) {
+            res.status(500).json(error);
+            return;
+        }
+        if(!card){
+            res.status(404).json({message:"Card not found"});
+            return;
+        }
+        if(req.user.id != card.creatorId){
+            res.status(403).json({message:"You are not allowed to do that"});
+            return;
+        }
+        let container;
+        try {
+            container = await Containers.findById(containerId);
+        } catch (error) {
+            res.status(500).json(error);
+            return;
+        }
+        if(!container){
+            res.status(404).json({message:"Container not found"});
+            return;
+        }
+        
+        try {
+            container = await Containers.findByIdAndUpdate(containerId,
+                                                {
+                                                    $pull:{
+                                                        cards:cardId,
+                                                    }
+                                                },
+                                                {new:true});
+        } catch (error) {
+            res.status(500).json(error);
+            return;
+        }
+        try {
+            card = await Cards.deleteOne(cardId);
+        } catch (error) {
+            res.status(500).json(error);
+            return;
+        }
+        res.status(200).json(container);
+    });
 
 
 

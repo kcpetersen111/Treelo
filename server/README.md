@@ -206,6 +206,8 @@
         - 403 == User unauthorized
         - 404 == Page not found
         - 500 == Any other issue
+    - Return value
+        - The edited card
 
 ## delete "board/:boardId/container/:containerId/card/:cardId"
     will delete a card 
@@ -219,3 +221,5 @@
         - 403 == User unauthorized
         - 404 == Page not found
         - 500 == Any other issue
+    - Return value
+        - The new container after the card was removed
