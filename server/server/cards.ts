@@ -123,14 +123,29 @@ export const cardSetUp = function(app:any){
             res.status(403).json({message:"You are not allowed to do that"});
             return;
         }
-        card = Cards.findByIdAndUpdate(cardId,
-                                {
-                                    name: req.body.name,
-                                    date: req.body.date,
-                                    category: req.body.category,
-                                }
-                                    ,{new:true});
+        try {
+            card = Cards.findByIdAndUpdate(cardId,
+                {
+                    name: req.body.name,
+                    date: req.body.date,
+                    category: req.body.category,
+                }
+                    ,{new:true});
+        } catch (error) {
+            res.status(500).json(error);
+            return;
+        }
+        res.status(200).json(card);
+        
+        
     });
+
+    // app.delete("/board/:boardId/container/:containerId/card/:cardId", async (req:Request, res:Response) => {
+    //     if(!req.user){
+    //         res.status(401).json({message:"You are not logged."});
+    //         return;
+    //     }
+    // });
 
 
 
