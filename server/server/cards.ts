@@ -88,7 +88,7 @@ export const cardSetUp = function(app:any){
        res.status(200).json(card);
     });
 
-    app.get("board/:boardId/container/:containerId/card",async (req:Request, res:Response) => {
+    app.get("/board/:boardId/container/:containerId/card",async (req:Request, res:Response) => {
         const boardId = req.params.boardId;
         const containerId = req.params.containerId;
 
@@ -132,7 +132,7 @@ export const cardSetUp = function(app:any){
             res.status(404).json({message:"Not found"});
             return;
         }
-        if(req.user.id != card.creatorId){
+        if(req.user.id != card.creatorID){
             res.status(403).json({message:"You are not allowed to do that"});
             return;
         }
@@ -171,7 +171,7 @@ export const cardSetUp = function(app:any){
             res.status(404).json({message:"Card not found"});
             return;
         }
-        if(req.user.id != card.creatorId){
+        if(req.user.id != card.creatorID){
             res.status(403).json({message:"You are not allowed to do that"});
             return;
         }
