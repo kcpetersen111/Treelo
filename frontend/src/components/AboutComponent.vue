@@ -21,7 +21,7 @@
                             v-for="card in cards"
                             :key="card.name"
                         >
-                        <v-card max-width="200px" @click="AboutInfo(card)" >
+                        <v-card max-width="200px" @click="AboutInfo(card)" to="/about" >
                             <v-img 
                                 :src="card.image"
                                 class="white--text BW"
@@ -35,7 +35,7 @@
                         </v-row>
                     </v-container>  
                 </v-card>
-                <v-card v-show="about" class="red lighten-4 pb-16">
+                <v-card v-show="about" class="red lighten-4 pb-16" href="/about">
                     <v-card-text>{{AboutTxt}}</v-card-text>
                     <a :href=GitHub target="_blank" style="text-decoration: none;"><v-btn class="mx-2"><v-icon>mdi-github</v-icon></v-btn></a>
                     <a :href=LinkedIn target="_blank" style="text-decoration: none;"><v-btn><v-icon>mdi-linkedin</v-icon></v-btn></a>
