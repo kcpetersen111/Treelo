@@ -34,7 +34,7 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title class="text-h4 font-weight-bold">
-        Budget Trello
+        Treelo
       </v-toolbar-title>
         <v-btn color="indigo" fab class="mx-auto mr-3" @click="goToSettings()">
           <v-icon color="green">
