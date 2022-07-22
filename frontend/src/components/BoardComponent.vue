@@ -1,5 +1,5 @@
 <template>
-  <v-container v-if="board.id != null">
+  <v-container v-if="board.id != -1">
     <h1 class="text-h2 blue--text font-weight-bold">{{ board.name }}</h1>
     <v-row>
       <v-col v-for="container in board.containers" :key="container.id">
@@ -27,9 +27,9 @@ export default Vue.extend({
   },
   data: () => ({
     board: {
-      creatorID: null,
-      id: null,
-      name: null,
+      creatorID: -1,
+      id: -1,
+      name: "",
       containers: [
         {
           id: 0,
