@@ -57,14 +57,14 @@ export const boardSetUp = function(app:any){
             res.status(403).json({message:"You do not have access to change this board"});
             return;
         }
-        let newBoard:Object = {name:req.body.name,
+        let newBoard = {name:req.body.name,
                         description:req.body.description,
                         container:req.body.container};
 
         // console.log(newBoard);
         try {
             board = await Boards.findByIdAndUpdate(id,newBoard,{new:true});
-            
+            console.log(newBoard,board);
         } catch (error) {
             console.log(error);
             res.status(500).json({message:'An error occured while updating the database',
