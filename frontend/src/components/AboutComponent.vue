@@ -21,27 +21,30 @@
                             v-for="card in cards"
                             :key="card.name"
                         >
-                        <v-card max-width="200px" @click="AboutInfo(card)" >
-                            <v-img 
-                                :src="card.image"
-                                class="white--text BW"
-                                max-width="200px"
-                                height="200px"
-                            >
-                                <v-card-title v-text="card.name" class="justify-center mt-7"></v-card-title>
-                            </v-img>
-                        </v-card>
+                        <router-link :to="about-div">
+                            <v-card max-width="200px" @click="AboutInfo(card)" >
+                                <v-img 
+                                    :src="card.image"
+                                    class="white--text BW"
+                                    max-width="200px"
+                                    height="200px"
+                                >
+                                    <v-card-title v-text="card.name" class="justify-center mt-7"></v-card-title>
+                                </v-img>
+                            </v-card>
+                        </router-link>
                         </v-col>
                         </v-row>
                     </v-container>  
                 </v-card>
-                <v-expand-transition>
-                    <v-card  v-show="about" class="red lighten-4 mx-auto mb-8 pb-8" width="60%" height="200px">
+                <v-fab-transition mode="in-out" tags="about-div">
+                    <v-card  v-show="about" class="red lighten-4 mx-auto mb-8 pb-8" width="60%" height="400px">
                         <v-card-text>{{AboutTxt}}</v-card-text>
+                        <v-img :src="picture" class="" width="40%" height="200"></v-img>
                         <a :href=GitHub target="_blank" style="text-decoration: none;"><v-btn class="mx-2"><v-icon>mdi-github</v-icon></v-btn></a>
                         <a :href=LinkedIn target="_blank" style="text-decoration: none;"><v-btn><v-icon>mdi-linkedin</v-icon></v-btn></a>
                     </v-card>
-                </v-expand-transition>
+                </v-fab-transition>
         </v-app>
     </div>
 
@@ -57,6 +60,7 @@ export default {
       AboutTxt: "",
       GitHub:"",
       LinkedIn: "",
+      picture: "",
       about: false,
       cards: [
       {name: "Chaz", 
@@ -64,34 +68,61 @@ export default {
         github: "https://github.com/chaz-cox",
         linkedin: "https://www.linkedin.com/in/chaz-cox-b108a9236/",
         image:"https://upload.wikimedia.org/wikipedia/commons/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg",
+        picture: "https://media-exp1.licdn.com/dms/image/C4E03AQGixDoEFEj04Q/profile-displayphoto-shrink_800_800/0/1648961201711?e=1663804800&v=beta&t=YVUf85MGOLkd1RFd9ZoPGaf_uO_bW_5LvMIOm3ap6uE",
         },
       {name: "Kendall", 
         about: "Kendall is pretty cool too", 
         github: "https://github.com/kendallbaker12",
         linkedin: "https://www.linkedin.com/in/kendall-baker-033210205/",
         image:"https://theedinburghreporter.co.uk/wp-content/uploads/2020/12/TREES-Tree-hugger-David-Knott-Curator-of-the-Living-Collection-RBGE.jpg",
+        picture: "https://media-exp1.licdn.com/dms/image/C5603AQFBrK9dga0q4A/profile-displayphoto-shrink_400_400/0/1658502459239?e=1663804800&v=beta&t=Zr5QVIgZ4GusXPKR_fI2k32EYscTdyQToP58PbA1JOQ",
+
     },
       {name: "Kaleb", 
         about: "Kaleb is pretty cool too", 
         github: "https://github.com/kcpetersen111",
         linkedin: "https://www.linkedin.com/in/kaleb-petersen-92bb19237/",
         image:"http://cdn.shopify.com/s/files/1/0062/8532/8445/products/Norfolk_Island_Pine_5_BB_grande.jpg?v=1607375158",
+        picture: "https://media-exp1.licdn.com/dms/image/C4E03AQFCU9ZA0L-oRg/profile-displayphoto-shrink_400_400/0/1650147374237?e=1663804800&v=beta&t=JyPvXm8qbLExikLrc3OqamkvqaWWJjwpqoxQJ7vkj1o",
+
     },
       {name: "Jake", 
         about: "Jake is pretty cool too", 
         github: "https://github.com/Legac3e",
         linkedin: "https://www.linkedin.com/in/jake-duckett-720967116/",
         image: "https://cdn.britannica.com/92/142292-004-459092B7.jpg",
+        picture: "https://media-exp1.licdn.com/dms/image/D5635AQEQuyWWbeYLlA/profile-framedphoto-shrink_800_800/0/1654923985946?e=1659110400&v=beta&t=tlrL6yh2bzpvrxs3hI59SM4snY1woPdfrrMOuh3Kb0c",
+
     },
       ],
     //
   }),
   methods: {
     AboutInfo(card){
-        this.about = true;
-        this.AboutTxt = card.about;
-        this.GitHub = card.github;
-        this.LinkedIn = card.linkedin;
+        
+        //for opening card that has not been opened
+        if(!this.about){
+            this.about = true;
+            this.AboutTxt = card.about;
+            this.GitHub = card.github;
+            this.LinkedIn = card.linkedin;
+            this.picture = card.picture;
+        }else if(this.AboutTxt == card.about){
+            this.about = false;
+            this.AboutTxt = "";
+            this.GitHub = "";
+            this.LinkedIn = "";
+            this.picture = "";
+        }else{
+            this.about = false;
+            setTimeout(() => {
+                this.about = true;
+                this.AboutTxt = card.about;
+                this.GitHub = card.github;
+                this.LinkedIn = card.linkedin;
+                this.picture = card.picture;
+            },40);
+        }
     },
   },
 };
