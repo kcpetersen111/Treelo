@@ -200,7 +200,7 @@ export const cardSetUp = function(app:any){
             return;
         }
         try {
-            card = await Cards.deleteOne(cardId);
+            card = await Cards.findByIdAndDelete(cardId);
         } catch (error) {
             res.status(500).json(error);
             return;
