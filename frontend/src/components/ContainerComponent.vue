@@ -1,8 +1,11 @@
 <template>
   <v-card>
-    <v-card-title class="text-h4 purple--text font-weight-bold">
+    <v-card-title class="text-h4 purple--text font-weight-bold" @click="logit()">
       {{ containerData.name }}
     </v-card-title>
+    <v-card-text>
+        {{containerData.description}}
+    </v-card-text>
     <v-list>
       <CardComponent
         v-for="card in containerData.cards"
@@ -21,7 +24,8 @@ export default {
   name: "ContainerComponent",
   props: {
     containerData: {
-      id: Number,
+      _id: String,
+      creatorID: String,
       name: String,
       description: String,
       cards: Array,
@@ -31,9 +35,12 @@ export default {
     CardComponent,
   },
   created() {
-    // console.log(this.$props.containerData);
   },
   methods: {
+      logit: function(){
+        console.log(this.$props.containerData);
+      },
+
     //
   },
 };
