@@ -1,14 +1,18 @@
 <template>
   <v-card>
-    <v-card-title class="text-h4 purple--text font-weight-bold" >
+    <v-card-title class="text-h4 purple--text font-weight-bold">
       {{ containerData.name }}
     </v-card-title>
+    <!--
     <v-card-text>
-        {{containerData.description}}
+      {{ containerData.description }}
     </v-card-text>
-    <v-list v-for="(card, index) in cards" :key="index">
+    -->
+
+    <v-list v-if="fetchedCards.length > 0">
       <CardComponent
-        :key="card.cardID"
+        v-for="(card, index) in fetchedCards"
+        :key="index"
         :cardData="card"
       />
     </v-list>
@@ -17,6 +21,7 @@
 
 <script lang="ts">
 // @ is an alias to /src
+let URL = "http://localhost:8081";
 import CardComponent from "@/components/CardComponent.vue";
 
 export default {
@@ -24,39 +29,39 @@ export default {
   props: {
     containerData: {
       _id: String,
-      creatorID:String,
-      name:String,
-      description:String,
-      cards:Array,
+      creatorID: String,
+      name: String,
+      description: String,
+      cards: Array,
     },
   },
   components: {
     CardComponent,
   },
   data: () => ({
-      cards: [],
+    fetchedCards: [],
   }),
   created() {
-      this.getCards();
+    this.fetchCards();
   },
   methods: {
-      getCards: async function(){
-          for( let i; i>containerData.cards.length; i++){
-              let id = containerData[i];
-              let response = await fetch(`${URL}/card/${id}`,{
-                  credentials: "include",
-              });
-              if (response.status == 200){
-                  let body = await response.json();
-                  this.cards.push(body);
-              }
-              else{
-                 console.log("Error" , response.status, response);
-              }
-          }
-      },
+    fetchCards: async function () {
+      for (let i = 0; i < this.containerData.cards.length; i++) {
+        let id = this.containerData.cards[i];
 
-    //
+        let response = await fetch(`${URL}/card/${id}`, {
+          credentials: "include",
+        });
+
+        if (response.status == 200) {
+          let body = await response.json();
+          console.log("card: ", body);
+          this.fetchedCards.push(body);
+        } else {
+          console.log("ERROR", response.status, response);
+        }
+      }
+    },
   },
 };
 </script>

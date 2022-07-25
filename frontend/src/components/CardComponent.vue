@@ -3,8 +3,8 @@
     <v-card-title
       class="justify-center green--text text--darken-2 font-weight-bold"
     >
-    {{card.name}}
-    {{card.description}}
+      {{ cardData.name }}
+      <!-- {{ card.description }} -->
     </v-card-title>
   </v-card>
 </template>
@@ -14,9 +14,9 @@ export default {
   name: "CardComponent",
   props: {
     cardData: {
-      //id: Number,
+      _id: String,
       name: String,
-      description: String,
+      // description: String,
     },
   },
   created() {

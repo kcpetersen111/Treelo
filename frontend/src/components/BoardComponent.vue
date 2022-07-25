@@ -1,111 +1,56 @@
 <template>
-<div id = "wrapper">
-  <v-container v-if="boards.length > 0 && boards[num]._id != -1">
-    <v-btn @click="goLeft()">Left</v-btn><h1 class="text-h2 blue--text font-weight-bold" >{{ boards[num].name }}</h1><v-btn @click="goRight()">Right</v-btn>
+  <div id="wrapper">
     <v-row>
-      <v-col v-for="(container,index) in containers" :key="index" >
+      <v-col v-for="(container, index) in fetchedContainers" :key="index">
         <ContainerComponent :containerData="container" />
-        <!--<h1>{{ container.name }}</h1>
-        <p>{{ container.description}}</p>-->
       </v-col>
     </v-row>
-  </v-container>
-
-
-  <!--
-    Show a loading screen if we haven't received a response with the board id yet
-  -->
-  <v-container v-else>
-    <h1 class="text-h2 blue--text font-weight-bold">Loading ...</h1>
-  </v-container>
   </div>
 </template>
 
 <script lang="ts">
-let URL = "http://localhost:8081"
+let URL = "http://localhost:8081";
 import Vue from "vue";
 import ContainerComponent from "@/components/ContainerComponent.vue";
 
 export default Vue.extend({
   name: "BoardComponent",
+  props: {
+    boardData: {
+      _id: String,
+      creatorID: String,
+      name: String,
+      description: String,
+      container: Array,
+    },
+  },
   components: {
     ContainerComponent,
   },
   data: () => ({
-    boards: [
-      /*creatorID: -1,
-      _id: -1,
-      name: "",
-      containers: [
-            {
-          id: 0,
-          name: "My Container default",
-          description: "default container",
-          cards: [],
-        },
-      ],*/
-    ],
-    containers: [
-       /* {_id: "id",
-        creatorID: "creatorID",
-        name: "name",
-        description: "descrip",
-        cards: [],},*/
-        ],
-        num:0,
+    fetchedContainers: [],
   }),
   created() {
-    this.fetchBoard();
+    this.fetchContainers();
   },
   methods: {
-    fetchBoard: async function() {
-        let response = await fetch(`${URL}/board`,{
-            credentials: "include",
-        });
-        if(response.status == 200){
-            let body = await response.json();
-            this.boards = body;
-            console.log(this.boards);
-            for( let i in this.boards[this.num].container){
-                this.getContainer(this.boards[this.num].container[i]);
-            }
-        }else{
-            console.log("Error" , response.status,response);
-        }
-    },
-    getContainer: async function(id) {
-        let response = await fetch(`${URL}/container/${id}`,{
-            credentials: "include",
-        });
-        if(response.status ==200){
-            let body = await response.json();
-            console.log("container",body);
-            this.containers.push(body);
-        }else{
-            console.log("ERROR", response.status, response);
-        }
-    },
-    goLeft: function(){
-        this.containers = [];
-        if (this.num == 0){
-            this.num = this.boards.length-1;
-            this.fetchboard();
-        }else{
-            this.num--;
-            this.fetchBoard();
-        }
-    },
-    goRight: function(){
-        this.containers = [];
-        if (this.num == this.boards.length-1){
-            this.num = 0;
-            this.fetchBoard();
-        }else{
-            this.num++;
-            this.fetchBoard();
-        }
-    },
+    fetchContainers: async function () {
+      for (let i = 0; i < this.boardData.container.length; i++) {
+        let id = this.boardData.container[i];
 
+        let response = await fetch(`${URL}/container/${id}`, {
+          credentials: "include",
+        });
+
+        if (response.status == 200) {
+          let body = await response.json();
+          // console.log("container: ", body);
+          this.fetchedContainers.push(body);
+        } else {
+          console.log("ERROR", response.status, response);
+        }
+      }
+    },
   },
 });
 </script>
