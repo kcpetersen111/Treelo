@@ -47,7 +47,7 @@
       <router-view :key="$route.path" />
     </v-main>
 
-    <v-footer>
+    <v-footer style="background-image: url('https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg');">
       <router-link to="/contact">
         <v-card>
           <v-card-title> Contact us. </v-card-title>

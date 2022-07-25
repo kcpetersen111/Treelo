@@ -7,9 +7,9 @@
       <v-file-input
         accept="image/png, image/jpeg, image/bmp"
         placeholder="Pick a picture to make it yours!"
-        
         prepend-icon="mdi-camera"
       ></v-file-input>
+      
     </v-card>
   </v-app>
 </template>
