@@ -16,23 +16,25 @@
                             :key="card.name"
                             
                         >
-                        <v-card max-width="200px" @click="AboutInfo(card)" style="color:skyblue">
-                            <v-img 
-                                :src="card.image"
-                                class="white--text BW"
-                                max-width="200px"
-                                height="200px"
-                            >
-                                <v-card-title v-text="card.name" class="justify-center mt-12" ></v-card-title>
-                            </v-img>
-                        </v-card>
+                        <a href="#aboutMe">
+                            <v-card max-width="200px" @click="AboutInfo(card)" style="color:skyblue">
+                                <v-img 
+                                    :src="card.image"
+                                    class="white--text BW"
+                                    max-width="200px"
+                                    height="200px"
+                                >
+                                    <v-card-title v-text="card.name" class="justify-center mt-12" ></v-card-title>
+                                </v-img>
+                            </v-card>
+                        </a>
                         </v-col>
                         </v-row>
                     </v-container>  
                 </v-card>
-                <v-fade-transition>
+                <v-fade-transition >
                     <v-card v-show="about" class="red lighten-4 pb-16 mb-10 mx-auto" width=" 70%" style="background-image: url('https://i.stack.imgur.com/SvWWN.png'); border-radius:50px">
-                        <v-card-text style="color:white">{{AboutTxt}}</v-card-text>
+                        <v-card-text  id="aboutMe" style="color:white">{{AboutTxt}}</v-card-text>
                         <v-img :src="picture" class="mx-auto" width="200"></v-img>
                         <a :href=GitHub target="_blank" style="text-decoration: none;"><v-btn class="mx-2 mt-2"><v-icon>mdi-github</v-icon></v-btn></a>
                         <a :href=LinkedIn target="_blank" style="text-decoration: none;"><v-btn class=" mx-2 mt-2"><v-icon>mdi-linkedin</v-icon></v-btn></a>
@@ -48,7 +50,7 @@
 export default {
   name: "AboutComponent",
   props: {
-    //
+    // 
   },
   data: () => ({
       AboutTxt: "",

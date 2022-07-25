@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <video src="https://vimeo.com/733378185" autoplay loop playsinline muted></video>
     <v-card class="mx-auto my-2" width="300px">
       <v-icon size="300">
         mdi-account-badge-outline
