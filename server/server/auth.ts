@@ -57,6 +57,13 @@ export const setUpAuth = function(app:any){
         }
         res.status(200).json({message:"authed"});
     });
+    app.delete("/session",function(req:any,res:any){
+        req.logout((item:any)=>{
+            console.log(item,typeof item);
+            res.sendStatus(204);
+        });
+
+    });
 };
 
 // module.exports = setUpAuth;
