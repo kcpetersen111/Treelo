@@ -55,7 +55,7 @@ export const setUpAuth = function(app:any){
             res.status(401).json({message:"unauthed"});
             return;
         }
-        res.status(200).json({message:"authed"});
+        res.status(200).json({name:req.user.name});
     });
     app.delete("/session",function(req:any,res:any){
         req.logout((item:any)=>{

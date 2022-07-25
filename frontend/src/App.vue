@@ -36,7 +36,10 @@
       <v-toolbar-title class="text-h4 font-weight-bold">
         Treelo
       </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <div class="pr-4">Hello! {{username}}</div>
         <v-btn color="indigo" fab class="mx-auto mr-3" @click="goToSettings()">
+        
           <v-icon color="green">
             mdi-pine-tree
           </v-icon>
@@ -58,6 +61,7 @@
 </template>
 
 <script lang="ts">
+let URL = "http://localhost:8081"
 import Vue from "vue";
 
 export default Vue.extend({
@@ -68,6 +72,7 @@ export default Vue.extend({
   data: () => ({
     drawer: true,
     userCard: true,
+    username:"",
     items: [
       {
         title: "Login",
@@ -94,7 +99,20 @@ export default Vue.extend({
   methods: {
     goToSettings(){
       window.location.href = "/settings";
+    },
+    kalebsMethod:async function(){
+        let username = await fetch(URL+"/session",{
+            method:"GET",
+            credentials:"include"
+          });
+        username = await username.json();
+        this.username = username.name;
+      console.log(this.username);
     }
+  },
+  created() {
+    this.kalebsMethod();
+    
   }
 });
 </script>
