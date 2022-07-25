@@ -37,7 +37,7 @@
         Treelo
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <div class="pr-4">Hello! {{username}}</div>
+      <div class="pr-4">Hello {{username.charAt(0).toUpperCase() + username.slice(1)}}!</div>
         <v-btn color="indigo" fab class="mx-auto mr-3" @click="goToSettings()">
         
           <v-icon color="green">
