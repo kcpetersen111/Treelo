@@ -2,48 +2,43 @@
     <div>
         <v-app>
             <video src="https://static.videezy.com/system/resources/previews/000/036/687/original/18_015_06.mp4" autoplay loop playsinline muted></video>
-                <v-card class="green py-10 mx-auto" width="80%">
-                    <v-card-title class="justify-center">
-                        <h1>ABOUT US</h1>
-                    </v-card-title>
-                    <v-card-text>
-                        Here at [Budget Trello] we want to make your life alot easier!
-                        We enjoy our trees.
-                    </v-card-text>
-                </v-card>
                 <v-card class="pa-12 my-10 mx-auto" width="90%" style="background-image: url('https://media.istockphoto.com/photos/snowstorm-texture-bokeh-lights-and-falling-snow-on-a-black-background-picture-id814528100?k=20&m=814528100&s=612x612&w=0&h=2AugqAD4SQ0Dj5SxyCc35Urt88YFZlE_RsUSMfl47y8='); background-repeat: no-repeat; background-size: 100%; opacity: 0.9;">
-                    <v-card-title class="white--text">
-                        <b>Our Team</b>
+                    <v-card-title class="white--text" style="display:flex; justify-content: center; flex-direction: column;" >
+                        <b>Here at Treelo we want to make your life easier!</b>
+                        <v-card-subtitle>
+                            <b>Click on a name to learn more about ourselves!</b>
+                        </v-card-subtitle>
                     </v-card-title>
-                    <v-container justify="center">
+                    <v-container justify="center" >
                         <v-row dense justify="center">
                         <v-col
                             v-for="card in cards"
                             :key="card.name"
+                            
                         >
-                        <v-card max-width="200px" @click="AboutInfo(card)" >
+                        <v-card max-width="200px" @click="AboutInfo(card)" style="color:skyblue">
                             <v-img 
                                 :src="card.image"
                                 class="white--text BW"
                                 max-width="200px"
                                 height="200px"
                             >
-                                <v-card-title v-text="card.name" class="justify-center mt-7"></v-card-title>
+                                <v-card-title v-text="card.name" class="justify-center mt-12" ></v-card-title>
                             </v-img>
                         </v-card>
                         </v-col>
                         </v-row>
                     </v-container>  
                 </v-card>
-                <v-fab-transition>
-                    <v-card v-show="about" class="red lighten-4 pb-16 mx-auto" width=" 70%" >
-                        <v-card-text>{{AboutTxt}}</v-card-text>
+                <v-fade-transition>
+                    <v-card v-show="about" class="red lighten-4 pb-16 mb-10 mx-auto" width=" 70%" style="background-image: url('https://i.stack.imgur.com/SvWWN.png'); border-radius:50px">
+                        <v-card-text style="color:white">{{AboutTxt}}</v-card-text>
                         <v-img :src="picture" class="mx-auto" width="200"></v-img>
                         <a :href=GitHub target="_blank" style="text-decoration: none;"><v-btn class="mx-2 mt-2"><v-icon>mdi-github</v-icon></v-btn></a>
                         <a :href=LinkedIn target="_blank" style="text-decoration: none;"><v-btn class=" mx-2 mt-2"><v-icon>mdi-linkedin</v-icon></v-btn></a>
                         <a :href=resume target="_blank" style="text-decoration: none;"><v-btn class="mx-2 mt-2"><v-icon>mdi-file-account</v-icon></v-btn></a>
                     </v-card>
-                </v-fab-transition>
+                </v-fade-transition>
         </v-app>
     </div>
 
@@ -78,6 +73,8 @@ export default {
         image:"https://theedinburghreporter.co.uk/wp-content/uploads/2020/12/TREES-Tree-hugger-David-Knott-Curator-of-the-Living-Collection-RBGE.jpg",
         picture: "https://media-exp1.licdn.com/dms/image/C5603AQFBrK9dga0q4A/profile-displayphoto-shrink_400_400/0/1658502459239?e=1663804800&v=beta&t=Zr5QVIgZ4GusXPKR_fI2k32EYscTdyQToP58PbA1JOQ",
         resume: "https://docs.google.com/document/d/1knAWIW5-9ZnJVnbweYofkyZOxmZarqaDDVXpoO1Bf34/edit",
+        
+
     },
       {name: "Kaleb", 
         about: `I am a senior at Utah Tech University studying Computer Science.  I am passionate about Distributed Systems, Machine 
@@ -129,7 +126,7 @@ export default {
                 this.LinkedIn = card.linkedin;
                 this.picture = card.picture;
                 this.resume = card.resume;
-            },40);
+            },100);
         }
     },
   },
@@ -137,8 +134,10 @@ export default {
 </script>
 
 <style>
-    .BW{
-        -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-        filter: grayscale(100%);
-    }
+.BW{
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}
+
+    
 </style>
