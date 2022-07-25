@@ -36,7 +36,8 @@
       <v-toolbar-title class="text-h4 font-weight-bold">
         Treelo
       </v-toolbar-title>
-      <div style="text-align:right;">{{username}}</div>
+      <v-spacer></v-spacer>
+      <div class="pr-4">Hello! {{username}}</div>
         <v-btn color="indigo" fab class="mx-auto mr-3" @click="goToSettings()">
         
           <v-icon color="green">
