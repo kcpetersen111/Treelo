@@ -1,9 +1,9 @@
 <template>
 <div id = "wrapper">
-  <v-container v-if="boards[num]._id != -1">
+  <v-container v-if="boards.length > 0 && boards[num]._id != -1">
     <v-btn @click="goLeft()">Left</v-btn><h1 class="text-h2 blue--text font-weight-bold" >{{ boards[num].name }}</h1><v-btn @click="goRight()">Right</v-btn>
     <v-row>
-      <v-col v-for="(index,container) in containers" :key="index" >
+      <v-col v-for="(container,index) in containers" :key="index" >
         <ContainerComponent :containerData="container" />
         <!--<h1>{{ container.name }}</h1>
         <p>{{ container.description}}</p>-->
@@ -32,9 +32,9 @@ export default Vue.extend({
     ContainerComponent,
   },
   data: () => ({
-    boards: {
-      creatorID: -1,
-      id: -1,
+    boards: [
+      /*creatorID: -1,
+      _id: -1,
       name: "",
       containers: [
             {
@@ -43,8 +43,8 @@ export default Vue.extend({
           description: "default container",
           cards: [],
         },
-      ],
-    },
+      ],*/
+    ],
     containers: [
        /* {_id: "id",
         creatorID: "creatorID",
@@ -66,8 +66,8 @@ export default Vue.extend({
             let body = await response.json();
             this.boards = body;
             console.log(this.boards);
-            for( let containerID in this.boards[this.num].container){
-                this.getContainer(containerID);
+            for( let i in this.boards[this.num].container){
+                this.getContainer(this.boards[this.num].container[i]);
             }
         }else{
             console.log("Error" , response.status,response);
@@ -88,17 +88,21 @@ export default Vue.extend({
     goLeft: function(){
         this.containers = [];
         if (this.num == 0){
-            this.num = this.boards.length;
+            this.num = this.boards.length-1;
+            this.fetchboard();
         }else{
             this.num--;
+            this.fetchBoard();
         }
     },
     goRight: function(){
         this.containers = [];
-        if (this.num == this.boards.length){
+        if (this.num == this.boards.length-1){
             this.num = 0;
+            this.fetchBoard();
         }else{
             this.num++;
+            this.fetchBoard();
         }
     },
 
