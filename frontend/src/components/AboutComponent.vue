@@ -30,23 +30,25 @@
         <v-container justify="center">
           <v-row dense justify="center">
             <v-col v-for="card in cards" :key="card.name">
-              <v-card
-                max-width="200px"
-                @click="AboutInfo(card)"
-                style="color: skyblue"
-              >
-                <v-img
-                  :src="card.image"
-                  class="white--text BW"
+              <a href="#aboutMeImg">
+                <v-card
                   max-width="200px"
-                  height="200px"
+                  @click="AboutInfo(card)"
+                  style="color: skyblue"
                 >
-                  <v-card-title
-                    v-text="card.name"
-                    class="justify-center mt-12"
-                  ></v-card-title>
-                </v-img>
-              </v-card>
+                  <v-img
+                    :src="card.image"
+                    class="white--text BW"
+                    max-width="200px"
+                    height="200px"
+                  >
+                    <v-card-title
+                      v-text="card.name"
+                      class="justify-center mt-12"
+                    ></v-card-title>
+                  </v-img>
+                </v-card>
+              </a>
             </v-col>
           </v-row>
         </v-container>
@@ -62,7 +64,12 @@
           "
         >
           <v-card-text style="color: white">{{ AboutTxt }}</v-card-text>
-          <v-img :src="picture" class="mx-auto" width="200"></v-img>
+          <v-img
+            id="aboutMeImg"
+            :src="picture"
+            class="mx-auto"
+            width="200"
+          ></v-img>
           <a :href="GitHub" target="_blank" style="text-decoration: none"
             ><v-btn class="mx-2 mt-2"><v-icon>mdi-github</v-icon></v-btn></a
           >
