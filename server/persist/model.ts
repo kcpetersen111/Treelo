@@ -115,7 +115,7 @@ const containerSchema = mongoose.Schema({
         type: String,required:true,default:"",
     },
     description:{
-        type:String,required:true,default:"",
+        type:String,required:false,default:"",
     },
     cards:{
         //a list of event ids
@@ -133,7 +133,7 @@ const boardSchema = mongoose.Schema({
         type:String,required:true,default:"",
     },
     description:{
-        type:String,required:true,default:"",
+        type:String,required:false,default:"",
     },
     container:{
         //a list of container ids
