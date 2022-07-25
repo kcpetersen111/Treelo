@@ -123,6 +123,8 @@ const containerSchema = mongoose.Schema({
     },
 });
 
+// to add multiple users to the board you could turn creatorID into a list 
+// and just see if the person is in the list 
 const boardSchema = mongoose.Schema({
     creatorID:{
         type:mongoose.Schema.Types.ObjectId,
