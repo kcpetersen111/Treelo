@@ -13,7 +13,7 @@ export const boardSetUp = function(app:any){
         }
         let boards:[typeof Boards];
         try {
-            boards = await Boards.find({creatorId:req.user.id}).populate({
+            boards = await Boards.find({creatorID:req.user.id}).populate({
                 path:"container",
                 populate:{
                     path:"events"
