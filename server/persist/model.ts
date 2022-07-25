@@ -1,7 +1,5 @@
 // import mongoose, { Mongoose } from "mongoose";
 
-import { any } from "webidl-conversions";
-
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema(
@@ -127,7 +125,7 @@ const containerSchema = mongoose.Schema({
 // and just see if the person is in the list 
 const boardSchema = mongoose.Schema({
     creatorID:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:[mongoose.Schema.Types.ObjectId],
         ref:"User",
         required:true,
     },
