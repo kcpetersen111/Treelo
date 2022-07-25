@@ -1,13 +1,13 @@
-all: build packages run
+all: run
 
 packages:
 	cp package.json ../server-build/package.json
 	cd ../server-build && npm install
 
-build:
+build: packages
 	npx tsc
 
-run:
+run: build
 	node ../server-build/index.js
 
 clean:
