@@ -58,7 +58,7 @@ export const containerSetUp = function(app:any){
             return;
             }
 
-        
+
          } catch (err){
             res.status(500).json({
                 message: `error when finding container`,
@@ -71,7 +71,7 @@ export const containerSetUp = function(app:any){
 
     })
     //will need to update container by id
-    app.put("/container/:containerId", async (req:Request, res: Response)=>{
+    app.patch("/container/:containerId", async (req:Request, res: Response)=>{
         if (!req.user){
             res.status(401).json({message: `unauthed`});
             return;
@@ -95,7 +95,7 @@ export const containerSetUp = function(app:any){
             }
         }catch(err){
             res.status(500).json({
-                message: `failed to put`,
+                message: `failed to update`,
                 error: err,
             });
             return;
@@ -104,7 +104,7 @@ export const containerSetUp = function(app:any){
             name: req.body.name,
             description:req.body.description,
             cards: req.body.cards};
-        
+
         try{
             container = await Containers.findByIdAndUpdate(id,newContainer,
                 {
@@ -120,7 +120,7 @@ export const containerSetUp = function(app:any){
             return;
         }
         console.log(container);
-        res.status(201).json(container);    
+        res.status(201).json(container);
     });
     //will need to delete container by id
     app.delete("/board/:boardId/container/:containerId", async (req:Request, res:Response)=>{
@@ -183,7 +183,7 @@ export const containerSetUp = function(app:any){
         try{
             await Boards.findByIdAndUpdate(req.params.boardId,{
                 $pull: {
-                    container: req.params.containerId, 
+                    container: req.params.containerId,
                 },
             });
         }catch (err){
@@ -231,12 +231,12 @@ export const containerSetUp = function(app:any){
         // rn we are not checking if the board exists or should be changed
 
         try {
-            board = await Boards.findById(id);
+            board = await Boards.findById(ID);
         } catch (error) {
             res.status(500).json(error);
             return;
         }
-        
+
         if(!board){
             res.status(404).json({
                 message: `Doesn't exist`
@@ -273,13 +273,13 @@ export const containerSetUp = function(app:any){
             })
             return;
         }
-        
+
         } catch (error) {
             console.log("500 number 2");
             res.status(500).json({message: `failed to push and update`, error: error});
             return;
         }
-        
+
         res.status(201).json(board);
 
 
