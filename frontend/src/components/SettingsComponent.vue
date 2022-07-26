@@ -1,10 +1,12 @@
 <template>
   <v-app style="background-image: url('https://t3.ftcdn.net/jpg/02/65/41/32/360_F_265413209_odsMQCc5XqnZPtm8mseWbomCEQSN945n.jpg'); background-repeat:no-repeat; background-size: cover; background-attachment: fixed;">
-    <v-card class="mx-auto mt-10 rounded-lg" width="60%" height="60%" color="black">
-      <v-card width="90%" class="mx-auto mt-3" height="90%">
+    <v-card class="mx-auto mt-10 rounded-lg" width="60vw" height="60vh" color="black" style="opacity:0.8">
+      <v-card width="90%" class="mx-auto mt-3" height="90%" style="background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDp5O3D0lIron9kM_n2n4ttsyJ3eVAEbmfEg&usqp=CAU'); background-size: cover;">
         <div class="pt-4">
+          <v-card-title style="font-size: medium;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;" class="flex justify-center mt-2">Here you can update your personal info, or Logout</v-card-title>
+          <v-btn @click="logOut()" style="float:right" class="mr-9">Sign Out</v-btn>
           <v-text-field
-            class="mx-auto mt-5"
+            class="pl-8 mb-4"
             dense
             label="Username"
             hint="Username"
@@ -14,7 +16,7 @@
             style="width:40%"
           ></v-text-field>
           <v-text-field
-            class="mx-auto mt-4"
+            class="pl-8 mb-4"
             dense
             label="Password"
             hint="Password"
@@ -24,8 +26,9 @@
             v-ripple
             style="width:40%"
           ></v-text-field>
+          <v-btn style="float:right" class="mr-9" large>Update your settings!</v-btn>
           <v-text-field
-            class="mx-auto mt-5"
+            class="pl-8 mb-4"
             dense
             label="Email"
             hint="Email"
@@ -34,8 +37,8 @@
             v-ripple
             style="width:40%"
           ></v-text-field>
+        
         </div>
-        <v-btn @click="logOut()">Sign Out</v-btn>
       </v-card>
     </v-card>
   </v-app>
