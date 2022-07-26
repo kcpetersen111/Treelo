@@ -9,7 +9,7 @@
     </v-card-text>
     -->
 
-    <v-list >
+    <v-list>
       <CardComponent
         v-for="card in fetchedCards"
         :key="card._id"
@@ -103,23 +103,16 @@ export default {
         credentials: "include",
       });
 
+      this.cardInfo = "";
+
       if (response.status == 201) {
         console.log("post card success");
         this.newCard = false;
-        let responseBody = await response.json();
-        console.log("response body:", responseBody);
-        let allCards = responseBody.cards;
-        console.log("all cards:", allCards);
-        let newCard = allCards[allCards.length - 1];
-        console.log("new card:", newCard);
-        let newCardData = await this.fetchCard(newCard);
-        console.log("new card data:", newCardData);
-        this.fetchedCards.push(newCardData);
-        // this.$forceUpdate();
+        let justCreatedCard = await response.json();
+        this.fetchedCards.push(justCreatedCard);
       } else {
         console.log("ERROR", response.status);
       }
-      this.cardInfo = "";
     },
     refreshSelf: async function () {
       let id = this.containerData._id;
