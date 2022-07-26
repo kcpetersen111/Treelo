@@ -2,7 +2,7 @@
 // const express = require("express");
 import express, {Request, Response} from 'express';
 
-import {User, Cards, Containers, Boards} from "../persist/model";
+import {User, Cards, Containers, Boards, Contact} from "../persist/model";
 // const db = require("../persist/model");
 
 export const app = express();
@@ -38,6 +38,21 @@ app.post("/users", async (req:Request,res:Response)=>{
             error:err,
         });
     }
+});
+app.post("/contact",async (req:Request, res:Response) => {
+    let contact;
+    try {
+        contact = await Contact.create({
+            first: req.body.first,
+            last:  req.body.last,
+            email: req.body.email,
+            description: req.body.description,
+        });
+    } catch (error) {
+        res.status(500).json(error);
+        return;
+    }
+    res.status(201).json(contact);
 });
 
 import {cardSetUp} from "./cards";

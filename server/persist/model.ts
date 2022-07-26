@@ -154,13 +154,26 @@ boardSchema.pre('remove',async function(this:any,next:Function){
 
     next();
 });
-
+//contact us fields first name, last name, email, description
+const contactSchema = mongoose.Schema({
+    first:{type:String,default:""},
+    last:{type:String,default:""},
+    email:{
+        type: String,
+        match:[
+            /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+            "Please fill a valid email address",
+        ],
+        require:true,
+    },
+    description:{type:String,default:"",require:true},
+});
 
 export const Cards = mongoose.model("Cards",cardSchema);
 export const Containers = mongoose.model("Containers",containerSchema);
 export const Boards = mongoose.model("Boards",boardSchema);
 export const User = mongoose.model("User",userSchema);
-
+export const Contact = mongoose.model("Contact",contactSchema);
 // module.exports = {
 //     Cards,
 //     User,
