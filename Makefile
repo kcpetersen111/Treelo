@@ -22,4 +22,4 @@ frontend:
 	cd ./frontend && make build
 
 frontend-docker: frontend 
-	docker build -t productivity-app-frontend .
+	cd ./frontend && docker build -t productivity-app-frontend .

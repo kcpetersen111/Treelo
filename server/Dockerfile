@@ -23,6 +23,6 @@ RUN npm install --save
 
 RUN npx tsc
 
-EXPOSE 8080
+EXPOSE 8081
 
 CMD [ "node", "index.js" ]
