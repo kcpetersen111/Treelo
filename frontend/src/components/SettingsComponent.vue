@@ -53,6 +53,9 @@ export default {
   },
   data: () => ({
     //
+    updatedUsername: "",
+    updatedPassword: "",
+    updatedEmail: ""
   }),
   methods: {
     getImage() {},
