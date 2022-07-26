@@ -7,14 +7,10 @@
       playsinline
       muted
     ></video>
-    <v-card class="mx-auto my-2" width="300px">
-      <v-icon size="300"> mdi-account-badge-outline </v-icon>
-      <v-file-input
-        accept="image/png, image/jpeg, image/bmp"
-        placeholder="Pick a picture to make it yours!"
-        prepend-icon="mdi-camera"
-      ></v-file-input>
-      <v-btn @click="logOut()">Sign Out</v-btn>
+    <v-card class="mx-auto mt-10" width="50%" height="50%">
+      <v-card width="90%" class="mx-auto mt-3" height="90%">
+        <v-btn @click="logOut()">Sign Out</v-btn>
+      </v-card>
     </v-card>
   </v-app>
 </template>

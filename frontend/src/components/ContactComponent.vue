@@ -32,6 +32,7 @@
         contact us!
       </v-card-subtitle>
       <v-text-field
+        v-model="contactFirstName"
         id="first-name"
         class="px-7 my-5 mx-auto mr-5"
         style="
@@ -48,6 +49,7 @@
         v-ripple
       ></v-text-field>
       <v-text-field
+        v-model="contactLastName"
         id="last-name"
         class="px-7 mx-auto ml-5"
         style="
@@ -64,6 +66,7 @@
         v-ripple
       ></v-text-field>
       <v-text-field
+        v-model="contactEmail"
         id="email-text"
         class="px-9 mb-5 mx-auto"
         style="border: 2px solid black; border-radius: 100px; width: 60%"
@@ -75,6 +78,7 @@
         v-ripple
       ></v-text-field>
       <v-textarea
+        v-model="contactBody"
         id="text-area"
         class="px-7 mx-auto"
         style="width: 80%"
@@ -107,7 +111,38 @@ export default Vue.extend({
   },
   data: () => ({
     //
+    contactFirstName: "",
+    contactLastName: "",
+    contactEmail: "",
+    contactBody:"",
   }),
+  methods:{
+    postContact: async function(){
+      let newContact = {
+        first: this.contactFirstName,
+        last: this.contactLastName,
+        email: this.contactEmail,
+        description: this.contactBody
+      }
+      let response = await fetch(URL + "/contact",{
+        method: "POST",
+        body: JSON.stringify(newContact),
+        headers:{
+          "Content-Type" : "application/json"
+        },
+        credentials: "include"
+      });
+      if(response.status == 201){
+        console.log("contact was a sucess!")
+        this.contactFirstName = "",
+        this.contactLastName = "",
+        this.contactEmail = "",
+        this.contactBody = "",
+      }else{
+        console.log("Error",response.status,response);
+      }
+    }
+  }
 });
 </script>
 <style>
