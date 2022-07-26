@@ -6,7 +6,7 @@
       </v-col>
     </v-row>
     <div style="position: fixed; right:1%; bottom: 10%;">
-        <v-btn @click="showContainer=true"><v-icon>mdi-source-branch</v-icon></v-btn><!--package-variant-plus-->
+        <v-btn @click="showContainer=true">+<v-icon>mdi-source-branch</v-icon></v-btn><!--package-variant-plus-->
     </div>
     <div justify="center">
         <v-overlay :z-index="0" :value="showContainer">
@@ -69,7 +69,7 @@ export default Vue.extend({
     postContainer: async function() {
         let id = this.boardData._id;
         let info = {
-            name: this.containerInfo,
+            containerName: this.containerInfo,
         };
         let response = await fetch(`${URL}/board/${id}/container`,{
             method: "POST",

@@ -207,7 +207,7 @@ export const containerSetUp = function(app:any){
 
     //will need to create container on a board id
     app.post("/board/:boardID/container",async (req:Request, res:Response)=>{
-        const id = req.params.boardID;
+        const ID = req.params.boardID;
         if(!req.user){
             res.status(401).json({message:"unauthed"});
             return;
@@ -221,6 +221,7 @@ export const containerSetUp = function(app:any){
                 "cards": [],
             });
         }catch(err){
+            console.log("500 number 1");
             res.status(500).json({
                 message: "Failed to enter in all the feilds"
             });
@@ -229,7 +230,7 @@ export const containerSetUp = function(app:any){
         let board;
         try {
             board = await Boards.findByIdAndUpdate(
-                id,
+                ID,
                 {
                     $push:{
                         container: container._id,
@@ -249,9 +250,11 @@ export const containerSetUp = function(app:any){
             res.status(403).json({
                 message: `not authorized to access board`,
             })
+            return;
         }
         } catch (error) {
-            res.status(500).json(error);
+            console.log("500 number 2");
+            res.status(500).json({message: `failed to push and update`, error: error});
             return;
         }
         res.status(201).json(board);
