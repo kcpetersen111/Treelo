@@ -32,7 +32,7 @@ export const boardSetUp = function(app:any){
         res.status(200).json(boards);
     });
     //will need to update board
-    app.put("/board/:id",async(req:Request, res:Response)=>{
+    app.patch("/board/:id",async(req:Request, res:Response)=>{
         const id = req.params.id;
         if(!req.user){
             res.status(401).json({message:"unauthed"});

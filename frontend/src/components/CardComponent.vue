@@ -1,7 +1,7 @@
 <template>
   <v-card class="justify-center ma-2" style="display: flex">
     <v-card-title
-      class="justify-center green--text text--darken-2 font-weight-bold"
+      class="justify-center green--text text--darken-2 font-weight-bold pr-1"
     >
       {{ cardData.name }}
       <!-- {{ card.description }} -->

@@ -5,7 +5,7 @@
         <v-btn
           v-if="boards.length > 1 && currentBoardIndex > 0"
           @click="moveBoardIndex(-1)"
-          >Left
+          ><v-icon style="transform: rotate(270deg);"> mdi-pine-tree</v-icon>
         </v-btn>
 
         <h1 class="text-h2 blue--text font-weight-bold">
@@ -15,7 +15,7 @@
         <v-btn
           v-if="boards.length > 1 && currentBoardIndex < boards.length - 1"
           @click="moveBoardIndex(1)"
-          >Right
+          ><v-icon style="transform: rotate(90deg);">mdi-pine-tree</v-icon>
         </v-btn>
       </span>
 
