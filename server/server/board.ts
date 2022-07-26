@@ -1,6 +1,7 @@
 import express, {Request, Response} from 'express';
 
 import {User, Cards, Containers, Boards} from "../persist/model";
+import mongoose from 'mongoose';
 
 export const boardSetUp = function(app:any){
     
@@ -13,7 +14,7 @@ export const boardSetUp = function(app:any){
         }
         let boards:[typeof Boards];
         try {
-            boards = await Boards.find({creatorID:req.user.id}).populate({
+            boards = await Boards.find({creatorID:{$all:req.user.id} }).populate({
                 path:"container",
                 populate:{
                     path:"events"
@@ -53,7 +54,7 @@ export const boardSetUp = function(app:any){
         }
         // console.log(req.user);
         // console.log(board.creatorID);
-        if(req.user.id != board.creatorID){
+        if( board.creatorID.includes(req.user.id)){
             res.status(403).json({message:"You do not have access to change this board"});
             return;
         }
@@ -96,7 +97,7 @@ export const boardSetUp = function(app:any){
                                     error:error});
             return;
         }
-        if(req.user.id != board.creatorID){
+        if(board.creatorID.includes(req.user.id)){
             res.status(403).json({message:"You are not allowed to delete that"});
             return;
         }
@@ -121,7 +122,7 @@ export const boardSetUp = function(app:any){
         }
         try {
             let board = await Boards.create({
-                creatorID: req.user.id,
+                creatorID: [req.user.id],
                 name: req.body.name,
                 description: req.body.description,
                 container: [],
@@ -136,6 +137,66 @@ export const boardSetUp = function(app:any){
             });
             return;
         }
+    });
+
+    app.post("/board/:boardID/user/:userID",async (req:Request,res:Response) => {
+        if(!req.user){
+            res.status(401).json({message:"User is not logged in"});
+            return;
+        }
+        //the user to be added
+        const userID = req.params.userID;
+        //the board to add the user to 
+        const boardID = req.params.boardID;
+        
+        let board;
+        try {
+            
+            board = await Boards.findById(boardID);
+        } catch (error) {
+            console.log(error)
+            res.status(500).json(error);
+
+            return;
+        }
+
+        if(!board){
+            res.status(404).json({message:"Page not found"});
+            return;
+        }
+
+        if(!board.creatorID.includes(req.user.id)){
+            res.status(403).json({message:"you are not allowed to do that"});
+            return;
+        }
+        let addedPerson;
+        try {
+            addedPerson = await User.findById(userID,"-password");
+        } catch (error) {
+            res.status(500).json(error);
+            return;
+        }
+
+        if(!addedPerson){
+            res.status(404).json({message:"User does not exist"});
+            return;
+        }
+
+        try {
+
+            board = await Boards.findByIdAndUpdate(boardID,{
+                $push:{
+                    creatorID: addedPerson._id,
+                }
+            },
+            {new:true});
+        } catch (error) {
+            console.log(error);
+            res.status(500).json(error);
+            return;
+        }
+        res.status(201).json(board);
+
     });
 
 };

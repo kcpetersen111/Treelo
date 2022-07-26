@@ -22,7 +22,7 @@ export const containerSetUp = function(app:any){
             })
             return;
             }
-            if(board.creatorID != req.user.id){
+            if(!board.creatorID.includes(req.user.id)){
                 res.status(403).json({"message":"you are not authorized to view that board"});
                 return;
             }
@@ -207,7 +207,7 @@ export const containerSetUp = function(app:any){
 
     //will need to create container on a board id
     app.post("/board/:boardID/container",async (req:Request, res:Response)=>{
-        const id = req.params.boardID;
+        const ID = req.params.boardID;
         if(!req.user){
             res.status(401).json({message:"unauthed"});
             return;
@@ -221,15 +221,37 @@ export const containerSetUp = function(app:any){
                 "cards": [],
             });
         }catch(err){
+            console.log("500 number 1");
             res.status(500).json({
-                message: "Failed to enter in all the feilds"
+                message: "Failed to enter in all the fields"
             });
             return;
         }
         let board;
+        // rn we are not checking if the board exists or should be changed
+
+        try {
+            board = await Boards.findById(id);
+        } catch (error) {
+            res.status(500).json(error);
+            return;
+        }
+        
+        if(!board){
+            res.status(404).json({
+                message: `Doesn't exist`
+            });
+            return;
+        }
+        if(!board.creatorID.includes(req.user.id)){
+            res.status(403).json({
+                message: `not authorized to access board`});
+            return;
+        }
+
         try {
             board = await Boards.findByIdAndUpdate(
-                id,
+                ID,
                 {
                     $push:{
                         container: container._id,
@@ -249,11 +271,15 @@ export const containerSetUp = function(app:any){
             res.status(403).json({
                 message: `not authorized to access board`,
             })
-        }
-        } catch (error) {
-            res.status(500).json(error);
             return;
         }
+        
+        } catch (error) {
+            console.log("500 number 2");
+            res.status(500).json({message: `failed to push and update`, error: error});
+            return;
+        }
+        
         res.status(201).json(board);
 
 

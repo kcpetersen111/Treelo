@@ -7,7 +7,7 @@
     </v-row>
     <div style="position: fixed; right: 1%; bottom: 10%">
       <v-btn @click="showContainer = true"
-        ><v-icon>mdi-source-branch</v-icon></v-btn
+        >+<v-icon>mdi-source-branch</v-icon></v-btn
       ><!--package-variant-plus-->
     </div>
     <div justify="center">

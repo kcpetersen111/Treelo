@@ -9,7 +9,7 @@
     </v-card-text>
     -->
 
-    <v-list v-if="fetchedCards.length > 0">
+    <v-list >
       <CardComponent
         v-for="card in fetchedCards"
         :key="card._id"

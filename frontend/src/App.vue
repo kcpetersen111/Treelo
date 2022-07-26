@@ -45,7 +45,7 @@
       </v-btn>
     </v-app-bar>
 
-    <v-main class="px-0">
+    <v-main>
       <router-view :key="$route.path" />
     </v-main>
 
