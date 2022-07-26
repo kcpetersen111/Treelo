@@ -99,6 +99,17 @@
         >
       </v-card-actions>
     </v-card>
+      <v-alert
+        class="mx-auto"
+        width="50vw"
+        v-show="show"
+        type="success"
+        dense
+        transition="scale-transition"
+        dismissible
+        style="border-radius: 25px; border: 2px solid black"
+      >Thanks for contacting us!</v-alert
+    >
     <!-- </v-card> -->
   </v-app>
 </template>
@@ -117,9 +128,11 @@ export default Vue.extend({
     contactLastName: "",
     contactEmail: "",
     contactBody:"",
+    show: false,
   }),
   methods:{
     postContact: async function(){
+      this.show = false;
       let newContact = {
         first: this.contactFirstName,
         last: this.contactLastName,
@@ -140,6 +153,7 @@ export default Vue.extend({
         this.contactLastName = "";
         this.contactEmail = "";
         this.contactBody = "";
+        this.show = true;
       }else{
         console.log("Error",response.status,response);
       }
