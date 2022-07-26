@@ -39,6 +39,36 @@ app.post("/users", async (req:Request,res:Response)=>{
         });
     }
 });
+
+// app.put("/users", async (req:Request, res:Response)=>{
+//     if(!req.user){
+//         res.status(401).json({message:"Not logged in"});
+//         return;
+//     }
+//     let user;
+//     try {
+//         user = await User.findById(req.user.id);
+//     } catch (error) {
+//         res.status(500).json(error);
+//         return;
+//     }
+//     if(!user){
+//         res.status(404).json({message:"page does not exist"});
+//         return;
+//     }
+//     let newUser = {
+//         username:req.body.username,
+//         name:req.body.name,
+//         password:req.body.password,
+//     }
+//     try {
+//         user.update(newUser)
+//     } catch (error) {
+//         res.status(500).json(error);
+//         return;
+//     }
+// });
+
 app.post("/contact",async (req:Request, res:Response) => {
     let contact;
     try {
@@ -62,6 +92,7 @@ import {containerSetUp} from "./container";
 containerSetUp(app);
 
 import { boardSetUp } from "./board";
+import { reduceEachTrailingCommentRange } from 'typescript';
 boardSetUp(app);
 
 
