@@ -83,11 +83,10 @@ export default Vue.extend({
         if (response.status == 201){
             console.log("post success");
             this.showContainer = false;
-            this.containerInfo = "";
         }else{
             console.log("ERROR", response.status);
-            this.containerInfo = "";
         }
+        this.containerInfo = "";
     },          
   },
 });
