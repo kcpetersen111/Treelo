@@ -91,6 +91,7 @@
       ></v-textarea>
       <v-card-actions style="display: inline-block" class="mb-4">
         <v-btn
+          @click="postContact()"
           id="contact-button"
           v-ripple
           style="background-color: black; color: white"
@@ -103,6 +104,7 @@
 </template>
 
 <script lang="ts">
+let URL = "http://localhost:8081";
 import Vue from "vue";
 export default Vue.extend({
   name: "ContactComponent",
@@ -134,10 +136,10 @@ export default Vue.extend({
       });
       if(response.status == 201){
         console.log("contact was a sucess!")
-        this.contactFirstName = "",
-        this.contactLastName = "",
-        this.contactEmail = "",
-        this.contactBody = "",
+        this.contactFirstName = "";
+        this.contactLastName = "";
+        this.contactEmail = "";
+        this.contactBody = "";
       }else{
         console.log("Error",response.status,response);
       }
