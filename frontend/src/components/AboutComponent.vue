@@ -10,12 +10,12 @@
       ></video>
       <v-card
         class="pa-12 my-10 mx-auto"
-        width="90%"
         style="
           background-image: url('https://media.istockphoto.com/photos/snowstorm-texture-bokeh-lights-and-falling-snow-on-a-black-background-picture-id814528100?k=20&m=814528100&s=612x612&w=0&h=2AugqAD4SQ0Dj5SxyCc35Urt88YFZlE_RsUSMfl47y8=');
           background-repeat: no-repeat;
           background-size: 100%;
           opacity: 0.9;
+          width: 80vw;
         "
       >
         <v-card-title
