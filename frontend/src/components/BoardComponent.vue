@@ -5,6 +5,19 @@
         <ContainerComponent :containerData="container" />
       </v-col>
     </v-row>
+    <div style="position: fixed; right:1%; bottom: 10%;">
+        <v-btn @click="showContainer=true">+<v-icon>mdi-source-branch</v-icon></v-btn><!--package-variant-plus-->
+    </div>
+    <div justify="center">
+        <v-overlay :z-index="0" :value="showContainer">
+            <v-card class="blue">
+                <v-card-title>Create a Branch</v-card-title>
+                <v-text-field placeholder="Container Name" v-model="containerInfo"></v-text-field>
+                <v-btn @click="showContainer= false">Cancel</v-btn>
+                <v-btn @click="postContainer()">Submit</v-btn>
+            </v-card>
+        </v-overlay>
+    </div>
   </div>
 </template>
 
@@ -29,6 +42,8 @@ export default Vue.extend({
   },
   data: () => ({
     fetchedContainers: [],
+    showContainer: false,
+    containerInfo: "",
   }),
   created() {
     this.fetchContainers();
@@ -51,6 +66,29 @@ export default Vue.extend({
         }
       }
     },
+    postContainer: async function() {
+        let id = this.boardData._id;
+        let info = {
+            containerName: this.containerInfo,
+        };
+        let response = await fetch(`${URL}/board/${id}/container`,{
+            method: "POST",
+            body: JSON.stringify(info),
+            headers:{
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+        });
+        console.log(response.json);
+        if (response.status == 201){
+            console.log("post success");
+            this.showContainer = false;
+            this.containerInfo = "";
+        }else{
+            console.log("ERROR", response.status);
+            this.containerInfo = "";
+        }
+    },          
   },
 });
 </script>

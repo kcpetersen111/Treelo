@@ -6,8 +6,7 @@ import {User, Cards, Containers, Boards} from "../persist/model";
 
 export const cardSetUp = function(app:any){
 
-    app.post("/board/:boardId/container/:containerId/card", async (req:Request, res:Response)=>{
-        const boardID = req.params.boardId;
+    app.post("/container/:containerId/card", async (req:Request, res:Response)=>{
         const containerId = req.params.containerId;
         
         if(!req.user){
