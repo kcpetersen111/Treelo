@@ -10,15 +10,20 @@ export const app = express();
 const cors = require ("cors");
 
 app.use(cors({origin:"http://localhost:8080",credentials:true}));
+// app.use(cors());
 app.use(express.json());
-
-app.use(express.static(`${__dirname}/../frontend-build`));
+const frontendFiles:string = `${__dirname}/../frontend-build`;
+app.use(express.static(frontendFiles));
 
 import { setUpAuth} from "./auth";
 import { setUpSessionStore} from "./session"
 
 setUpSessionStore(app);
 setUpAuth(app);
+
+// app.get("/",(req:Request,res:Response)=>{
+//     res.sendFile(`${frontendFiles}/index.html`);
+// });
 
 app.post("/users", async (req:Request,res:Response)=>{
     if(req.body.username == undefined || req.body.password == undefined){
