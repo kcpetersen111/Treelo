@@ -1,6 +1,4 @@
-frontend
-server
-LICENSE
+server-build
 README.md
 node_modules
 npm-debug.log

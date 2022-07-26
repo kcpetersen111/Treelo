@@ -3,14 +3,23 @@ all:
 
 build: docker
 
-docker: frontend backend
-	docker build -t productivity-app .
 
-frontend:
-	cd ./frontend && make build
+
+#backend
+runBackend: backend
+	node server-build/index.js
 
 backend:
 	cd ./server && make build
 
-run:
-	node server-build/index.js
+#backend with docker
+backend-docker:  
+	cd ./server && docker build -t productivity-app-backend .
+
+
+# front end
+frontend: 
+	cd ./frontend && make build
+
+frontend-docker: frontend 
+	docker build -t productivity-app-frontend .

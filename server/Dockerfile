@@ -4,7 +4,7 @@ FROM node:18
 WORKDIR /usr/src/app
 
 # Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# A Makefilewildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
 # RUN make
 
@@ -19,8 +19,10 @@ COPY . .
 
 # RUN ls
 
-# RUN make
+RUN npm install --save
+
+RUN npx tsc
 
 EXPOSE 8080
 
-CMD [ "make", "run" ]
+CMD [ "node", "index.js" ]
