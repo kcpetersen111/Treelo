@@ -12,7 +12,7 @@ const cors = require ("cors");
 app.use(cors({origin:"http://localhost:8080",credentials:true}));
 // app.use(cors());
 app.use(express.json());
-const frontendFiles:string = `${__dirname}/../frontend-build`;
+const frontendFiles:string = `${__dirname}/frontend-build`;
 app.use(express.static(frontendFiles));
 
 import { setUpAuth} from "./auth";
