@@ -57,7 +57,7 @@ export const cardSetUp = function(app:any){
             res.status(500).json(err);
             return;
         }
-        res.status(201).json(newCard);
+        res.status(201).json(newCardIndb);
         
                             
 
