@@ -119,7 +119,7 @@ const containerSchema = mongoose.Schema({
     },
     cards:{
         //a list of event ids
-        type:[mongoose.Types.ObjectId],required: true,default:[],
+        type:[mongoose.Types.ObjectId],required: false,default:[],
     },
 });
 
