@@ -71,7 +71,7 @@ export const containerSetUp = function(app:any){
 
     })
     //will need to update container by id
-    app.put("/container/:containerId", async (req:Request, res: Response)=>{
+    app.patch("/container/:containerId", async (req:Request, res: Response)=>{
         if (!req.user){
             res.status(401).json({message: `unauthed`});
             return;
@@ -95,7 +95,7 @@ export const containerSetUp = function(app:any){
             }
         }catch(err){
             res.status(500).json({
-                message: `failed to put`,
+                message: `failed to update`,
                 error: err,
             });
             return;
