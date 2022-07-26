@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import AboutView from '../views/AboutView.vue'
-import BoardView from '../views/BoardView.vue'
+import BoardsView from '../views/BoardsView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegistrationView from '../views/RegistrationView.vue'
 import ContactView from '../views/ContactView.vue'
@@ -28,7 +28,7 @@ const routes: Array<RouteConfig> = [
   {
     name: "Budget Trello Board",
     path: "/board",
-    component: BoardView
+    component: BoardsView
   },
   {
     name: "Contact us",

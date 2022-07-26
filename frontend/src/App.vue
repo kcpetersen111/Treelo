@@ -37,20 +37,23 @@
         Treelo
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <div class="pr-4">Hello! {{username}}</div>
-        <v-btn color="indigo" fab class="mx-auto mr-3" @click="goToSettings()">
-        
-          <v-icon color="green">
-            mdi-pine-tree
-          </v-icon>
-        </v-btn>
+      <div class="pr-4">
+        Hello {{ username.charAt(0).toUpperCase() + username.slice(1) }}!
+      </div>
+      <v-btn color="indigo" fab class="mx-auto mr-3" @click="goToSettings()">
+        <v-icon color="green"> mdi-pine-tree </v-icon>
+      </v-btn>
     </v-app-bar>
 
-    <v-main class="px-0">
+    <v-main>
       <router-view :key="$route.path" />
     </v-main>
 
-    <v-footer style="background-image: url('https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg');">
+    <v-footer
+      style="
+        background-image: url('https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg');
+      "
+    >
       <router-link to="/contact">
         <v-card>
           <v-card-title> Contact us. </v-card-title>
@@ -61,7 +64,7 @@
 </template>
 
 <script lang="ts">
-let URL = "http://localhost:8081"
+let URL = "http://localhost:8081";
 import Vue from "vue";
 
 export default Vue.extend({
@@ -72,7 +75,7 @@ export default Vue.extend({
   data: () => ({
     drawer: true,
     userCard: true,
-    username:"",
+    username: "",
     items: [
       {
         title: "Login",
@@ -97,23 +100,22 @@ export default Vue.extend({
     ],
   }),
   methods: {
-    goToSettings(){
+    goToSettings() {
       window.location.href = "/settings";
     },
-    kalebsMethod:async function(){
-        let username = await fetch(URL+"/session",{
-            method:"GET",
-            credentials:"include"
-          });
-        username = await username.json();
-        this.username = username.name;
+    kalebsMethod: async function () {
+      let username = await fetch(URL + "/session", {
+        method: "GET",
+        credentials: "include",
+      });
+      username = await username.json();
+      this.username = username.name;
       console.log(this.username);
-    }
+    },
   },
   created() {
     this.kalebsMethod();
-    
-  }
+  },
 });
 </script>
 
