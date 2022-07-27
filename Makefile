@@ -17,9 +17,10 @@ backend-docker:
 	cd ./server && docker build -t productivity-app-backend .
 
 
+# litterally why would you ever put a frontend in a docker container
 # front end
-frontend: 
-	cd ./frontend && make build
+# frontend: 
+# 	cd ./frontend && make build
 
-frontend-docker: frontend 
-	cd ./frontend && docker build -t productivity-app-frontend .
+# frontend-docker: frontend 
+# 	cd ./frontend &&  docker build -t productivity-app-frontend .
