@@ -18,9 +18,9 @@
     <div justify="center">
       <v-overlay :z-index="0" :value="showContainer">
         <v-card class="blue">
-          <v-card-title>Create A Container</v-card-title>
+          <v-card-title>Create A Branch</v-card-title>
           <v-text-field
-            placeholder="Container Name"
+            placeholder="Branch Name"
             v-model="containerInfo"
           ></v-text-field>
           <v-btn @click="showContainer = false">Cancel</v-btn>
@@ -120,6 +120,7 @@ export default Vue.extend({
         if (response.status == 201){
             console.log("post success");
             this.showContainer = false;
+            this.fetchContainers();
         }else{
             console.log("ERROR", response.status);
         }
