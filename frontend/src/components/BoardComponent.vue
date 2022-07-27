@@ -47,7 +47,7 @@ export default Vue.extend({
       container: Array,
       
     },
-    fetchBoards:{},
+    fetchBoards:Function,
 
   },
   components: {

@@ -105,7 +105,7 @@ export default Vue.extend({
     this.fetchBoards();
   },
   methods: {
-    fetchBoards: async function () {
+    fetchBoards: async function (defaultIndex:number=0) {
       let response = await fetch(`${URL}/board`, {
         credentials: "include",
       });
@@ -117,7 +117,7 @@ export default Vue.extend({
         console.log(this.boards);
 
         if (this.boards.length >= this.currentBoardIndex)
-          this.currentBoardIndex = 0;
+          this.currentBoardIndex = defaultIndex;
 
         this.currentBoard = this.boards[this.currentBoardIndex];
         console.log(this.currentBoard);
@@ -154,7 +154,7 @@ export default Vue.extend({
      console.log(response.json);
      if (response.status == 201){
       console.log("post success");
-      this.fetchBoards();
+      this.fetchBoards(this.boards.length);
       this.newBoard = false;
      }else{
       console.log("ERROR", response.status);
