@@ -2,7 +2,7 @@
   <div id="wrapper">
     <v-row>
       <v-col v-for="(container, index) in fetchedContainers" :key="index">
-        <ContainerComponent :containerData="container" />
+        <ContainerComponent :containerData="container" :boardID="boardData._id" />
       </v-col>
     </v-row>
     <div style="position: fixed; right: 1%; bottom: 10%">
