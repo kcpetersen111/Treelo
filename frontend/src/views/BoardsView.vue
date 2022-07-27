@@ -18,7 +18,7 @@
             @click="moveBoardIndex(1)"
             ><v-icon style="transform: rotate(90deg);">mdi-pine-tree</v-icon>
           </v-btn>
-          <v-btn v-if=" currentBoardIndex == boards.length -1" @click="newBoard = true;">
+          <v-btn v-if=" currentBoardIndex == boards.length -1 || boards.length == 0" @click="newBoard = true;">
             +<v-icon>mdi-forest</v-icon>
           </v-btn>
         </span>
@@ -40,7 +40,10 @@
     <!--
     Show a loading screen if we haven't received a response yet
   -->
-    <v-container v-else>
+    <v-container>
+      <v-btn v-if=" currentBoardIndex == boards.length -1 || boards.length == 0" @click="newBoard = true;">
+        +<v-icon>mdi-forest</v-icon>
+      </v-btn>
       <h1 class="text-h2 blue--text font-weight-bold">Loading ...</h1>
     </v-container>
   </div>
@@ -54,10 +57,12 @@ let URL = "http://localhost:8081";
 import Vue from "vue";
 import BoardComponent from "@/components/BoardComponent.vue";
 
+
 export default Vue.extend({
   name: "BoardsView",
   components: {
     BoardComponent,
+
   },
   data: () => ({
     currentBoardIndex: 0,

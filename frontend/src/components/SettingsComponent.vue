@@ -26,7 +26,7 @@
             v-ripple
             style="width:40%"
           ></v-text-field>
-          <v-btn style="float:right" class="mr-9" large>Update your settings!</v-btn>
+          <v-btn style="float:right" class="mr-9" large @click="updateSettings()" >Update your settings!</v-btn>
           <v-text-field
             class="pl-8 mb-4"
             dense
@@ -58,14 +58,14 @@ export default {
     updatedEmail: ""
   }),
   methods: {
-    updateSettings: asynce function(){
+    updateSettings: async function(){
       let newSettings ={
         username: this.updatedEmail,
         name: this.updatedUsername,
         password: this.updatedPassword
       }
       let response = await fetch(URL + "/users",{
-        method: "PUT"
+        method: "PATCH",
         body: JSON.stringify(newSettings),
         headers:{
           "Content-Type" : "application/json"
@@ -77,6 +77,8 @@ export default {
         this.updatedEmail = "";
         this.updatedUsername = "";
         this.updatedPassword = "";
+      }else{
+        console.log("Error",response.status,response);
       }
     },
     logOut: async function () {
