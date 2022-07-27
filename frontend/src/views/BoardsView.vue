@@ -1,6 +1,6 @@
 <template>
   <div class="board">
-    <v-container v-if="currentBoard._id != ''">
+    <v-container v-if="boards.length !=0 && loggedIn">
       <div v-if="!newBoard">
         <span style="display: flex; justify-content: center">
           <v-btn
@@ -40,11 +40,26 @@
     <!--
     Show a loading screen if we haven't received a response yet
   -->
-    <v-container>
-      <v-btn v-if=" currentBoardIndex == boards.length -1 || boards.length == 0" @click="newBoard = true;">
-        +<v-icon>mdi-forest</v-icon>
-      </v-btn>
-      <h1 class="text-h2 blue--text font-weight-bold">Loading ...</h1>
+    <v-container v-else-if="loggedIn">
+          <v-btn @click="newBoard = true;">
+            +<v-icon>mdi-forest</v-icon>
+          </v-btn>
+      <h1 class="text-h2 blue--text font-weight-bold">Create A New Tree to get started!</h1>
+      <div v-if="newBoard">
+        <span style="display: flex; justify-content:center">
+          <v-text-field v-model="boardInfo" placeholder="Tree Name"></v-text-field>
+        </span>
+        <v-btn @click="newBoard = false;">
+          Cancel
+        </v-btn>
+        <v-btn @click="postBoard()">
+          Submit
+        </v-btn>
+      </div>
+    </v-container>
+
+    <v-container v-else>
+      <h1 class="red--text font-weight-bold">PLEASE LOG IN!</h1>
     </v-container>
   </div>
 </template>
@@ -66,7 +81,8 @@ export default Vue.extend({
   },
   data: () => ({
     currentBoardIndex: 0,
-    currentBoard: { _id: "", name: "", description: "", cards: [] },
+    currentBoard: {_id: "", name: "", description: "", cards: [] },
+    loggedIn: false,
     boards: [
       /*
       creatorID: -1,
@@ -96,6 +112,8 @@ export default Vue.extend({
 
       if (response.status == 200) {
         this.boards = await response.json();
+        this.loggedIn = true;
+        console.log(this.loggedIn)
         console.log(this.boards);
 
         if (this.boards.length >= this.currentBoardIndex)
