@@ -1,8 +1,6 @@
 <template>
   <v-card class="justify-center ma-2" style="display: flex">
-    <v-card-title class="justify-center green--text text--darken-2 font-weight-bold pr-1">
-      {{ cardData.name }} 
-      <v-btn @click="deleteCard()">-<v-icon>mdi-axe</v-icon></v-btn>
+    <v-btn class="red darken-4 my-auto float-left" @click="deleteCard()">-<v-icon>mdi-axe</v-icon></v-btn>
     
     <!-- IF not editing card -->
     <v-card-title
@@ -18,12 +16,12 @@
     <v-text-field
       v-else
       @keydown.enter="updateCardLocal()"
+      @keydown.esc="cancelUpdate()"
       class="green--text text--darken-2 font-weight-bold px-4"
       v-model="newCard.name"
     >
       
     </v-text-field>
-
   </v-card>
 </template>
 
@@ -32,11 +30,6 @@ let URL = "http://localhost:8081";
 export default {
   name: "CardComponent",
   props: {
-    cardData: {
-      _id: String,
-      name: String,
-      // description: String,
-    },
     fetchCards:{},
     containerID:{},
     cardData: Object,
@@ -67,6 +60,7 @@ export default {
       } else{
         console.log("Error while deleting",response.status);
       }
+    },
 
     editCard: function () {
       if (!this.editing) {
@@ -76,6 +70,9 @@ export default {
     },
     updateCardLocal: async function () {
       await this.updateCard(this.cardIndex, this.newCard);
+      this.editing = false;
+    },
+    cancelUpdate: function () {
       this.editing = false;
     }
   },
