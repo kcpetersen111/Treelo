@@ -1,5 +1,5 @@
 <template>
-  <v-card class="justify-center ma-2" style="display: flex">
+  <v-card class="justify-center ma-2 grab" style="display: flex;" >
     <v-card-title
       class="justify-center green--text text--darken-2 font-weight-bold pr-1"
     >
@@ -27,3 +27,11 @@ export default {
   },
 };
 </script>
+<style>
+  .grab{
+    cursor: -webkit-grab;
+  }
+  .grab:active{
+    cursor: grabbing;
+  }
+</style>
