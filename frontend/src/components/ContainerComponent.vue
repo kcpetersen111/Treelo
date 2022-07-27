@@ -1,4 +1,5 @@
 <template>
+  <!-- V-Card for entire container -->
   <v-card>
     <div fab style=" float:right;"> 
       <v-btn @click="deleteContainer()" fab x-small><v-icon>mdi-axe</v-icon></v-btn>
@@ -14,26 +15,36 @@
 
     <v-list>
       <CardComponent
-        v-for="card in fetchedCards"
+        v-for="(card,index) in fetchedCards"
         :key="card._id"
         :cardData="card"
+        :fetchCards="fetchCard"
+        :containerID="containerData._id"
+        :cardIndex="index"
+        :updateCard="updateCard"
       />
-      <div class="text-right">
+      <div class="text-right mr-2">
         <v-btn
-          class="ml-15 white"
+          class="pa-0 white"
           elevation="0"
           x-small
+          v-if="!newCard"
           @click="newCard = !newCard"
           ><v-icon>mdi-leaf</v-icon></v-btn
         ><!--note-plus-outline-->
       </div>
-      <v-card v-if="newCard">
-        <v-text-field
-          placeholder="add leaf info"
-          v-model="cardInfo"
-        ></v-text-field>
-        <v-btn @click="postCards()">Submit</v-btn>
-      </v-card>
+      <v-text-field
+        class="mx-4"
+        v-if="newCard"
+        placeholder="add leaf info"
+        v-model="cardInfo"
+      ></v-text-field>
+      <v-btn 
+        v-if="newCard"
+        @click="postCards()">Submit</v-btn>
+      <v-btn 
+        v-if="newCard"
+        @click="newCard = !newCard">Cancel</v-btn>
     </v-list>
   </v-card>
 </template>
@@ -145,6 +156,21 @@ export default {
         console.log("ERROR", response.status, response);
       }
     },
+    // FETCH - Patch new card (callback for card component)
+    updateCard: async function (index, newCard) {
+      let response = await fetch(`${URL}/card/${newCard._id}`, {
+        method: "PATCH",
+        body: JSON.stringify(newCard),
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include"
+      });
+
+      if (response.status == 200) {
+        this.fetchAllCards();
+      }
+    }
   },
 };
 </script>

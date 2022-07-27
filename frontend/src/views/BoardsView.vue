@@ -18,11 +18,11 @@
             @click="moveBoardIndex(1)"
             ><v-icon style="transform: rotate(90deg);">mdi-pine-tree</v-icon>
           </v-btn>
-          <v-btn v-if=" currentBoardIndex == boards.length -1" @click="newBoard = true;">
+          <v-btn v-if=" currentBoardIndex == boards.length -1 || boards.length == 0" @click="newBoard = true;">
             +<v-icon>mdi-forest</v-icon>
           </v-btn>
         </span>
-        <BoardComponent :boardData="currentBoard" :key="currentBoardIndex" />
+        <BoardComponent :boardData="currentBoard" :fetchBoards="fetchBoards" :key="currentBoardIndex" />
       </div>
       <div v-if="newBoard">
         <span style="display: flex; justify-content:center">
@@ -72,10 +72,12 @@ let URL = "http://localhost:8081";
 import Vue from "vue";
 import BoardComponent from "@/components/BoardComponent.vue";
 
+
 export default Vue.extend({
   name: "BoardsView",
   components: {
     BoardComponent,
+
   },
   data: () => ({
     currentBoardIndex: 0,
@@ -152,6 +154,7 @@ export default Vue.extend({
      console.log(response.json);
      if (response.status == 201){
       console.log("post success");
+      this.fetchBoards();
       this.newBoard = false;
      }else{
       console.log("ERROR", response.status);

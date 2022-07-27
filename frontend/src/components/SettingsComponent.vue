@@ -14,6 +14,7 @@
             full-width
             v-ripple
             style="width:40%"
+            v-model='updatedUsername'
           ></v-text-field>
           <v-text-field
             class="pl-8 mb-4"
@@ -25,8 +26,9 @@
             full-width
             v-ripple
             style="width:40%"
+            v-model='updatedPassword'
           ></v-text-field>
-          <v-btn style="float:right" class="mr-9" large>Update your settings!</v-btn>
+          <v-btn style="float:right" class="mr-9" large @click="updateSettings()" >Update your settings!</v-btn>
           <v-text-field
             class="pl-8 mb-4"
             dense
@@ -36,6 +38,7 @@
             full-width
             v-ripple
             style="width:40%"
+            v-model='updatedEmail'
           ></v-text-field>
         
         </div>
@@ -53,9 +56,35 @@ export default {
   },
   data: () => ({
     //
+    updatedUsername: "",
+    updatedPassword: "",
+    updatedEmail: ""
   }),
   methods: {
-    getImage() {},
+    updateSettings: async function(){
+      let newSettings ={
+        username: this.updatedEmail,
+        name: this.updatedUsername,
+        password: this.updatedPassword
+      }
+      console.log(newSettings);
+      let response = await fetch(URL + "/users",{
+        method: "PATCH",
+        body: JSON.stringify(newSettings),
+        headers:{
+          "Content-Type" : "application/json"
+        },
+        credentials: "include"
+      });
+      if(response.status == 200){
+        console.log("updating was a sucess!");
+        this.updatedEmail = "";
+        this.updatedUsername = "";
+        this.updatedPassword = "";
+      }else{
+        console.log("Error",response.status,response);
+      }
+    },
     logOut: async function () {
       let response = await fetch(URL + "/session", {
         method: "DELETE",

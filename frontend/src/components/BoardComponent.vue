@@ -1,14 +1,24 @@
 <template>
   <div id="wrapper">
     <v-row>
+<<<<<<< HEAD
       <v-col v-for="(container, index) in fetchedContainers" :key="index">
         <ContainerComponent :containerData="container" :boardID="boardData._id" />
+=======
+      <v-col v-for="(container, index) in fetchedContainers" md="4" :key="index">
+        <ContainerComponent :containerData="container" />
+>>>>>>> origin/main
       </v-col>
     </v-row>
     <div style="position: fixed; right: 1%; bottom: 10%">
       <v-btn @click="showContainer = true"
         >+<v-icon>mdi-source-branch</v-icon></v-btn
       ><!--package-variant-plus-->
+      <!-- delete board -->
+      <v-btn @click="deleteBoard()"
+        >-<v-icon>mdi-axe</v-icon></v-btn
+      ><!--package-variant-plus-->
+      
     </div>
     <div justify="center">
       <v-overlay :z-index="0" :value="showContainer">
@@ -40,7 +50,10 @@ export default Vue.extend({
       name: String,
       description: String,
       container: Array,
+      
     },
+    fetchBoards:{},
+
   },
   components: {
     ContainerComponent,
@@ -49,6 +62,7 @@ export default Vue.extend({
     fetchedContainers: [],
     showContainer: false,
     containerInfo: "",
+    // currentBoardIndex:0,
   }),
   created() {
     this.fetchContainers();
@@ -70,6 +84,29 @@ export default Vue.extend({
           console.log("ERROR", response.status, response);
         }
       }
+    },
+    deleteBoard: async function(){
+      let boardID = this.boardData._id;
+      let response = await fetch(`${URL}/board/${boardID}`,{
+        method:"DELETE",
+        credentials: "include",
+      })
+
+      if (response.status == 200){
+        console.log("delete successful")
+        // this.boardData = null;
+        // this.boardData = await response.json();
+        // this.$forceUpdate();
+        // this.currentBoardIndex --;
+        // this.boardData.fetchBoards();
+        this.fetchBoards();
+        console.log(this.boardData);
+
+
+      } else{
+        console.log("Error while deleting", response.status);
+      }
+
     },
     postContainer: async function() {
         let id = this.boardData._id;
