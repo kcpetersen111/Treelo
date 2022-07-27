@@ -57,6 +57,12 @@ export default {
   data: () => ({
     cards: [],
     fetchedCards: [],
+    //what the user sees
+    displayList: [],
+    //what card is being picked up
+    pickedUpCard: null,
+    //container Index it is getting draged to
+    pickedUpIndex: -1,
     newCard: false,
     cardInfo: "",
   }),
@@ -129,6 +135,9 @@ export default {
       } else {
         console.log("ERROR", response.status, response);
       }
+    },
+    pickupCard: function(cardIndex){
+        this.pickedUpCard = 
     },
   },
 };
