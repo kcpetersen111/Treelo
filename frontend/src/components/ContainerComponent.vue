@@ -20,11 +20,13 @@
           class="ml-15 white"
           elevation="0"
           x-small
+          v-if="!newCard"
           @click="newCard = !newCard"
           ><v-icon>mdi-leaf</v-icon></v-btn
         ><!--note-plus-outline-->
       </div>
       <v-text-field
+        class="mx-4"
         v-if="newCard"
         placeholder="add leaf info"
         v-model="cardInfo"
@@ -32,6 +34,9 @@
       <v-btn 
         v-if="newCard"
         @click="postCards()">Submit</v-btn>
+      <v-btn 
+        v-if="newCard"
+        @click="newCard = !newCard">Cancel</v-btn>
     </v-list>
   </v-card>
 </template>
