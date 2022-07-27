@@ -82,7 +82,7 @@ export default Vue.extend({
   }),
   methods:{
     goToLogin(){
-      window.location.href = "/login";
+      this.$router.replace({path:"/login"});
     },
     // creating a new user to the database.
     postUser: async function(){
@@ -108,7 +108,7 @@ export default Vue.extend({
         this.registerUsername = "";
         
         //send the user to the login page to log in.
-        window.location.href = "/login";
+        this.$router.replace({path:"/login"});
       } else{
         this.registerPassword = "";
         this.registerEmail = "";

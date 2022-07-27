@@ -90,8 +90,7 @@ export default {
   methods: {
     gotoRegister() {
       console.log("GO to Register page!");
-      window.location.href = "/registration";
-      //make this a route later??
+      this.$router.replace({path: "/registration"});
     },
     postSession: async function () {
       this.show = false;
