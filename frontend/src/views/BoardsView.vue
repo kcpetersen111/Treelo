@@ -1,6 +1,6 @@
 <template>
   <div class="board">
-    <v-container v-if="boards.length ==0 && loggedIn">
+    <v-container v-if="boards.length !=0 && loggedIn">
       <div v-if="!newBoard">
         <span style="display: flex; justify-content: center">
           <v-btn
@@ -44,7 +44,18 @@
           <v-btn @click="newBoard = true;">
             +<v-icon>mdi-forest</v-icon>
           </v-btn>
-      <h1 class="text-h2 blue--text font-weight-bold">Loading ...</h1>
+      <h1 class="text-h2 blue--text font-weight-bold">Create A New Tree to get started!</h1>
+      <div v-if="newBoard">
+        <span style="display: flex; justify-content:center">
+          <v-text-field v-model="boardInfo" placeholder="Tree Name"></v-text-field>
+        </span>
+        <v-btn @click="newBoard = false;">
+          Cancel
+        </v-btn>
+        <v-btn @click="postBoard()">
+          Submit
+        </v-btn>
+      </div>
     </v-container>
 
     <v-container v-else>
