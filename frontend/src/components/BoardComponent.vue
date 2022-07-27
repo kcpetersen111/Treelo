@@ -69,6 +69,7 @@ export default Vue.extend({
   methods: {
     fetchContainers: async function () {
       this.fetchedContainers = [];
+      await this.fetchBoards();
       for (let i = 0; i < this.boardData.container.length; i++) {
         let id = this.boardData.container[i];
 
