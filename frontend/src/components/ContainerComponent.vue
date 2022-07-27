@@ -1,4 +1,5 @@
 <template>
+  <!-- V-Card for entire container -->
   <v-card>
     <v-card-title class="text-h4 purple--text font-weight-bold">
       {{ containerData.name }}
