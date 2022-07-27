@@ -2,7 +2,7 @@
   <v-app>
     <v-parallax
       src="https://cdn.shopify.com/s/files/1/0326/7189/articles/General_Sherman_tree_2000x.jpg?v=1627936731"
-      height="1000"
+      height="900"
     >
       <v-container>
         <v-card
@@ -92,28 +92,6 @@ export default {
       console.log("GO to Register page!");
       window.location.href = "/registration";
       //make this a route later??
-    },
-    getSession: async function () {
-      let response = await fetch(URL + "/session", {
-        method: "GET",
-        credentials: "include",
-      });
-      //asks if we are logged in
-      if (response.status == 200) {
-        // log in succesful!
-        console.log("logged in");
-        window.location.href = "/board";
-        return;
-      } else if (response.status == 401) {
-        // log in was not succesfull
-        console.log("not logged in");
-      } else {
-        console.log(
-          "There was an error when getting /session",
-          response.status,
-          response
-        );
-      }
     },
     postSession: async function () {
       this.show = false;
