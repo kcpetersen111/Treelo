@@ -1,6 +1,6 @@
 <template>
-  <div class="board">
-    <v-container v-if="boards.length !=0 && loggedIn">
+  <div class="board" >
+    <v-container v-if="boards.length !=0 && loggedIn" >
       <div v-if="!newBoard">
         <span style="display: flex; justify-content: center">
           <v-btn
@@ -170,3 +170,12 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style>
+.board{
+  background: url("https://i.pinimg.com/originals/fa/1d/48/fa1d48f051a9baf60958dbdbf4da68bb.jpg") no-repeat center center fixed;
+  background-size: cover;
+  height: 100%;
+
+}
+</style>
