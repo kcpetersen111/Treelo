@@ -113,7 +113,7 @@ export const cardSetUp = function(app:any){
         res.status(200).json(container.cards);
     });
 
-    app.patch("/board/:boardId/container/:containerId/card/:cardId",async (req:Request,res:Response) => {
+    app.patch("/card/:cardId",async (req:Request,res:Response) => {
         if(!req.user){
             res.status(401).json({message:"User is not logged in"});
             return;

@@ -12,9 +12,11 @@
 
     <v-list>
       <CardComponent
-        v-for="card in fetchedCards"
+        v-for="(card,index) in fetchedCards"
         :key="card._id"
         :cardData="card"
+        :cardIndex="index"
+        :updateCard="updateCard"
       />
       <div class="text-right mr-2">
         <v-btn
@@ -137,6 +139,21 @@ export default {
         console.log("ERROR", response.status, response);
       }
     },
+    // FETCH - Patch new card (callback for card component)
+    updateCard: async function (index, newCard) {
+      let response = await fetch(`${URL}/card/${newCard._id}`, {
+        method: "PATCH",
+        body: JSON.stringify(newCard),
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include"
+      });
+
+      if (response.status == 200) {
+        this.fetchAllCards();
+      }
+    }
   },
 };
 </script>
