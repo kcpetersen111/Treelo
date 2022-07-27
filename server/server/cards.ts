@@ -170,6 +170,7 @@ export const cardSetUp = function(app:any){
             res.status(404).json({message:"Card not found"});
             return;
         }
+        console.log(req.user.id, card.creatorID, req.user.id == card.creatorID);
         if(req.user.id != card.creatorID){
             res.status(403).json({message:"You are not allowed to do that"});
             return;
@@ -178,6 +179,7 @@ export const cardSetUp = function(app:any){
         try {
             container = await Containers.findById(containerId);
         } catch (error) {
+            console.log(error);
             res.status(500).json(error);
             return;
         }
@@ -195,12 +197,14 @@ export const cardSetUp = function(app:any){
                                                 },
                                                 {new:true});
         } catch (error) {
+            console.log(error);
             res.status(500).json(error);
             return;
         }
         try {
             card = await Cards.findByIdAndDelete(cardId);
         } catch (error) {
+            console.log(error);
             res.status(500).json(error);
             return;
         }

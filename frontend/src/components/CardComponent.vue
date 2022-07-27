@@ -1,28 +1,32 @@
 <template>
-  <v-card class="justify-center ma-2" style="display: flex">
-    <v-btn class="red darken-4 my-auto float-left" @click="deleteCard()">-<v-icon>mdi-axe</v-icon></v-btn>
+  <v-badge>
     
-    <!-- IF not editing card -->
-    <v-card-title
-      @click="editCard()"
-      v-if="!editing"
-      class="justify-center green--text text--darken-2 font-weight-bold pr-1"
-    >
-      {{ cardData.name }}
-      <!-- {{ card.description }} -->
-    </v-card-title>
-
-    <!-- IF not editing card -->
-    <v-text-field
-      v-else
-      @keydown.enter="updateCardLocal()"
-      @keydown.esc="cancelUpdate()"
-      class="green--text text--darken-2 font-weight-bold px-4"
-      v-model="newCard.name"
-    >
+    <v-card class="justify-center mb-6" style="display: flex">
       
-    </v-text-field>
-  </v-card>
+      <!-- IF not editing card -->
+      <v-card-title
+        @click="editCard()"
+        v-if="!editing"
+        class="justify-center green--text text--darken-2 font-weight-bold pr-1"
+      >
+        {{ cardData.name }}
+        <!-- {{ card.description }} -->
+      </v-card-title>
+
+      <!-- IF not editing card -->
+      <div v-else>
+        <v-text-field
+          @keydown.enter="updateCardLocal()"
+          @keydown.esc="cancelUpdate()"
+          class="green--text text--darken-2 font-weight-bold px-4"
+          v-model="newCard.name"
+          autofocus
+        ></v-text-field>
+        <v-btn class="mb-2" @click="deleteCard()">-<v-icon>mdi-axe</v-icon></v-btn>
+        <v-btn class="ml-2 mb-2" @click="updateCardLocal()">+<v-icon>mdi-forest</v-icon></v-btn>
+      </div>
+    </v-card>
+  </v-badge>
 </template>
 
 <script lang="ts">
