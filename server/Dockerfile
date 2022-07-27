@@ -14,15 +14,24 @@ WORKDIR /usr/src/app
 # RUN npm ci --omit=dev
 
 # Bundle app source
-COPY . .
+COPY package*.json ./
 
 
 # RUN ls
 
-RUN npm install --save
+# RUN cd ../server-build && npm install 
+RUN npm install 
 
-RUN npx tsc
+COPY . .
+
+RUN npx tsc --pretty 
+
+COPY package*.json . ../server-build/ 
+
+RUN cd ../server-build/. && npm install
 
 EXPOSE 8081
 
-CMD [ "node", "index.js" ]
+# CMD [ "ls" ]
+
+CMD [ "node", "../server-build/index.js" ]
