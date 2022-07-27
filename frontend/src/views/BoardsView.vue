@@ -22,7 +22,7 @@
             +<v-icon>mdi-forest</v-icon>
           </v-btn>
         </span>
-        <BoardComponent :boardData="currentBoard" :key="currentBoardIndex" />
+        <BoardComponent :boardData="currentBoard" :fetchBoards="fetchBoards" :key="currentBoardIndex" />
       </div>
       <div v-if="newBoard">
         <span style="display: flex; justify-content:center">
