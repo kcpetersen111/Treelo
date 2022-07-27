@@ -97,13 +97,14 @@ export const boardSetUp = function(app:any){
                                     error:error});
             return;
         }
-        if(board.creatorID.includes(req.user.id)){
+        if(!board.creatorID.includes(req.user.id)){
             res.status(403).json({message:"You are not allowed to delete that"});
             return;
         }
 
         try {
-            board.remove();
+            // board.remove();
+            board = await Boards.findByIdAndDelete(id);
             // console.log(`${req.user.username} deleted the board ${board.name}`);            
         } catch (error) {
             res.status(500).json({message:"Error in deleting the board",
