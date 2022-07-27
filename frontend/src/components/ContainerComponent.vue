@@ -14,6 +14,8 @@
         v-for="card in fetchedCards"
         :key="card._id"
         :cardData="card"
+        :fetchCards="fetchCard"
+        :containerID="containerData._id"
       />
       <div class="text-right">
         <v-btn

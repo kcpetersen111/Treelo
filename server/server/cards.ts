@@ -152,7 +152,7 @@ export const cardSetUp = function(app:any){
         
     });
 
-    app.delete("/board/:boardId/container/:containerId/card/:cardId", async (req:Request, res:Response) => {
+    app.delete("/container/:containerId/card/:cardId", async (req:Request, res:Response) => {
         if(!req.user){
             res.status(401).json({message:"You are not logged."});
             return;
