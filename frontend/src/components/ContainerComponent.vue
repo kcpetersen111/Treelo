@@ -18,7 +18,7 @@
         v-for="(card,index) in fetchedCards"
         :key="card._id"
         :cardData="card"
-        :fetchCards="fetchCard"
+        :fetchCards="fetchAllCards"
         :containerID="containerData._id"
         :cardIndex="index"
         :updateCard="updateCard"
