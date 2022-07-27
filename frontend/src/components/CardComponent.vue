@@ -1,10 +1,8 @@
 <template>
   <v-card class="justify-center ma-2" style="display: flex">
-<<<<<<< HEAD
     <v-card-title class="justify-center green--text text--darken-2 font-weight-bold pr-1">
       {{ cardData.name }} 
       <v-btn @click="deleteCard()">-<v-icon>mdi-axe</v-icon></v-btn>
-=======
     
     <!-- IF not editing card -->
     <v-card-title
@@ -13,7 +11,6 @@
       class="justify-center green--text text--darken-2 font-weight-bold pr-1"
     >
       {{ cardData.name }}
->>>>>>> c50595b472d3809d23fceeeefc04ec6ee1588ade
       <!-- {{ card.description }} -->
     </v-card-title>
 
