@@ -1,10 +1,32 @@
 <template>
   <v-card class="justify-center ma-2" style="display: flex">
+<<<<<<< HEAD
     <v-card-title class="justify-center green--text text--darken-2 font-weight-bold pr-1">
       {{ cardData.name }} 
       <v-btn @click="deleteCard()">-<v-icon>mdi-axe</v-icon></v-btn>
+=======
+    
+    <!-- IF not editing card -->
+    <v-card-title
+      @click="editCard()"
+      v-if="!editing"
+      class="justify-center green--text text--darken-2 font-weight-bold pr-1"
+    >
+      {{ cardData.name }}
+>>>>>>> c50595b472d3809d23fceeeefc04ec6ee1588ade
       <!-- {{ card.description }} -->
     </v-card-title>
+
+    <!-- IF not editing card -->
+    <v-text-field
+      v-else
+      @keydown.enter="updateCardLocal()"
+      class="green--text text--darken-2 font-weight-bold px-4"
+      v-model="newCard.name"
+    >
+      
+    </v-text-field>
+
   </v-card>
 </template>
 
@@ -20,6 +42,15 @@ export default {
     },
     fetchCards:{},
     containerID:{},
+    cardData: Object,
+    cardIndex: Number,
+    updateCard: Function,
+  },
+  data: function () {
+    return {
+      editing: false,
+      newCard: {},
+    }
   },
   created() {
     // console.log(this.$props.cardData);
@@ -40,6 +71,15 @@ export default {
         console.log("Error while deleting",response.status);
       }
 
+    editCard: function () {
+      if (!this.editing) {
+        this.newCard = {...this.cardData};
+        this.editing = true;
+      }
+    },
+    updateCardLocal: async function () {
+      await this.updateCard(this.cardIndex, this.newCard);
+      this.editing = false;
     }
   },
 };

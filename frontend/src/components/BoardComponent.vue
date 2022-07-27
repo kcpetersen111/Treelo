@@ -1,7 +1,7 @@
 <template>
   <div id="wrapper">
     <v-row>
-      <v-col v-for="(container, index) in fetchedContainers" :key="index">
+      <v-col v-for="(container, index) in fetchedContainers" md="4" :key="index">
         <ContainerComponent :containerData="container" />
       </v-col>
     </v-row>
