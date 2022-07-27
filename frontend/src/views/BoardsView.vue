@@ -1,25 +1,40 @@
 <template>
   <div class="board">
     <v-container v-if="currentBoard._id != ''">
-      <span style="display: flex; justify-content: center">
-        <v-btn
-          v-if="boards.length > 1 && currentBoardIndex > 0"
-          @click="moveBoardIndex(-1)"
-          ><v-icon style="transform: rotate(270deg);"> mdi-pine-tree</v-icon>
+      <div v-if="!newBoard">
+        <span style="display: flex; justify-content: center">
+          <v-btn
+            v-if="boards.length > 1 && currentBoardIndex > 0"
+            @click="moveBoardIndex(-1)"
+            ><v-icon style="transform: rotate(270deg);"> mdi-pine-tree</v-icon>
+          </v-btn>
+
+          <h1 class="text-h2 blue--text font-weight-bold">
+            {{ currentBoard.name }}
+          </h1>
+
+          <v-btn
+            v-if="boards.length > 1 && currentBoardIndex < boards.length - 1"
+            @click="moveBoardIndex(1)"
+            ><v-icon style="transform: rotate(90deg);">mdi-pine-tree</v-icon>
+          </v-btn>
+          <v-btn v-if=" currentBoardIndex == boards.length -1" @click="newBoard = true;">
+            +<v-icon>mdi-forest</v-icon>
+          </v-btn>
+        </span>
+        <BoardComponent :boardData="currentBoard" :key="currentBoardIndex" />
+      </div>
+      <div v-if="newBoard">
+        <span style="display: flex; justify-content:center">
+          <v-text-field v-model="boardInfo" placeholder="Tree Name"></v-text-field>
+        </span>
+        <v-btn @click="newBoard = false;">
+          Cancel
         </v-btn>
-
-        <h1 class="text-h2 blue--text font-weight-bold">
-          {{ currentBoard.name }}
-        </h1>
-
-        <v-btn
-          v-if="boards.length > 1 && currentBoardIndex < boards.length - 1"
-          @click="moveBoardIndex(1)"
-          ><v-icon style="transform: rotate(90deg);">mdi-pine-tree</v-icon>
+        <v-btn @click="postBoard()">
+          Submit
         </v-btn>
-      </span>
-
-      <BoardComponent :boardData="currentBoard" :key="currentBoardIndex" />
+      </div>
     </v-container>
 
     <!--
@@ -62,6 +77,8 @@ export default Vue.extend({
       ],
       */
     ],
+    boardInfo: "",
+    newBoard: false,
   }),
   created() {
     this.fetchBoards();
@@ -98,6 +115,28 @@ export default Vue.extend({
 
       this.currentBoard = this.boards[this.currentBoardIndex];
       this.$forceUpdate();
+    },
+    postBoard: async function(){
+     let info = {
+      name: this.boardInfo,
+     };
+     let response = await fetch(`${URL}/board`,{
+          method: "POST",
+          body: JSON.stringify(info),
+          headers:{
+            "Content-Type": "application/json"
+          },
+          credentials: "include",
+     });
+     console.log(response.json);
+     if (response.status == 201){
+      console.log("post success");
+      this.newBoard = false;
+     }else{
+      console.log("ERROR", response.status);
+     }
+     this.boardInfo = "";
+
     },
   },
 });
