@@ -1,6 +1,9 @@
 <template>
   <!-- V-Card for entire container -->
   <v-card>
+    <div fab style=" float:right;"> 
+      <v-btn @click="deleteContainer()" fab x-small><v-icon>mdi-axe</v-icon></v-btn>
+    </div>
     <v-card-title class="text-h4 purple--text font-weight-bold">
       {{ containerData.name }}
     </v-card-title>
@@ -61,6 +64,7 @@ export default {
       description: String,
       cards: Array,
     },
+    boardID: {},
   },
   components: {
     CardComponent,
@@ -76,6 +80,17 @@ export default {
     this.fetchAllCards();
   },
   methods: {
+    deleteContainer: async function(){
+      let response = await fetch(`${URL}/board/${this.boardID}/container/${this.containerData._id}`,{
+        method: "DELETE",
+        credentials: "include",
+      });
+      if (response.status == 201){
+        console.log("delete success");
+      }else{
+        console.log("ERROR", response.status);
+      }
+    },
     fetchAllCards: async function () {
       this.fetchedCards = [];
 
