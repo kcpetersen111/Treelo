@@ -58,7 +58,27 @@ export default {
     updatedEmail: ""
   }),
   methods: {
-    getImage() {},
+    updateSettings: asynce function(){
+      let newSettings ={
+        username: this.updatedEmail,
+        name: this.updatedUsername,
+        password: this.updatedPassword
+      }
+      let response = await fetch(URL + "/users",{
+        method: "PUT"
+        body: JSON.stringify(newSettings),
+        headers:{
+          "Content-Type" : "application/json"
+        },
+        credentials: "include"
+      });
+      if(response.status == 200){
+        console.log("updating was a sucess!");
+        this.updatedEmail = "";
+        this.updatedUsername = "";
+        this.updatedPassword = "";
+      }
+    },
     logOut: async function () {
       let response = await fetch(URL + "/session", {
         method: "DELETE",
