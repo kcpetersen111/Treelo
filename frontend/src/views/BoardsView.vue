@@ -49,7 +49,7 @@
         <span style="display: flex; justify-content:center">
           <v-text-field v-model="boardInfo" placeholder="Tree Name"></v-text-field>
         </span>
-        <v-btn @click="newBoard = false;">
+        <v-btn @click="newBoard = false; boardInfo = '';">
           Cancel
         </v-btn>
         <v-btn @click="postBoard()">
@@ -113,8 +113,9 @@ export default Vue.extend({
       if (response.status == 200) {
         this.boards = await response.json();
         this.loggedIn = true;
-        console.log(this.loggedIn)
-        console.log(this.boards);
+        // if we have no boards, return
+        if (this.boards.length == 0)
+          return;
 
         // is the index too big?
         if (this.boards.length <= this.currentBoardIndex)
@@ -126,7 +127,6 @@ export default Vue.extend({
         }
 
         this.currentBoard = this.boards[this.currentBoardIndex];
-        console.log(this.currentBoard);
       } else {
         console.log("Error", response.status, response);
       }
@@ -157,7 +157,6 @@ export default Vue.extend({
           },
           credentials: "include",
      });
-     console.log(response.json);
      if (response.status == 201){
       console.log("post success");
       this.fetchBoards(this.boards.length);
