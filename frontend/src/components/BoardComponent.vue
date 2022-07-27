@@ -2,7 +2,11 @@
   <div id="wrapper">
     <v-row>
       <v-col v-for="(container, index) in fetchedContainers" md="4" :key="index">
-        <ContainerComponent :containerData="container" :boardID="boardData._id" />
+        <ContainerComponent 
+          :containerData="container" 
+          :boardID="boardData._id" 
+          :fetchContainers="fetchContainers"
+          />
       </v-col>
     </v-row>
     <div style="position: fixed; right: 1%; bottom: 10%">
@@ -64,6 +68,7 @@ export default Vue.extend({
   },
   methods: {
     fetchContainers: async function () {
+      this.fetchedContainers = [];
       for (let i = 0; i < this.boardData.container.length; i++) {
         let id = this.boardData.container[i];
 

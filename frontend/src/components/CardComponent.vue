@@ -1,8 +1,8 @@
 <template>
-  <v-badge>
-    
-    <v-card class="justify-center mb-6" style="display: flex">
-      
+    <v-card 
+      class="justify-center mb-6 mx-4" 
+      style="display: flex">
+
       <!-- IF not editing card -->
       <v-card-title
         @click="editCard()"
@@ -24,9 +24,9 @@
         ></v-text-field>
         <v-btn class="mb-2" @click="deleteCard()">-<v-icon>mdi-axe</v-icon></v-btn>
         <v-btn class="ml-2 mb-2" @click="updateCardLocal()">+<v-icon>mdi-forest</v-icon></v-btn>
+        <v-btn class="ml-2 mb-2" @click="editCard()"><v-icon>mdi-undo</v-icon></v-btn>
       </div>
     </v-card>
-  </v-badge>
 </template>
 
 <script lang="ts">
@@ -34,7 +34,7 @@ let URL = "http://localhost:8081";
 export default {
   name: "CardComponent",
   props: {
-    fetchCards:{},
+    fetchCards: Function,
     containerID:{},
     cardData: Object,
     cardIndex: Number,
@@ -70,6 +70,8 @@ export default {
       if (!this.editing) {
         this.newCard = {...this.cardData};
         this.editing = true;
+      } else {
+        this.editing = false;
       }
     },
     updateCardLocal: async function () {
