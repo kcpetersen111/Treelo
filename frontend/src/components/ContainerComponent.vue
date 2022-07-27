@@ -24,13 +24,14 @@
           ><v-icon>mdi-leaf</v-icon></v-btn
         ><!--note-plus-outline-->
       </div>
-      <v-card v-if="newCard">
-        <v-text-field
-          placeholder="add leaf info"
-          v-model="cardInfo"
-        ></v-text-field>
-        <v-btn @click="postCards()">Submit</v-btn>
-      </v-card>
+      <v-text-field
+        v-if="newCard"
+        placeholder="add leaf info"
+        v-model="cardInfo"
+      ></v-text-field>
+      <v-btn 
+        v-if="newCard"
+        @click="postCards()">Submit</v-btn>
     </v-list>
   </v-card>
 </template>
