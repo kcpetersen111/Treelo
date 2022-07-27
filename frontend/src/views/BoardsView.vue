@@ -154,6 +154,7 @@ export default Vue.extend({
      console.log(response.json);
      if (response.status == 201){
       console.log("post success");
+      this.fetchBoards();
       this.newBoard = false;
      }else{
       console.log("ERROR", response.status);
