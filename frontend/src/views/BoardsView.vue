@@ -116,8 +116,14 @@ export default Vue.extend({
         console.log(this.loggedIn)
         console.log(this.boards);
 
-        if (this.boards.length >= this.currentBoardIndex)
+        // is the index too big?
+        if (this.boards.length <= this.currentBoardIndex)
+          this.currentBoardIndex = this.boards.length - 1;
+        
+        // are we using a default index?
+        if (defaultIndex > 0) {
           this.currentBoardIndex = defaultIndex;
+        }
 
         this.currentBoard = this.boards[this.currentBoardIndex];
         console.log(this.currentBoard);
