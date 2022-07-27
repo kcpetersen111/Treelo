@@ -14,6 +14,7 @@
             full-width
             v-ripple
             style="width:40%"
+            v-model='updatedUsername'
           ></v-text-field>
           <v-text-field
             class="pl-8 mb-4"
@@ -25,6 +26,7 @@
             full-width
             v-ripple
             style="width:40%"
+            v-model='updatedPassword'
           ></v-text-field>
           <v-btn style="float:right" class="mr-9" large @click="updateSettings()" >Update your settings!</v-btn>
           <v-text-field
@@ -36,6 +38,7 @@
             full-width
             v-ripple
             style="width:40%"
+            v-model='updatedEmail'
           ></v-text-field>
         
         </div>
@@ -64,6 +67,7 @@ export default {
         name: this.updatedUsername,
         password: this.updatedPassword
       }
+      console.log(newSettings);
       let response = await fetch(URL + "/users",{
         method: "PATCH",
         body: JSON.stringify(newSettings),

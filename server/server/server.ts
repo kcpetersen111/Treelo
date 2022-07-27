@@ -46,6 +46,7 @@ app.post("/users", async (req:Request,res:Response)=>{
 });
 
 app.patch("/users", async (req:Request, res:Response)=>{
+
     if(!req.user){
         res.status(401).json({message:"Not logged in"});
         return;
@@ -55,6 +56,7 @@ app.patch("/users", async (req:Request, res:Response)=>{
         user = await User.findById(req.user.id);
     } catch (error) {
         res.status(500).json(error);
+        console.log(error);
         return;
     }
     if(!user){
@@ -66,10 +68,12 @@ app.patch("/users", async (req:Request, res:Response)=>{
         name:req.body.name,
         password:req.body.password,
     }
+    
     try {
-        user = await user.updateOne(newUser);
+        user = await User.findByIdAndUpdate(user.id,newUser,{new:true});
     } catch (error) {
         res.status(500).json(error);
+        console.log(error);
         return;
     }
     res.status(200).json(user);
