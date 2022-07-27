@@ -16,9 +16,9 @@
         :key="card._id"
         :cardData="card"
       />
-      <div class="text-right">
+      <div class="text-right mr-2">
         <v-btn
-          class="ml-15 white"
+          class="pa-0 white"
           elevation="0"
           x-small
           v-if="!newCard"
