@@ -65,6 +65,7 @@ export default {
       cards: Array,
     },
     boardID: {},
+    fetchContainers: Function,
   },
   components: {
     CardComponent,
@@ -86,6 +87,7 @@ export default {
         credentials: "include",
       });
       if (response.status == 201){
+        this.fetchContainers();
         console.log("delete success");
       }else{
         console.log("ERROR", response.status);
