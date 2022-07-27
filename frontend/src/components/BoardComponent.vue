@@ -71,29 +71,28 @@ export default Vue.extend({
         }
       }
     },
-    postContainer: async function () {
-      let id = this.boardData._id;
-      let info = {
-        name: this.containerInfo,
-      };
-      let response = await fetch(`${URL}/board/${id}/container`, {
-        method: "POST",
-        body: JSON.stringify(info),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
-      console.log(response.json);
-      if (response.status == 201) {
-        console.log("post success");
-        this.showContainer = false;
+    postContainer: async function() {
+        let id = this.boardData._id;
+        let info = {
+            containerName: this.containerInfo,
+        };
+        let response = await fetch(`${URL}/board/${id}/container`,{
+            method: "POST",
+            body: JSON.stringify(info),
+            headers:{
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+        });
+        console.log(response.json);
+        if (response.status == 201){
+            console.log("post success");
+            this.showContainer = false;
+        }else{
+            console.log("ERROR", response.status);
+        }
         this.containerInfo = "";
-      } else {
-        console.log("ERROR", response.status);
-        this.containerInfo = "";
-      }
-    },
+    },          
   },
 });
 </script>
