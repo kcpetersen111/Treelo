@@ -15,13 +15,6 @@
     </div>
     <v-card-title
       class="text-h4 blue--text font-weight-bold text-wrap"
-      style="
-        word-break: break-word;
-        -webkit-hyphens: manual;
-        -moz-hyphens: manual;
-        -ms-hyphens: manual;
-        hyphens: manual;
-      "
       @click="
         newContainer = true;
         containerInfo = containerData.name;
