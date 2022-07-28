@@ -18,8 +18,17 @@
         >+<v-icon>mdi-source-branch</v-icon></v-btn
       ><!--package-variant-plus-->
       <!-- delete board -->
-      <v-btn @click="deleteBoard()">-<v-icon>mdi-axe</v-icon></v-btn
-      ><!--package-variant-plus-->
+      <v-btn @click="overlay = !overlay">-<v-icon>mdi-axe</v-icon>
+        <v-overlay :value="overlay">
+        <v-card width="400" height="400" class="mx-auto white--text" style="padding-top: 40%;background-image:url('https://images.unsplash.com/photo-1613858636109-354616495373?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80');background-size: cover;">
+          <div>
+            <h3>Are You Sure You want to delete?</h3>
+            <v-btn @click="deleteBoard()"><v-icon>mdi-fire-alert</v-icon></v-btn>
+          </div>
+        </v-card>
+        </v-overlay>
+      </v-btn>
+      <!--package-variant-plus-->
     </div>
     <div justify="center">
       <v-overlay :z-index="0" :value="showContainer">
@@ -61,6 +70,7 @@ export default Vue.extend({
     fetchedContainers: [],
     showContainer: false,
     containerInfo: "",
+    overlay: false,
     // currentBoardIndex:0,
   }),
   created() {
@@ -87,10 +97,10 @@ export default Vue.extend({
       }
     },
     deleteBoard: async function () {
-      let userWantsToDeleteBoard = confirm(
-        `Are you sure you want to delete the "${this.boardData.name}" tree?`
-      );
-      if (!userWantsToDeleteBoard) return;
+      // let userWantsToDeleteBoard = confirm(
+      //   `Are you sure you want to delete the "${this.boardData.name}" tree?`
+      // );
+      // if (!userWantsToDeleteBoard) return;
 
       let boardID = this.boardData._id;
       let response = await fetch(`${URL}/board/${boardID}`, {
