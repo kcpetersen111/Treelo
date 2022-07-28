@@ -179,8 +179,6 @@ export default Vue.extend({
       } else {
         console.log("Error", response.status, response);
       }
-
-      this.$forceUpdate();
     },
     moveBoardIndex: function (num: number) {
       if (this.boards.length <= 0) return;
