@@ -1,13 +1,14 @@
 <template>
     <v-card 
       class="justify-center mb-6 mx-4" 
-      style="display: flex">
+      style="display: flex;">
 
       <!-- IF not editing card -->
-      <v-card-title
+
+      <v-card-title 
         @click="editCard()"
         v-if="!editing"
-        class="justify-center green--text text--darken-2 font-weight-bold pr-1 magiccrossout"
+        class="justify-center green--text text--darken-2 font-weight-bold pr-1 card-hovering"
         :class="{done:cardData.done}"
       >
         {{ cardData.name }}
@@ -66,8 +67,7 @@
 </template>
 
 <script lang="ts">
-// let URL = "http://localhost:8081";
-import {URL} from '../config';
+let URL = "http://localhost:8081";
 export default {
   name: "CardComponent",
   props: {
@@ -128,4 +128,9 @@ export default {
   .done{
     text-decoration: line-through !important;
   }
+  .card-hovering:hover{
+    background-color: rgba(#FFF, 0.8);
+    opacity: 0.5;
+  }
+
 </style>
