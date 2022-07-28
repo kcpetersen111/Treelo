@@ -51,7 +51,8 @@
 </template>
 
 <script lang="ts">
-const URL = "http://localhost:8081";
+// const URL = "http://localhost:8081";
+import {URL} from '../config';
 import Vue from "vue";
 //import Calendar from "./components/Calendar.vue";
 

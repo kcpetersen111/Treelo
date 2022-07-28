@@ -59,7 +59,8 @@
 </template>
 
 <script>
-let URL = "http://localhost:8081";
+// let URL = "http://localhost:8081";
+import {URL} from '../config';
 export default {
   name: "SettingsComponent",
   props: {
