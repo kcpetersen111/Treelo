@@ -94,13 +94,22 @@ export default {
       }
     },
     fetchAllCards: async function () {
-      this.fetchedCards = [];
-
-      for (let i = 0; i < this.cards.length; i++) {
-        let id = this.cards[i];
-        let fetchedCard = await this.fetchCard(id);
-        this.fetchedCards.push(fetchedCard);
+      let response = await fetch(`${URL}/container/${this.containerData._id}/card`,{
+        credentials: "include",
+      });
+      
+      if (response.status == 200) {
+        this.fetchedCards = await response.json();
+        
+      } else {
+        console.log("ERROR", response.status, response);
       }
+
+      // for (let i = 0; i < this.cards.length; i++) {
+      //   let id = this.cards[i];
+      //   let fetchedCard = await this.fetchCard(id);
+      //   this.fetchedCards.push(fetchedCard);
+      // }
     },
     fetchCard: async function (id: Number) {
       let response = await fetch(`${URL}/card/${id}`, {

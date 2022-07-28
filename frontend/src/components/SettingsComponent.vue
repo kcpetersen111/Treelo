@@ -78,7 +78,7 @@ export default {
         name: this.updatedUsername,
         password: this.updatedPassword,
       };
-      console.log(newSettings);
+      // console.log(newSettings);
       let response = await fetch(URL + "/users", {
         method: "PATCH",
         body: JSON.stringify(newSettings),
@@ -95,6 +95,7 @@ export default {
       } else {
         console.log("Error", response.status, response);
       }
+      console.log(await response.json());
     },
     logOut: async function () {
       let response = await fetch(URL + "/session", {
