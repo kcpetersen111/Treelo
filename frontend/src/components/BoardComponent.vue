@@ -15,10 +15,10 @@
     </v-row>
 
     <v-overlay
-      v-if="showContainer"
+      v-if="newContainer"
       class="justify-center"
       :z-index="0"
-      :value="showContainer"
+      :value="newContainer"
     >
       <v-card class="blue pa-8">
         <v-card-title>Create A Branch</v-card-title>
@@ -26,11 +26,12 @@
           class="px-3"
           placeholder="Branch Name"
           v-model="containerInfo"
+          autofocus
         >
           {{ containerInfo }}
         </v-text-field>
         <div style="display: flex; justify-content: space-between">
-          <v-btn small @click="showContainer = false">Cancel</v-btn>
+          <v-btn small @click="newContainer = false">Cancel</v-btn>
           <v-btn small @click="postContainer()">Submit</v-btn>
         </div>
       </v-card>
@@ -38,7 +39,7 @@
 
     <div style="position: fixed; right: 1%; bottom: 10%">
       <v-btn
-        @click="showContainer = true"
+        @click="newContainer = true"
         class="tree-buttons"
         color="blue-grey lighten-3"
         >+<v-icon>mdi-source-branch</v-icon>
@@ -54,21 +55,21 @@
 
     <v-overlay :value="overlay">
       <v-card
-        @focusout="overlay = false"
-        width="400"
-        height="400"
-        class="mx-auto white--text"
+        class="pa-16 ma-auto white--text"
         style="
-          padding-top: 40%;
           background-image: url('https://images.unsplash.com/photo-1613858636109-354616495373?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80');
           background-size: cover;
         "
       >
-        <div>
-          <h3>Are You Sure You want to delete?</h3>
-          <v-btn @click="overlay = false">Cancel</v-btn>
-          <v-btn @click="deleteBoard()"><v-icon>mdi-fire-alert</v-icon></v-btn>
-        </div>
+        <v-card-title class="font-weight-bold text-h4"
+          >Are You Sure You want to delete?</v-card-title
+        >
+        <v-card-actions>
+          <v-btn x-large @click="overlay = false">Cancel</v-btn>
+          <v-btn x-large @click="deleteBoard()"
+            ><v-icon>mdi-fire-alert</v-icon></v-btn
+          >
+        </v-card-actions>
       </v-card>
     </v-overlay>
   </v-container>
@@ -97,7 +98,7 @@ export default Vue.extend({
   },
   data: () => ({
     fetchedContainers: [],
-    showContainer: false,
+    newContainer: false,
     containerInfo: "",
     overlay: false,
     // currentBoardIndex:0,
@@ -151,10 +152,16 @@ export default Vue.extend({
       }
     },
     postContainer: async function () {
+      if (this.containerInfo == "") {
+        this.newContainer = false;
+        return;
+      }
+
       let id = this.boardData._id;
       let info = {
         containerName: this.containerInfo,
       };
+
       let response = await fetch(`${URL}/board/${id}/container`, {
         method: "POST",
         body: JSON.stringify(info),
@@ -166,7 +173,7 @@ export default Vue.extend({
       console.log(response.json);
       if (response.status == 201) {
         console.log("post success");
-        this.showContainer = false;
+        this.newContainer = false;
         this.fetchContainers();
       } else {
         console.log("ERROR", response.status);

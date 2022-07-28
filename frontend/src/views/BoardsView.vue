@@ -80,6 +80,7 @@
           maxlength="25"
           placeholder="Tree Name"
           v-model="boardInfo"
+          autofocus
         ></v-text-field>
         <div style="display: flex; justify-content: space-between">
           <v-btn
@@ -195,6 +196,11 @@ export default Vue.extend({
       this.$forceUpdate();
     },
     postBoard: async function () {
+      if (this.boardInfo == "") {
+        this.newBoard = false;
+        return;
+      }
+
       let info = {
         name: this.boardInfo,
       };
