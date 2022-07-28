@@ -109,7 +109,7 @@ export default {
         credentials: "include",
       });
 
-      let body = response.json();
+      let body = await response.json();
       console.log(body);
 
       if (response.status == 201) {
