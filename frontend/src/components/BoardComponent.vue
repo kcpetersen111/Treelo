@@ -14,41 +14,6 @@
       </v-col>
     </v-row>
 
-    <div style="position: fixed; right: 1%; bottom: 10%">
-      <v-btn
-        @click="showContainer = true"
-        class="tree-buttons"
-        color="blue-grey lighten-3"
-        >+<v-icon>mdi-source-branch</v-icon></v-btn
-      >
-      <!-- delete board -->
-      <v-btn
-        @click="overlay = !overlay"
-        class="tree-buttons"
-        color="blue-grey lighten-3"
-        >-<v-icon>mdi-axe</v-icon>
-        <v-overlay :value="overlay">
-          <v-card
-            width="400"
-            height="400"
-            class="mx-auto white--text"
-            style="
-              padding-top: 40%;
-              background-image: url('https://images.unsplash.com/photo-1613858636109-354616495373?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80');
-              background-size: cover;
-            "
-          >
-            <div>
-              <h3>Are You Sure You want to delete?</h3>
-              <v-btn @click="deleteBoard()"
-                ><v-icon>mdi-fire-alert</v-icon></v-btn
-              >
-            </div>
-          </v-card>
-        </v-overlay>
-      </v-btn>
-    </div>
-
     <v-overlay
       v-if="showContainer"
       class="justify-center"
@@ -57,14 +22,49 @@
     >
       <v-card class="blue pa-8">
         <v-card-title>Create A Branch</v-card-title>
-        <v-text-field
-          class="px-3"
-          placeholder="Branch Name"
-          v-model="containerInfo"
-        ></v-text-field>
+        <v-text-field class="px-3" placeholder="Branch Name">
+          {{ containerInfo }}
+        </v-text-field>
         <div style="display: flex; justify-content: space-between">
           <v-btn small @click="showContainer = false">Cancel</v-btn>
           <v-btn small @click="postContainer()">Submit</v-btn>
+        </div>
+      </v-card>
+    </v-overlay>
+
+    <div style="position: fixed; right: 1%; bottom: 10%">
+      <v-btn
+        @click="showContainer = true"
+        class="tree-buttons"
+        color="blue-grey lighten-3"
+        >+<v-icon>mdi-source-branch</v-icon>
+      </v-btn>
+      <v-btn
+        @click="overlay = !overlay"
+        class="tree-buttons"
+        color="blue-grey lighten-3"
+      >
+        -<v-icon>mdi-axe</v-icon></v-btn
+      >
+      <!-- delete board -->
+    </div>
+
+    <v-overlay :value="overlay">
+      <v-card
+        @focusout="overlay = false"
+        width="400"
+        height="400"
+        class="mx-auto white--text"
+        style="
+          padding-top: 40%;
+          background-image: url('https://images.unsplash.com/photo-1613858636109-354616495373?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80');
+          background-size: cover;
+        "
+      >
+        <div>
+          <h3>Are You Sure You want to delete?</h3>
+          <v-btn @click="overlay = false">Cancel</v-btn>
+          <v-btn @click="deleteBoard()"><v-icon>mdi-fire-alert</v-icon></v-btn>
         </div>
       </v-card>
     </v-overlay>
