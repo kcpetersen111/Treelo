@@ -1,39 +1,46 @@
 <template>
-  <div class="board" >
-    <v-container v-if="boards.length !=0 && loggedIn" >
+  <div class="board">
+    <v-container v-if="boards.length != 0 && loggedIn">
       <div v-if="!newBoard">
-        <span style="display: flex; justify-content: center; margin-bottom: 3%;">
+        <span style="display: flex; justify-content: center; margin-bottom: 3%">
           <v-btn
             v-if="boards.length > 1 && currentBoardIndex > 0"
             @click="moveBoardIndex(-1)"
-            ><v-icon style="transform: rotate(270deg);"> mdi-pine-tree</v-icon>
+            ><v-icon style="transform: rotate(270deg)"> mdi-pine-tree</v-icon>
           </v-btn>
           <div class="boardName">
-          <h1 class="text-h2 white--text font-weight-bold">
-            {{ currentBoard.name }}
-          </h1>
+            <h1 class="text-h2 white--text font-weight-bold">
+              {{ currentBoard.name }}
+            </h1>
           </div>
           <v-btn
             v-if="boards.length > 1 && currentBoardIndex < boards.length - 1"
             @click="moveBoardIndex(1)"
-            ><v-icon style="transform: rotate(90deg);">mdi-pine-tree</v-icon>
+            ><v-icon style="transform: rotate(90deg)">mdi-pine-tree</v-icon>
           </v-btn>
-          <v-btn v-if=" currentBoardIndex == boards.length -1 || boards.length == 0" @click="newBoard = true;">
+          <v-btn
+            v-if="currentBoardIndex == boards.length - 1 || boards.length == 0"
+            @click="newBoard = true"
+          >
             +<v-icon>mdi-forest</v-icon>
           </v-btn>
         </span>
-        <BoardComponent :boardData="currentBoard" :fetchBoards="fetchBoards" :key="currentBoardIndex" />
+        <BoardComponent
+          :boardData="currentBoard"
+          :fetchBoards="fetchBoards"
+          :key="currentBoardIndex"
+        />
       </div>
       <div v-if="newBoard" class="boardName">
-        <span style="display: flex; justify-content:center">
-          <v-text-field maxlength="25" v-model="boardInfo" placeholder="Tree Name"></v-text-field>
+        <span style="display: flex; justify-content: center">
+          <v-text-field
+            maxlength="25"
+            v-model="boardInfo"
+            placeholder="Tree Name"
+          ></v-text-field>
         </span>
-        <v-btn @click="newBoard = false;" x-small>
-          Cancel
-        </v-btn>
-        <v-btn @click="postBoard()" x-small class="ml-4">
-         Create 
-        </v-btn>
+        <v-btn @click="newBoard = false" small> Cancel </v-btn>
+        <v-btn @click="postBoard()" small class="ml-4"> Create </v-btn>
       </div>
     </v-container>
 
@@ -42,24 +49,37 @@
   -->
     <v-container v-else-if="loggedIn">
       <div class="boardName">
-        <h1 class="text-h2 white--text font-weight-bold">Create A New Tree to get started!</h1>
+        <p class="text-h3 white--text font-weight-bold">
+          Create a new tree to get started!
+        </p>
+        <v-btn class="mb-2" v-if="!newBoard" @click="newBoard = true">
+          +<v-icon>mdi-forest</v-icon>
+        </v-btn>
         <div v-if="newBoard">
-          <span style="display: flex; justify-content:center">
-            <v-text-field maxlength="25" v-model="boardInfo" placeholder="Tree Name"></v-text-field>
+          <span style="display: flex; justify-content: center">
+            <v-text-field
+              maxlength="25"
+              v-model="boardInfo"
+              placeholder="Tree Name"
+            ></v-text-field>
           </span>
-          <v-btn @click="newBoard = false; boardInfo = '';" x-small>
+          <v-btn
+            @click="
+              newBoard = false;
+              boardInfo = '';
+            "
+            x-small
+          >
             Cancel
           </v-btn>
-          <v-btn @click="postBoard()" x-small class="ml-4">
-           Create 
-          </v-btn>
+          <v-btn @click="postBoard()" x-small class="ml-4"> Create </v-btn>
         </div>
       </div>
-          <v-btn v-if="!newBoard" @click="newBoard = true;">
-            +<v-icon>mdi-forest</v-icon>
-          </v-btn>
     </v-container>
 
+    <!--
+      Show a loading screen if we haven't received a response yet
+    -->
     <v-container v-else>
       <div class="boardName">
         <h1 class="white--text font-weight-bold">Loading ....</h1>
@@ -76,16 +96,14 @@ let URL = "http://localhost:8081";
 import Vue from "vue";
 import BoardComponent from "@/components/BoardComponent.vue";
 
-
 export default Vue.extend({
   name: "BoardsView",
   components: {
     BoardComponent,
-
   },
   data: () => ({
     currentBoardIndex: 0,
-    currentBoard: {_id: "", name: "", description: "", cards: [] },
+    currentBoard: { _id: "", name: "", description: "", cards: [] },
     loggedIn: false,
     boards: [
       /*
@@ -109,7 +127,7 @@ export default Vue.extend({
     this.fetchBoards();
   },
   methods: {
-    fetchBoards: async function (defaultIndex:number=0) {
+    fetchBoards: async function (defaultIndex: number = 0) {
       let response = await fetch(`${URL}/board`, {
         credentials: "include",
       });
@@ -118,13 +136,12 @@ export default Vue.extend({
         this.boards = await response.json();
         this.loggedIn = true;
         // if we have no boards, return
-        if (this.boards.length == 0)
-          return;
+        if (this.boards.length == 0) return;
 
         // is the index too big?
         if (this.boards.length <= this.currentBoardIndex)
           this.currentBoardIndex = this.boards.length - 1;
-        
+
         // are we using a default index?
         if (defaultIndex > 0) {
           this.currentBoardIndex = defaultIndex;
@@ -149,40 +166,39 @@ export default Vue.extend({
       this.currentBoard = this.boards[this.currentBoardIndex];
       this.$forceUpdate();
     },
-    postBoard: async function(){
-     let info = {
-      name: this.boardInfo,
-     };
-     let response = await fetch(`${URL}/board`,{
-          method: "POST",
-          body: JSON.stringify(info),
-          headers:{
-            "Content-Type": "application/json"
-          },
-          credentials: "include",
-     });
-     if (response.status == 201){
-      console.log("post success");
-      this.fetchBoards(this.boards.length);
-      this.newBoard = false;
-     }else{
-      console.log("ERROR", response.status);
-     }
-     this.boardInfo = "";
-
+    postBoard: async function () {
+      let info = {
+        name: this.boardInfo,
+      };
+      let response = await fetch(`${URL}/board`, {
+        method: "POST",
+        body: JSON.stringify(info),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      if (response.status == 201) {
+        console.log("post success");
+        this.fetchBoards(this.boards.length);
+        this.newBoard = false;
+      } else {
+        console.log("ERROR", response.status);
+      }
+      this.boardInfo = "";
     },
   },
 });
 </script>
 
 <style>
-.board{
-  background: url("https://i.pinimg.com/originals/fa/1d/48/fa1d48f051a9baf60958dbdbf4da68bb.jpg") no-repeat center center fixed;
+.board {
+  background: url("https://i.pinimg.com/originals/fa/1d/48/fa1d48f051a9baf60958dbdbf4da68bb.jpg")
+    no-repeat center center fixed;
   background-size: cover;
   height: 100%;
-
 }
-.boardName{
+.boardName {
   background-color: rgba(95, 168, 242, 0.98);
   justify-content: center;
   margin: 0;
