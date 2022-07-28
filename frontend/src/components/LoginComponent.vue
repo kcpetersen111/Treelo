@@ -1,68 +1,68 @@
 <template>
-  <v-app>
-    <v-parallax
-      src="https://cdn.shopify.com/s/files/1/0326/7189/articles/General_Sherman_tree_2000x.jpg?v=1627936731"
-      height="900"
+  <v-parallax
+    src="https://cdn.shopify.com/s/files/1/0326/7189/articles/General_Sherman_tree_2000x.jpg?v=1627936731"
+    height="100%"
+  >
+    <v-card
+      class="mx-auto my-auto pb-4 px-7 rounded-xl"
+      color="rgba(255,255,255,.7)"
+      flat
+      width="400"
     >
-      <v-container>
-        <v-card
-          class="mx-auto mt-7 pb-4 px-7 rounded-xl"
-          color="rgba(255,255,255,.7)"
-          flat
-          width="400"
+      <v-card-title style="display: block">
+        <b>Sign in</b>
+      </v-card-title>
+
+      <v-text-field
+        class="rounded-pill"
+        label="Email"
+        outlined
+        color="black"
+        v-model="usernameInput"
+        :rules="[rules.requiredEmail, rules.email]"
+        autofocus
+      ></v-text-field>
+
+      <v-text-field
+        class="rounded-pill"
+        label="Password"
+        outlined
+        color="black"
+        type="password"
+        v-model="passwordInput"
+        :rules="[rules.requiredPassWord]"
+      ></v-text-field>
+
+      <v-card-actions>
+        <v-btn
+          id="login-button"
+          class="mr-auto ml-10 mb-2 mt-n4 rounded-sm"
+          elevation="12"
+          @click="postSession()"
         >
-          <v-card-title style="display: block">
-            <b>Sign in</b>
-          </v-card-title>
-          <v-text-field
-            class="rounded-pill"
-            label="Email"
-            outlined
-            color="black"
-            v-model="usernameInput"
-            :rules="[rules.requiredEmail, rules.email]"
-            autofocus
-          ></v-text-field>
-          <v-text-field
-            class="rounded-pill"
-            label="Password"
-            outlined
-            color="black"
-            type="password"
-            v-model="passwordInput"
-            :rules="[rules.requiredPassWord]"
-          ></v-text-field>
-          <v-card-actions>
-            <v-btn
-              id="login-button"
-              class="mr-auto ml-10 mb-2 mt-n4 rounded-sm"
-              elevation="12"
-              @click="postSession()"
-            >
-              Login
-            </v-btn>
-            <v-btn
-              id="registration-button"
-              class="mr-8 ml-14 mb-2 mt-n4 rounded-sm"
-              elevation="12"
-              @click="gotoRegister()"
-            >
-              Register
-            </v-btn>
-          </v-card-actions>
-          <v-alert
-            v-show="show"
-            type="error"
-            dense
-            transition="scale-transition"
-            dismissible
-            style="border-radius: 25px; border: 2px solid black"
-            >Login Unsuccessful</v-alert
-          >
-        </v-card>
-      </v-container>
-    </v-parallax>
-  </v-app>
+          Login
+        </v-btn>
+        <v-btn
+          id="registration-button"
+          class="mr-8 ml-14 mb-2 mt-n4 rounded-sm"
+          elevation="12"
+          @click="gotoRegister()"
+        >
+          Register
+        </v-btn>
+      </v-card-actions>
+
+      <v-alert
+        v-show="show"
+        type="error"
+        dense
+        transition="scale-transition"
+        dismissible
+        style="border-radius: 25px; border: 2px solid black"
+        >Login Unsuccessful</v-alert
+      >
+    </v-card>
+  </v-parallax>
 </template>
 
 <script lang="ts">
@@ -90,7 +90,7 @@ export default {
   methods: {
     gotoRegister() {
       console.log("GO to Register page!");
-      this.$router.replace({path: "/registration"});
+      this.$router.replace({ path: "/registration" });
     },
     postSession: async function () {
       this.show = false;

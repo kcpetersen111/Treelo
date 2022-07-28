@@ -1,6 +1,6 @@
 <template>
-  <div class="login">
-    <LoginComponent />
+  <div class="login" style="height: 100%">
+    <LoginComponent style="height: 100%" />
   </div>
 </template>
 
