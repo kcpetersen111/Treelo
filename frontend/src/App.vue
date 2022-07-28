@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app v-cloak>
     <v-navigation-drawer
       v-model="drawer"
       app
@@ -31,16 +31,16 @@
       dark
       src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
     >
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="openNav()" v-if="username"></v-app-bar-nav-icon>
 
       <v-toolbar-title class="text-h4 font-weight-bold">
         Treelo
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <div class="pr-4">
+      <div v-if="username" class="pr-4">
         Hello {{ username.charAt(0).toUpperCase() + username.slice(1) }}!
       </div>
-      <v-btn color="indigo" fab class="mx-auto mr-3" @click="goToSettings()">
+      <v-btn v-if="username" color="indigo" fab class="mx-auto mr-3" @click="changeRoute('/settings')">
         <v-icon color="green"> mdi-pine-tree </v-icon>
       </v-btn>
     </v-app-bar>
@@ -49,17 +49,31 @@
       <router-view :key="$route.path" />
     </v-main>
 
-    <v-footer
-      style="
+    
+    <v-bottom-navigation 
+    v-if="username == ''"
+    width="100%"
+    style="
         background-image: url('https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg');
+        background-size: cover;
       "
-    >
-      <router-link to="/contact">
-        <v-card>
-          <v-card-title> Contact us. </v-card-title>
-        </v-card>
-      </router-link>
-    </v-footer>
+      grow
+      >
+      <v-btn @click="changeRoute('/login')">
+        <span class="white--text">Login</span>
+        <v-icon class="white--text">mdi-login</v-icon>
+      </v-btn>
+
+      <v-btn @click="changeRoute('/contact')">
+        <span class="white--text">Contact Us</span>
+        <v-icon class="white--text">mdi-email</v-icon>
+      </v-btn>
+
+      <v-btn @click="changeRoute('/about')">
+        <span class="white--text">About Us</span>
+        <v-icon class="white--text">mdi-human-greeting-variant</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
   </v-app>
 </template>
 
@@ -73,15 +87,10 @@ export default Vue.extend({
   components: {},
 
   data: () => ({
-    drawer: true,
+    drawer: false,
     userCard: true,
     username: "",
     items: [
-      {
-        title: "Login",
-        link: "/login",
-        icon: "mdi-account-circle",
-      },
       {
         title: "My Board",
         link: "/board",
@@ -100,18 +109,28 @@ export default Vue.extend({
     ],
   }),
   methods: {
-    goToSettings() {
-      window.location.href = "/settings";
+    changeRoute(route){
+      this.$router.replace({path:route});
     },
     kalebsMethod: async function () {
-      let username = await fetch(URL + "/session", {
+      let response = await fetch(URL + "/session", {
         method: "GET",
         credentials: "include",
       });
-      username = await username.json();
-      this.username = username.name;
-      console.log(this.username);
+      if (response.status != 200 && this.$router.currentRoute.path != '/login') {
+        this.$router.replace({path: "/login"});
+      } else if (response.status == 200) {
+        let body = await response.json();
+        this.username = body.name;
+        if (this.$router.currentRoute.path != '/board')
+          this.$router.replace({path: "/board"});
+      }
     },
+    openNav: function () {
+      if (this.username) {
+        this.drawer = !this.drawer;
+      }
+    }
   },
   created() {
     this.kalebsMethod();
@@ -120,6 +139,10 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+[v-cloak] {
+  display: none;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

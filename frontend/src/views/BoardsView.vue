@@ -1,38 +1,80 @@
 <template>
   <div class="board">
-    <v-container v-if="currentBoard._id != ''">
-      <div v-if="!newBoard">
+    <v-container v-if="boards.length != 0 && loggedIn">
+      <div
+        v-if="!newBoard"
+        style="margin-left: 150px; margin-right: 150px; margin-bottom: 3%"
+      >
         <span style="display: flex; justify-content: center">
           <v-btn
+            class="tree-buttons"
+            color="blue-grey lighten-3"
             v-if="boards.length > 1 && currentBoardIndex > 0"
             @click="moveBoardIndex(-1)"
-            ><v-icon style="transform: rotate(270deg);"> mdi-pine-tree</v-icon>
+          >
+            <v-icon style="transform: rotate(270deg)"> mdi-pine-tree</v-icon>
           </v-btn>
 
-          <h1 class="text-h2 blue--text font-weight-bold">
-            {{ currentBoard.name }}
-          </h1>
+          <div class="boardName">
+            <h1 class="text-h2 font-weight-bold">
+              {{ currentBoard.name }}
+            </h1>
+          </div>
 
           <v-btn
+            class="tree-buttons"
+            color="blue-grey lighten-3"
             v-if="boards.length > 1 && currentBoardIndex < boards.length - 1"
             @click="moveBoardIndex(1)"
-            ><v-icon style="transform: rotate(90deg);">mdi-pine-tree</v-icon>
+            ><v-icon style="transform: rotate(90deg)">mdi-pine-tree</v-icon>
           </v-btn>
-          <v-btn v-if=" currentBoardIndex == boards.length -1" @click="newBoard = true;">
+
+          <v-btn
+            class="tree-buttons"
+            color="blue-grey lighten-3"
+            v-if="currentBoardIndex == boards.length - 1 || boards.length == 0"
+            @click="newBoard = true"
+          >
             +<v-icon>mdi-forest</v-icon>
           </v-btn>
         </span>
-        <BoardComponent :boardData="currentBoard" :key="currentBoardIndex" />
+        <BoardComponent
+          :boardData="currentBoard"
+          :fetchBoards="fetchBoards"
+          :key="currentBoardIndex"
+        />
       </div>
-      <div v-if="newBoard">
-        <span style="display: flex; justify-content:center">
-          <v-text-field v-model="boardInfo" placeholder="Tree Name"></v-text-field>
+      <div
+        v-if="newBoard"
+        class="boardName"
+        style="
+          background-color: rgba(255, 255, 255, 0.7);
+          margin-left: 150px;
+          margin-right: 150px;
+        "
+      >
+        <span style="display: flex; justify-content: center">
+          <v-text-field
+            maxlength="25"
+            v-model="boardInfo"
+            placeholder="Tree Name"
+          ></v-text-field>
         </span>
-        <v-btn @click="newBoard = false;">
+        <v-btn
+          @click="newBoard = false"
+          small
+          class="tree-buttons mb-3"
+          color="blue-grey lighten-3"
+        >
           Cancel
         </v-btn>
-        <v-btn @click="postBoard()">
-          Submit
+        <v-btn
+          @click="postBoard()"
+          small
+          class="ml-4 mb-3 tree-buttons"
+          color="blue-grey lighten-3"
+        >
+          Create
         </v-btn>
       </div>
     </v-container>
@@ -40,8 +82,64 @@
     <!--
     Show a loading screen if we haven't received a response yet
   -->
+    <v-container v-else-if="loggedIn">
+      <div
+        class="boardName"
+        style="
+          background-color: rgba(255, 255, 255, 0.7);
+          margin-left: 150px;
+          margin-right: 150px;
+        "
+      >
+        <h1 class="text-h2 black--text font-weight-bold">
+          Create A New Tree to get started!
+        </h1>
+        <div v-if="newBoard">
+          <span style="display: flex; justify-content: center">
+            <v-text-field
+              maxlength="25"
+              v-model="boardInfo"
+              placeholder="Tree Name"
+            ></v-text-field>
+          </span>
+          <v-btn
+            class="tree-buttons mb-3"
+            color="blue-grey lighten-3"
+            @click="
+              newBoard = false;
+              boardInfo = '';
+            "
+            small
+          >
+            Cancel
+          </v-btn>
+          <v-btn
+            @click="postBoard()"
+            small
+            class="ml-4 mb-3 tree-buttons"
+            color="blue-grey lighten-3"
+          >
+            Create
+          </v-btn>
+        </div>
+      </div>
+      <v-btn
+        v-if="!newBoard"
+        @click="newBoard = true"
+        class="tree-buttons"
+        color="blue-grey ligthen-3"
+      >
+        +<v-icon>mdi-forest</v-icon>
+      </v-btn>
+    </v-container>
+
+    <!--
+      Show a loading screen if we haven't received a response yet
+    -->
     <v-container v-else>
-      <h1 class="text-h2 blue--text font-weight-bold">Loading ...</h1>
+      <div class="boardName">
+        <h1 class="white--text font-weight-bold">Loading ....</h1>
+      </div>
     </v-container>
   </div>
 </template>
@@ -62,6 +160,7 @@ export default Vue.extend({
   data: () => ({
     currentBoardIndex: 0,
     currentBoard: { _id: "", name: "", description: "", cards: [] },
+    loggedIn: false,
     boards: [
       /*
       creatorID: -1,
@@ -84,20 +183,27 @@ export default Vue.extend({
     this.fetchBoards();
   },
   methods: {
-    fetchBoards: async function () {
+    fetchBoards: async function (defaultIndex: number = 0) {
       let response = await fetch(`${URL}/board`, {
         credentials: "include",
       });
 
       if (response.status == 200) {
         this.boards = await response.json();
-        console.log(this.boards);
+        this.loggedIn = true;
+        // if we have no boards, return
+        if (this.boards.length == 0) return;
 
-        if (this.boards.length >= this.currentBoardIndex)
-          this.currentBoardIndex = 0;
+        // is the index too big?
+        if (this.boards.length <= this.currentBoardIndex)
+          this.currentBoardIndex = this.boards.length - 1;
+
+        // are we using a default index?
+        if (defaultIndex > 0) {
+          this.currentBoardIndex = defaultIndex;
+        }
 
         this.currentBoard = this.boards[this.currentBoardIndex];
-        console.log(this.currentBoard);
       } else {
         console.log("Error", response.status, response);
       }
@@ -116,28 +222,57 @@ export default Vue.extend({
       this.currentBoard = this.boards[this.currentBoardIndex];
       this.$forceUpdate();
     },
-    postBoard: async function(){
-     let info = {
-      name: this.boardInfo,
-     };
-     let response = await fetch(`${URL}/board`,{
-          method: "POST",
-          body: JSON.stringify(info),
-          headers:{
-            "Content-Type": "application/json"
-          },
-          credentials: "include",
-     });
-     console.log(response.json);
-     if (response.status == 201){
-      console.log("post success");
-      this.newBoard = false;
-     }else{
-      console.log("ERROR", response.status);
-     }
-     this.boardInfo = "";
-
+    postBoard: async function () {
+      let info = {
+        name: this.boardInfo,
+      };
+      let response = await fetch(`${URL}/board`, {
+        method: "POST",
+        body: JSON.stringify(info),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      if (response.status == 201) {
+        console.log("post success");
+        this.fetchBoards(this.boards.length);
+        this.newBoard = false;
+      } else {
+        console.log("ERROR", response.status);
+      }
+      this.boardInfo = "";
     },
   },
 });
 </script>
+
+<style>
+.board {
+  background: url("https://images.unsplash.com/photo-1473448912268-2022ce9509d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=841&q=80")
+    no-repeat center center fixed;
+  background-size: cover;
+  height: 100%;
+}
+.boardName {
+  justify-content: center;
+  border-radius: 100px 100px 100px 100px;
+  padding: 0 20%;
+}
+.tree-buttons:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #0087ca;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+.tree-buttons:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+</style>
