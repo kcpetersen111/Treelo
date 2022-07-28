@@ -21,7 +21,9 @@
         :fetchCards="fetchAllCards"
         :containerID="containerData._id"
         :cardIndex="index"
+        :cardDone="cardDone"
         :updateCard="updateCard"
+        
       />
       <div class="text-right mr-2">
         <v-btn
@@ -92,6 +94,29 @@ export default {
       }else{
         console.log("ERROR", response.status);
       }
+    },
+    cardDone: async function(index:number) {
+      let tempCard = this.fetchedCards[index];
+      tempCard.done = !tempCard.done;
+
+      let response = await fetch(`${URL}/card/${tempCard._id}`,{
+        method: "PATCH",
+        credentials: "include",
+        body:JSON.stringify(tempCard),
+        headers:{
+          "Content-Type": "application/json",
+        },
+      }); 
+
+      if(response.status == 200){
+        this.fetchedCards[index] = await response.json();
+        // this.fetchCard(this.fetchedCards[index]._id);
+        this.fetchAllCards();
+      } else{
+        console.log("ERROR", response.status, response);
+
+      }
+      // console.log(this.fetchedCards[index]);
     },
     fetchAllCards: async function () {
       let response = await fetch(`${URL}/container/${this.containerData._id}/card`,{
@@ -185,3 +210,8 @@ export default {
   },
 };
 </script>
+<style>
+  .done div div:not(button){
+    /* text-decoration: line-through !important;*/
+  }
+</style>
