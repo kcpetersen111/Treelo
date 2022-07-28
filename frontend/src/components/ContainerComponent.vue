@@ -56,6 +56,7 @@
         v-if="newCard"
         placeholder="add leaf info"
         v-model="cardInfo"
+        autofocus
       ></v-text-field>
       <v-btn v-if="newCard" @click="postCards()">Submit</v-btn>
       <v-btn v-if="newCard" @click="newCard = !newCard">Cancel</v-btn>
@@ -171,10 +172,16 @@ export default {
       return card;
     },
     postCards: async function () {
+      if (this.cardInfo == "") {
+        this.newCard = false;
+        return;
+      }
+
       let containerID = this.containerData._id;
       let info = {
         name: this.cardInfo,
       };
+
       let response = await fetch(`${URL}/container/${containerID}/card`, {
         method: "POST",
         body: JSON.stringify(info),
