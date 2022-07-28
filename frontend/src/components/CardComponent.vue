@@ -131,6 +131,7 @@ export default {
   .card-hovering:hover{
     background-color: rgba(#FFF, 0.8);
     opacity: 0.5;
+    cursor: pointer;
   }
 
 </style>
