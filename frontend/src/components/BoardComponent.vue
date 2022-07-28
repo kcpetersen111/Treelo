@@ -1,12 +1,16 @@
 <template>
   <div id="wrapper">
     <v-row>
-      <v-col v-for="(container, index) in fetchedContainers" md="4" :key="index">
-        <ContainerComponent 
-          :containerData="container" 
-          :boardID="boardData._id" 
+      <v-col
+        v-for="(container, index) in fetchedContainers"
+        md="4"
+        :key="index"
+      >
+        <ContainerComponent
+          :containerData="container"
+          :boardID="boardData._id"
           :fetchContainers="fetchContainers"
-          />
+        />
       </v-col>
     </v-row>
     <div style="position: fixed; right: 1%; bottom: 10%">
@@ -14,10 +18,8 @@
         >+<v-icon>mdi-source-branch</v-icon></v-btn
       ><!--package-variant-plus-->
       <!-- delete board -->
-      <v-btn @click="deleteBoard()"
-        >-<v-icon>mdi-axe</v-icon></v-btn
+      <v-btn @click="deleteBoard()">-<v-icon>mdi-axe</v-icon></v-btn
       ><!--package-variant-plus-->
-      
     </div>
     <div justify="center">
       <v-overlay :z-index="0" :value="showContainer">
@@ -49,10 +51,8 @@ export default Vue.extend({
       name: String,
       description: String,
       container: Array,
-      
     },
-    fetchBoards:Function,
-
+    fetchBoards: Function,
   },
   components: {
     ContainerComponent,
@@ -86,15 +86,20 @@ export default Vue.extend({
         }
       }
     },
-    deleteBoard: async function(){
-      let boardID = this.boardData._id;
-      let response = await fetch(`${URL}/board/${boardID}`,{
-        method:"DELETE",
-        credentials: "include",
-      })
+    deleteBoard: async function () {
+      let userWantsToDeleteBoard = confirm(
+        `Are you sure you want to delete the "${this.boardData.name}" tree?`
+      );
+      if (!userWantsToDeleteBoard) return;
 
-      if (response.status == 200){
-        console.log("delete successful")
+      let boardID = this.boardData._id;
+      let response = await fetch(`${URL}/board/${boardID}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+
+      if (response.status == 200) {
+        console.log("delete successful");
         // this.boardData = null;
         // this.boardData = await response.json();
         // this.$forceUpdate();
@@ -102,36 +107,33 @@ export default Vue.extend({
         // this.boardData.fetchBoards();
         this.fetchBoards();
         console.log(this.boardData);
-
-
-      } else{
+      } else {
         console.log("Error while deleting", response.status);
       }
-
     },
-    postContainer: async function() {
-        let id = this.boardData._id;
-        let info = {
-            containerName: this.containerInfo,
-        };
-        let response = await fetch(`${URL}/board/${id}/container`,{
-            method: "POST",
-            body: JSON.stringify(info),
-            headers:{
-                "Content-Type": "application/json"
-            },
-            credentials: "include",
-        });
-        console.log(response.json);
-        if (response.status == 201){
-            console.log("post success");
-            this.showContainer = false;
-            this.fetchContainers();
-        }else{
-            console.log("ERROR", response.status);
-        }
-        this.containerInfo = "";
-    },          
+    postContainer: async function () {
+      let id = this.boardData._id;
+      let info = {
+        containerName: this.containerInfo,
+      };
+      let response = await fetch(`${URL}/board/${id}/container`, {
+        method: "POST",
+        body: JSON.stringify(info),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      console.log(response.json);
+      if (response.status == 201) {
+        console.log("post success");
+        this.showContainer = false;
+        this.fetchContainers();
+      } else {
+        console.log("ERROR", response.status);
+      }
+      this.containerInfo = "";
+    },
   },
 });
 </script>
