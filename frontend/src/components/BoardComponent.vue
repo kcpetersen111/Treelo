@@ -49,22 +49,20 @@
       </v-btn>
     </div>
 
-    <div class="justify-center">
-      <v-overlay :z-index="0" :value="showContainer">
-        <v-card class="blue pa-8">
-          <v-card-title>Create A Branch</v-card-title>
-          <v-text-field
-            class="px-3"
-            placeholder="Branch Name"
-            v-model="containerInfo"
-          ></v-text-field>
-          <div style="display: flex; justify-content: space-between">
-            <v-btn small @click="showContainer = false">Cancel</v-btn>
-            <v-btn small @click="postContainer()">Submit</v-btn>
-          </div>
-        </v-card>
-      </v-overlay>
-    </div>
+    <v-overlay class="justify-center" :z-index="0" :value="showContainer">
+      <v-card class="blue pa-8">
+        <v-card-title>Create A Branch</v-card-title>
+        <v-text-field
+          class="px-3"
+          placeholder="Branch Name"
+          v-model="containerInfo"
+        ></v-text-field>
+        <div style="display: flex; justify-content: space-between">
+          <v-btn small @click="showContainer = false">Cancel</v-btn>
+          <v-btn small @click="postContainer()">Submit</v-btn>
+        </div>
+      </v-card>
+    </v-overlay>
   </v-container>
 </template>
 

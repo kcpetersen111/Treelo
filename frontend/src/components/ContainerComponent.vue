@@ -4,7 +4,9 @@
     <div fab style=" float:right;"> 
       <v-btn @click="deleteContainer()" fab x-small><v-icon>mdi-axe</v-icon></v-btn>
     </div>
-    <v-card-title class="text-h4 purple--text font-weight-bold" @click="newContainer = true; containerInfo = containerData.name" v-if="!newContainer">
+    <v-card-title class="text-h4 blue--text font-weight-bold text-wrap" 
+      style="word-break:break-word; -webkit-hyphens: manual; -moz-hyphens: manual; -ms-hyphens: manual; hyphens: manual;"
+     @click="newContainer = true; containerInfo = containerData.name" v-if="!newContainer">
       {{ containerData.name }}
     </v-card-title>
     <div v-if="newContainer">
@@ -30,7 +32,7 @@
         :updateCard="updateCard"
         
       />
-      <div class="text-right mr-2">
+      <div class="text-right mr-2" style="overflow-wrap: break-word; word-wrap: break-word; hyphens: auto;">
         <v-btn
           class="pa-0 white"
           elevation="0"
