@@ -50,7 +50,6 @@
       >
         -<v-icon>mdi-axe</v-icon></v-btn
       >
-      <!-- delete board -->
     </div>
 
     <v-overlay :value="overlay">
@@ -77,7 +76,7 @@
 
 <script lang="ts">
 // let URL = "http://localhost:8081";
-import {URL} from '../config';
+import { URL } from "../config";
 import Vue from "vue";
 import ContainerComponent from "@/components/ContainerComponent.vue";
 
@@ -145,8 +144,8 @@ export default Vue.extend({
         // this.$forceUpdate();
         // this.currentBoardIndex --;
         // this.boardData.fetchBoards();
-        this.fetchBoards();
         console.log(this.boardData);
+        this.fetchBoards();
       } else {
         console.log("Error while deleting", response.status);
       }

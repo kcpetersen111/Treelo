@@ -48,9 +48,10 @@
       </div>
 
       <BoardComponent
+        v-if="currentBoard.name.length > 0"
         :boardData="currentBoard"
         :fetchBoards="fetchBoards"
-        :key="currentBoardIndex"
+        :key="currentBoard._id"
       />
     </v-container>
 
@@ -105,7 +106,7 @@
 <script lang="ts">
 // @ is an alias to /src
 // let URL = "http://localhost:8081";
-import {URL} from '../config';
+import { URL } from "../config";
 import Vue from "vue";
 import BoardComponent from "@/components/BoardComponent.vue";
 
@@ -154,7 +155,16 @@ export default Vue.extend({
         this.boards = await response.json();
         this.loggedIn = true;
         // if we have no boards, return
-        if (this.boards.length == 0) return;
+        if (this.boards.length == 0) {
+          this.currentBoard = {
+            _id: "",
+            name: "",
+            description: "",
+            cards: [],
+          };
+
+          return;
+        }
 
         // is the index too big?
         if (this.boards.length <= this.currentBoardIndex)
@@ -169,6 +179,8 @@ export default Vue.extend({
       } else {
         console.log("Error", response.status, response);
       }
+
+      this.$forceUpdate();
     },
     moveBoardIndex: function (num: number) {
       if (this.boards.length <= 0) return;
