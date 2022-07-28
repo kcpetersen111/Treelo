@@ -23,6 +23,9 @@
     <v-list>
       <CardComponent
         v-for="(card,index) in fetchedCards"
+        @click="addCard(index)"
+        @mousemove="isStillHoldingCard"
+        @mousedown="pickUpCard(index)"
         :key="card._id"
         :cardData="card"
         :fetchCards="fetchAllCards"
@@ -32,7 +35,7 @@
         :updateCard="updateCard"
         
       />
-      <div class="text-right mr-2" style="overflow-wrap: break-word; word-wrap: break-word; hyphens: auto;">
+      <div @mousedown="dropCard(index)" class="text-right mr-2" style="overflow-wrap: break-word; word-wrap: break-word; hyphens: auto;">
         <v-btn
           class="pa-0 white"
           elevation="0"
@@ -83,13 +86,13 @@ export default {
     cards: [],
     newContainer: false,
     containerInfo: "",
-    //fetchedCards: [],
+    fetchedCards: [],
     //what the user sees
-    //displayList: [],
+    displayCards: [],
     //what card is being picked up
-    //pickedUpCard: null,
+    pickedUpCard: null,
     //container Index it is getting draged to
-    //pickedUpIndex: -1,
+    pickedUpCardIndex: -1,
     newCard: false,
     cardInfo: "",
   }),
@@ -167,11 +170,10 @@ export default {
       return card;
     },
     postCards: async function () {
-      let containerID = this.containerData._id;
       let info = {
         name: this.cardInfo,
       };
-      let response = await fetch(`${URL}/container/${containerID}/card`, {
+      let response = await fetch(`${URL}/container/${this.containerData._id}/card`, {
         method: "POST",
         body: JSON.stringify(info),
         headers: {
@@ -207,9 +209,50 @@ export default {
         console.log("ERROR", response.status, response);
       }
     },
-    //pickupCard: function(cardIndex){
-      //  this.pickedUpCard = 
-    //},
+    pickupCard: async function(cardIndex){
+        let response = await fetch(`${URL}/card/${this.cards[cardIndex]}`,{
+          "credentials": "include",
+        }); 
+        this.pickedUpCard = await response.json() 
+        this.pickedUpCardIndex = cardIndex;
+    },
+    isStillHoldingCard: function(event){
+        if (event.buttons == 0){
+          this.pickedUpCard = null;
+          this.pickedUpCardIndex = -1;
+
+        }
+    },
+    dropCard: async function(dropIndex ){
+        if(this.pickedUpCard == null){
+          return;
+        }
+        if(dropIndex >= this.cards.length){
+          dropIndex = this.cards.length -1;
+        }
+        this.cards.splice(this.pickupCardIndex, 1);
+        this.cards.splice(dropIndex , 0 , this.pickedUpCard);
+        this.pickedUpCard = null;
+        this.pickupCardIndex = -1;
+        let info = {
+          name: this.containerData.name,
+          cards: this.cards
+        }
+        let response = await fetch(`${URL}/container/${this.containerData._id}}`,{
+          method:"PATCH",
+          body: JSON.stringify(info),
+          headers:{
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+        if (response.status == 201){
+          this.fetchAllCards();
+        }
+        else{
+          console.log("ERROR: ", response.status)
+        }
+    },
     updateContainer: async function(){
       let info = {
         name: this.containerInfo,
