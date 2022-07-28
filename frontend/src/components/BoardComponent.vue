@@ -20,7 +20,7 @@
         class="tree-buttons"
         color="blue-grey lighten-3"
         >+<v-icon>mdi-source-branch</v-icon></v-btn
-      ><!--package-variant-plus-->
+      >
       <!-- delete board -->
       <v-btn
         @click="overlay = !overlay"
@@ -49,7 +49,12 @@
       </v-btn>
     </div>
 
-    <v-overlay class="justify-center" :z-index="0" :value="showContainer">
+    <v-overlay
+      v-if="showContainer"
+      class="justify-center"
+      :z-index="0"
+      :value="showContainer"
+    >
       <v-card class="blue pa-8">
         <v-card-title>Create A Branch</v-card-title>
         <v-text-field

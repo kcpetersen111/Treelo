@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import passport from "passport";
 // import * from "@types/passport"
 // const passport = require("passport");
+import  bcrypt from "bcrypt";
 
 const LocalStrategy = require('passport-local');
 // const { password } = require("../config");
@@ -20,7 +21,14 @@ passport.use(
     new LocalStrategy( async (username:string,password:string,done:Function)=>{
     let user:typeof User;
     try{
-        user = await User.findOne({username:username, password:password});
+        user = await User.findOne({username:username});
+
+        let pword:boolean = await bcrypt.compare(password,user.password);
+        
+        if(pword){
+            return done(null,false);
+        }
+
         if(!user){
             //this did not exist in the db
             return done(null,false);

@@ -4,6 +4,7 @@ import express, {Request, Response} from 'express';
 
 import {User, Cards, Containers, Boards, Contact} from "../persist/model";
 // const db = require("../persist/model");
+const bcrypt = require('bcrypt');
 
 export const app = express();
 
@@ -30,11 +31,15 @@ app.post("/users", async (req:Request,res:Response)=>{
         res.status(400).json({message:"Email and password must be defined"});
         return;
     }
+
+    // const salt = bcrypt.genSalt(100);
+    let pword = await bcrypt.hash(req.body.password, 12);
+
     try {
         let user = await User.create({
             name:    req.body.name,
             username: req.body.username,
-            password: req.body.password,
+            password: pword,
         });
         res.status(201).json(user);
     }catch(err){

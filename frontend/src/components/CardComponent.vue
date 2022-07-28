@@ -23,10 +23,44 @@
           v-model="newCard.name"
           autofocus
         ></v-text-field>
-        <v-btn class="ml-1 mb-2" small @click="cardDone(cardIndex); editing = false;"><v-icon>mdi-check</v-icon></v-btn>
-        <v-btn class="ml-1 mb-2" small @click="deleteCard()">-<v-icon>mdi-axe</v-icon></v-btn>
-        <v-btn class="ml-1 mb-2" small @click="updateCardLocal()">+<v-icon>mdi-forest</v-icon></v-btn>
-        <v-btn class="ml-1 mb-2" small @click="editCard()"><v-icon>mdi-undo</v-icon></v-btn>
+          <v-tooltip bottom color="primary">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn class="ml-1 mb-2 tree-buttons"
+                v-on="on"
+                v-bind="attrs" 
+                small @click="cardDone(cardIndex); 
+                editing = false;"><v-icon>mdi-check</v-icon>
+            </v-btn>
+          </template>
+          <span>Check As Complete</span>
+        </v-tooltip>
+        <v-tooltip bottom color="primary">
+          <template v-slot:activator="{ on, attrs }">
+             <v-btn class="ml-1 mb-2 tree-buttons"
+              v-on="on"
+              v-bind="attrs" 
+              small @click="deleteCard()">-<v-icon>mdi-axe</v-icon></v-btn>
+          </template>
+          <span>Delete Card</span>
+        </v-tooltip>
+        <v-tooltip bottom color="primary">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn class="ml-1 mb-2 tree-buttons"
+            v-on="on"
+            v-bind="attrs" 
+            small @click="updateCardLocal()"><v-icon>mdi-sprout</v-icon></v-btn>
+          </template>
+          <span>Add your Changes</span>
+        </v-tooltip>
+        <v-tooltip bottom color="primary">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn class="ml-1 mb-2 tree-buttons" 
+            v-on="on"
+            v-bind="attrs"
+            small @click="editCard()"><v-icon>mdi-undo</v-icon></v-btn>
+          </template>
+          <span>Go Back</span>
+        </v-tooltip>
       </div>
     </v-card>
 </template>
