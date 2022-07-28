@@ -1,13 +1,20 @@
 <template>
   <!-- V-Card for entire container -->
-  <v-card style="background-color: rgb(215, 225, 225)">
-    <div fab style="float: right">
-      <v-btn @click="deleteContainer()" fab x-small
-        ><v-icon>mdi-axe</v-icon></v-btn
-      >
+  <v-card style="background-color: rgb(215, 225, 225)" >
+    <div fab style="float: right" >
+      <v-tooltip bottom color="primary">
+        <template v-slot:activator="{on,attrs}">
+          <v-btn class="tree-buttons"
+          v-on="on"
+          v-bind="attrs"
+          fab x-small
+          @click="deleteContainer()"><v-icon>mdi-axe</v-icon></v-btn>
+        </template>
+        <span>Delete</span>
+      </v-tooltip>    
     </div>
     <v-card-title
-      class="text-h4 blue--text font-weight-bold text-wrap"
+      class="text-h4 blue--text font-weight-bold text-wrap container-hover"
       @click="
         newContainer = true;
         containerInfo = containerData.name;
@@ -18,8 +25,24 @@
     </v-card-title>
     <div v-if="newContainer">
       <v-text-field v-model="containerInfo" autofocus></v-text-field>
-      <v-btn @click="newContainer = false"><v-icon>mdi-undo</v-icon></v-btn>
-      <v-btn @click="updateContainer()"><v-icon>mdi-sprout</v-icon></v-btn>
+      <v-tooltip bottom color="primary">
+        <template v-slot:activator="{on,attrs}">
+          <v-btn class="tree-buttons"
+          v-on="on"
+          v-bind="attrs"
+          @click="newContainer = false"><v-icon>mdi-undo</v-icon></v-btn>
+        </template>
+        <span>Undo Changes</span>
+      </v-tooltip>
+      <v-tooltip bottom color="primary">
+        <template v-slot:activator="{on,attrs}">
+          <v-btn class="tree-buttons"
+          v-on="on"
+          v-bind="attrs"
+          @click="updateContainer()"><v-icon>mdi-sprout</v-icon></v-btn>
+        </template>
+        <span>Add Your Changes</span>
+      </v-tooltip>
     </div>
     <!--
     <v-card-text>
@@ -259,5 +282,9 @@ export default {
 <style>
 .done div div:not(button) {
   /* text-decoration: line-through !important;*/
+}
+.container-hover:hover{
+  background-color: rgb(215, 225, 225);
+  opacity:0.8;
 }
 </style>
