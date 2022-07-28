@@ -47,7 +47,6 @@
           </v-card>
         </v-overlay>
       </v-btn>
-      <!--package-variant-plus-->
     </div>
 
     <div class="justify-center">
