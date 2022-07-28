@@ -47,7 +47,7 @@
       <h1 class="text-h2 blue--text font-weight-bold">Create A New Tree to get started!</h1>
       <div v-if="newBoard">
         <span style="display: flex; justify-content:center">
-          <v-text-field v-model="boardInfo" placeholder="Tree Name"></v-text-field>
+          <v-text-field maxlength="30" v-model="boardInfo" placeholder="Tree Name"></v-text-field>
         </span>
         <v-btn @click="newBoard = false; boardInfo = '';">
           Cancel
@@ -59,7 +59,7 @@
     </v-container>
 
     <v-container v-else>
-      <h1 class="red--text font-weight-bold">PLEASE LOG IN!</h1>
+      <h1 class="blue--text font-weight-bold">Loading ....</h1>
     </v-container>
   </div>
 </template>
