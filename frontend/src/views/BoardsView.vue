@@ -1,7 +1,11 @@
 <template>
   <div class="board">
-    <v-container v-if="loggedIn">
-      <span style="display: flex; justify-content: center">
+    <v-container
+      v-if="loggedIn"
+      class="flex justify-center align-center"
+      style="background-color: rgba(155, 155, 155, 0.7)"
+    >
+      <span class="flex justify-center align-center">
         <v-btn
           class="tree-buttons"
           color="blue-grey lighten-3"
@@ -11,20 +15,15 @@
           <v-icon style="transform: rotate(270deg)"> mdi-pine-tree</v-icon>
         </v-btn>
 
-        <div
-          class="boardName"
-          style="background-color: rgba(155, 155, 155, 0.7)"
+        <h1
+          v-if="currentBoard.name.length > 0"
+          class="text-h2 font-weight-bold"
         >
-          <h1
-            v-if="currentBoard.name.length > 0"
-            class="text-h2 font-weight-bold"
-          >
-            {{ currentBoard.name }}
-          </h1>
-          <h1 v-else class="text-h2 font-weight-bold">
-            Create A New Tree to get started!
-          </h1>
-        </div>
+          {{ currentBoard.name }}
+        </h1>
+        <h1 v-else class="text-h2 font-weight-bold">
+          Create A New Tree to get started!
+        </h1>
 
         <v-btn
           class="tree-buttons"
