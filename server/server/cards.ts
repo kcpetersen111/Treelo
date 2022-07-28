@@ -87,8 +87,8 @@ export const cardSetUp = function(app:any){
        res.status(200).json(card);
     });
 
-    app.get("/board/:boardId/container/:containerId/card",async (req:Request, res:Response) => {
-        const boardId = req.params.boardId;
+    app.get("/container/:containerId/card",async (req:Request, res:Response) => {
+        // const boardId = req.params.boardId;
         const containerId = req.params.containerId;
 
         if(!req.user){
@@ -97,7 +97,7 @@ export const cardSetUp = function(app:any){
         }
         let container;
         try {
-            container = await Containers.findById(containerId);
+            container = await Containers.findById(containerId).populate('cards');
         } catch (error) {
             res.status(500).json(error);
             return;
@@ -141,6 +141,7 @@ export const cardSetUp = function(app:any){
                     name: req.body.name,
                     date: req.body.date,
                     category: req.body.category,
+                    done: req.body.done,
                 }
                     ,{new:true});
         } catch (error) {

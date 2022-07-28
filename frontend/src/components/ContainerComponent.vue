@@ -26,7 +26,9 @@
         :fetchCards="fetchAllCards"
         :containerID="containerData._id"
         :cardIndex="index"
+        :cardDone="cardDone"
         :updateCard="updateCard"
+        
       />
       <div class="text-right mr-2">
         <v-btn
@@ -100,14 +102,46 @@ export default {
         console.log("ERROR", response.status);
       }
     },
-    fetchAllCards: async function () {
-      this.fetchedCards = [];
+    cardDone: async function(index:number) {
+      let tempCard = this.fetchedCards[index];
+      tempCard.done = !tempCard.done;
 
-      for (let i = 0; i < this.cards.length; i++) {
-        let id = this.cards[i];
-        let fetchedCard = await this.fetchCard(id);
-        this.fetchedCards.push(fetchedCard);
+      let response = await fetch(`${URL}/card/${tempCard._id}`,{
+        method: "PATCH",
+        credentials: "include",
+        body:JSON.stringify(tempCard),
+        headers:{
+          "Content-Type": "application/json",
+        },
+      }); 
+
+      if(response.status == 200){
+        this.fetchedCards[index] = await response.json();
+        // this.fetchCard(this.fetchedCards[index]._id);
+        this.fetchAllCards();
+      } else{
+        console.log("ERROR", response.status, response);
+
       }
+      // console.log(this.fetchedCards[index]);
+    },
+    fetchAllCards: async function () {
+      let response = await fetch(`${URL}/container/${this.containerData._id}/card`,{
+        credentials: "include",
+      });
+      
+      if (response.status == 200) {
+        this.fetchedCards = await response.json();
+        
+      } else {
+        console.log("ERROR", response.status, response);
+      }
+
+      // for (let i = 0; i < this.cards.length; i++) {
+      //   let id = this.cards[i];
+      //   let fetchedCard = await this.fetchCard(id);
+      //   this.fetchedCards.push(fetchedCard);
+      // }
     },
     fetchCard: async function (id: Number) {
       let response = await fetch(`${URL}/card/${id}`, {
@@ -203,3 +237,8 @@ export default {
   },
 };
 </script>
+<style>
+  .done div div:not(button){
+    /* text-decoration: line-through !important;*/
+  }
+</style>

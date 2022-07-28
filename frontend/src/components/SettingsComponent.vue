@@ -1,49 +1,60 @@
 <template>
-  <v-app style="background-image: url('https://t3.ftcdn.net/jpg/02/65/41/32/360_F_265413209_odsMQCc5XqnZPtm8mseWbomCEQSN945n.jpg'); background-repeat:no-repeat; background-size: cover; background-attachment: fixed;">
-    <v-card class="mx-auto mt-10 rounded-lg" width="60vw" height="60vh" color="black" style="opacity:0.8">
-      <v-card width="90%" class="mx-auto mt-3" height="90%" style="background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDp5O3D0lIron9kM_n2n4ttsyJ3eVAEbmfEg&usqp=CAU'); background-size: cover;">
-        <div class="pt-4">
-          <v-card-title style="font-size: medium;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;" class="flex justify-center mt-2">Here you can update your personal info, or Logout</v-card-title>
-          <v-btn @click="logOut()" style="float:right" class="mr-9">Sign Out</v-btn>
-          <v-text-field
-            class="pl-8 mb-4"
-            dense
-            label="Username"
-            hint="Username"
-            color="black"
-            full-width
-            v-ripple
-            style="width:40%"
-            v-model='updatedUsername'
-          ></v-text-field>
-          <v-text-field
-            class="pl-8 mb-4"
-            dense
-            label="Password"
-            hint="Password"
-            type="password"
-            color="black"
-            full-width
-            v-ripple
-            style="width:40%"
-            v-model='updatedPassword'
-          ></v-text-field>
-          <v-btn style="float:right" class="mr-9" large @click="updateSettings()" >Update your settings!</v-btn>
-          <v-text-field
-            class="pl-8 mb-4"
-            dense
-            label="Email"
-            hint="Email"
-            color="black"
-            full-width
-            v-ripple
-            style="width:40%"
-            v-model='updatedEmail'
-          ></v-text-field>
-        
-        </div>
+  <v-app
+    style="
+      background-image: url('https://t3.ftcdn.net/jpg/02/65/41/32/360_F_265413209_odsMQCc5XqnZPtm8mseWbomCEQSN945n.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+    "
+  >
+    <v-container
+      class="mx-auto mt-8 rounded-lg font-weight-bold"
+      color="black"
+      style="width: 50%"
+    >
+      <v-card
+        class="pa-8"
+        style="
+          background-image: url('https://static.vecteezy.com/ti/vecteur-libre/p2/2422203-resume-nature-montagne-vue-bleu-et-vert-fond-degrade-gratuit-vectoriel.jpg');
+          background-size: cover;
+        "
+      >
+        <v-card-title class="flex justify-center mt-2 font-weight-bold">
+          Update User Profile
+        </v-card-title>
+
+        <v-text-field
+          v-model="updatedUsername"
+          label="Username"
+          hint="Username"
+          color="black"
+          dense
+          v-ripple
+        ></v-text-field>
+        <v-text-field
+          label="Password"
+          hint="Password"
+          type="password"
+          color="black"
+          dense
+          v-ripple
+          v-model="updatedPassword"
+        ></v-text-field>
+        <v-text-field
+          label="Email"
+          hint="Email"
+          color="black"
+          dense
+          v-ripple
+          v-model="updatedEmail"
+        ></v-text-field>
+
+        <v-btn class="ma-4" large @click="updateSettings()">
+          Update settings
+        </v-btn>
+        <v-btn large @click="logOut()"> Sign Out </v-btn>
       </v-card>
-    </v-card>
+    </v-container>
   </v-app>
 </template>
 
@@ -58,32 +69,33 @@ export default {
     //
     updatedUsername: "",
     updatedPassword: "",
-    updatedEmail: ""
+    updatedEmail: "",
   }),
   methods: {
-    updateSettings: async function(){
-      let newSettings ={
+    updateSettings: async function () {
+      let newSettings = {
         username: this.updatedEmail,
         name: this.updatedUsername,
-        password: this.updatedPassword
-      }
-      console.log(newSettings);
-      let response = await fetch(URL + "/users",{
+        password: this.updatedPassword,
+      };
+      // console.log(newSettings);
+      let response = await fetch(URL + "/users", {
         method: "PATCH",
         body: JSON.stringify(newSettings),
-        headers:{
-          "Content-Type" : "application/json"
+        headers: {
+          "Content-Type": "application/json",
         },
-        credentials: "include"
+        credentials: "include",
       });
-      if(response.status == 200){
+      if (response.status == 200) {
         console.log("updating was a sucess!");
         this.updatedEmail = "";
         this.updatedUsername = "";
         this.updatedPassword = "";
-      }else{
-        console.log("Error",response.status,response);
+      } else {
+        console.log("Error", response.status, response);
       }
+      console.log(await response.json());
     },
     logOut: async function () {
       let response = await fetch(URL + "/session", {
