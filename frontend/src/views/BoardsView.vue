@@ -2,7 +2,7 @@
   <div class="board" >
     <v-container v-if="boards.length !=0 && loggedIn" >
       <div v-if="!newBoard">
-        <span style="display: flex; justify-content: center">
+        <span style="display: flex; justify-content: center; margin-bottom: 3%;">
           <v-btn
             v-if="boards.length > 1 && currentBoardIndex > 0"
             @click="moveBoardIndex(-1)"
