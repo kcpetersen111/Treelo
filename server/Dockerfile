@@ -30,7 +30,7 @@ COPY package*.json . ../server-build/
 
 RUN cd ../server-build/. && npm install
 
-EXPOSE 8081
+EXPOSE ${PORT}
 
 # CMD [ "ls" ]
 
