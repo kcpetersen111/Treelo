@@ -22,6 +22,7 @@
         :containerID="containerData._id"
         :cardIndex="index"
         :cardDone="cardDone"
+        :updateCard="updateCard"
         
       />
       <div class="text-right mr-2">
@@ -109,6 +110,8 @@ export default {
 
       if(response.status == 200){
         this.fetchedCards[index] = await response.json();
+        // this.fetchCard(this.fetchedCards[index]._id);
+        this.fetchAllCards();
       } else{
         console.log("ERROR", response.status, response);
 

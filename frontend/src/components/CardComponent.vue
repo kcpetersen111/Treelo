@@ -41,6 +41,7 @@ export default {
     containerID:{},
     cardData: Object,
     cardIndex: Number,
+    updateCard:Function,
     
   },
   data: function () {

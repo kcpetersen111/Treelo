@@ -141,6 +141,7 @@ export const cardSetUp = function(app:any){
                     name: req.body.name,
                     date: req.body.date,
                     category: req.body.category,
+                    done: req.body.done,
                 }
                     ,{new:true});
         } catch (error) {
