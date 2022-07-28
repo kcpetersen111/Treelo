@@ -2,9 +2,16 @@
   <!-- V-Card for entire container -->
   <v-card style="background-color: rgb(215, 225, 225)">
     <div fab style="float: right">
-      <v-btn @click="deleteContainer()" fab x-small
-        ><v-icon>mdi-axe</v-icon></v-btn
-      >
+      <v-tooltip bottom color="primary">
+        <template v-slot:activator="{on,attrs}">
+          <v-btn class="tree-buttons"
+          v-on="on"
+          v-bind="attrs"
+          fab x-small
+          @click="deleteContainer()"><v-icon>mdi-axe</v-icon></v-btn>
+        </template>
+        <span>Delete</span>
+      </v-tooltip>    
     </div>
     <v-card-title
       class="text-h4 blue--text font-weight-bold text-wrap"
