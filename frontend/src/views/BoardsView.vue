@@ -130,7 +130,8 @@
 
 <script lang="ts">
 // @ is an alias to /src
-let URL = "http://localhost:8081";
+// let URL = "http://localhost:8081";
+import {URL} from '../config';
 import Vue from "vue";
 import BoardComponent from "@/components/BoardComponent.vue";
 

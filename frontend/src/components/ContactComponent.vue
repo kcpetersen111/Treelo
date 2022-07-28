@@ -114,7 +114,8 @@
 </template>
 
 <script lang="ts">
-let URL = "http://localhost:8081";
+// let URL = "http://localhost:8081";
+import {URL} from '../config';
 import Vue from "vue";
 export default Vue.extend({
   name: "ContactComponent",

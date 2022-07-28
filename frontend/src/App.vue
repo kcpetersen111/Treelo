@@ -78,7 +78,7 @@
 </template>
 
 <script lang="ts">
-let URL = "http://localhost:8081";
+import {URL} from './config';
 import Vue from "vue";
 
 export default Vue.extend({
@@ -112,6 +112,7 @@ export default Vue.extend({
     changeRoute(route){
       this.$router.replace({path:route});
     },
+    // will get the name so that it can show up at the top
     kalebsMethod: async function () {
       let response = await fetch(URL + "/session", {
         method: "GET",
