@@ -70,7 +70,7 @@ app.patch("/users", async (req:Request, res:Response)=>{
     }
     
     try {
-        user = await User.findByIdAndUpdate(user.id,newUser,{new:true});
+        user = await User.findByIdAndUpdate(user.id,newUser,{new:true}).select("-password");
     } catch (error) {
         res.status(500).json(error);
         console.log(error);
