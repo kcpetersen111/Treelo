@@ -1,36 +1,40 @@
 <template>
   <div class="board">
-    <v-container
-      v-if="loggedIn"
-      class="flex justify-center align-center"
-      style="background-color: rgba(155, 155, 155, 0.7)"
-    >
-      <span class="flex justify-center align-center">
+    <v-container v-if="loggedIn" class="flex justify-center align-center">
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: rgba(155, 155, 155, 0.7);
+        "
+      >
         <v-btn
           class="tree-buttons"
           color="blue-grey lighten-3"
           v-if="boards.length > 1 && currentBoardIndex > 0"
           @click="moveBoardIndex(-1)"
         >
-          <v-icon style="transform: rotate(270deg)"> mdi-pine-tree</v-icon>
+          <v-icon style="transform: rotate(270deg)">mdi-pine-tree</v-icon>
         </v-btn>
 
-        <h1
+        <div
           v-if="currentBoard.name.length > 0"
           class="text-h2 font-weight-bold"
         >
           {{ currentBoard.name }}
-        </h1>
-        <h1 v-else class="text-h2 font-weight-bold">
+        </div>
+        <div v-else class="text-h2 font-weight-bold">
           Create A New Tree to get started!
-        </h1>
+        </div>
 
         <v-btn
           class="tree-buttons"
           color="blue-grey lighten-3"
           v-if="boards.length > 1 && currentBoardIndex < boards.length - 1"
           @click="moveBoardIndex(1)"
-          ><v-icon style="transform: rotate(90deg)">mdi-pine-tree</v-icon>
+        >
+          <v-icon style="transform: rotate(90deg)">mdi-pine-tree</v-icon>
         </v-btn>
 
         <v-btn
@@ -41,47 +45,13 @@
         >
           +<v-icon>mdi-forest</v-icon>
         </v-btn>
-      </span>
+      </div>
 
       <BoardComponent
         :boardData="currentBoard"
         :fetchBoards="fetchBoards"
         :key="currentBoardIndex"
       />
-    </v-container>
-
-    <v-container v-else-if="false">
-      <div class="boardName" style="margin-left: 150px; margin-right: 150px">
-        <h1 class="text-h2 black--text font-weight-bold"></h1>
-        <div v-if="newBoard">
-          <span style="display: flex; justify-content: center">
-            <v-text-field
-              maxlength="25"
-              v-model="boardInfo"
-              placeholder="Tree Name"
-            ></v-text-field>
-          </span>
-          <v-btn
-            class="tree-buttons mb-3"
-            color="blue-grey lighten-3"
-            @click="
-              newBoard = false;
-              boardInfo = '';
-            "
-            small
-          >
-            Cancel
-          </v-btn>
-          <v-btn
-            @click="postBoard()"
-            small
-            class="ml-4 mb-3 tree-buttons"
-            color="blue-grey lighten-3"
-          >
-            Create
-          </v-btn>
-        </div>
-      </div>
     </v-container>
 
     <!--
@@ -106,20 +76,24 @@
         <v-card-title>Create A Tree</v-card-title>
         <v-text-field
           class="px-3"
+          maxlength="25"
           placeholder="Tree Name"
           v-model="boardInfo"
         ></v-text-field>
         <div style="display: flex; justify-content: space-between">
           <v-btn
-            small
+            class="tree-buttons"
             @click="
               newBoard = false;
               boardInfo = '';
             "
+            small
           >
             Cancel
           </v-btn>
-          <v-btn small @click="postBoard()">Submit</v-btn>
+          <v-btn @click="postBoard()" small class="tree-buttons">
+            Create
+          </v-btn>
         </div>
       </v-card>
     </v-overlay>

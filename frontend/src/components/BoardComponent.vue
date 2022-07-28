@@ -22,7 +22,11 @@
     >
       <v-card class="blue pa-8">
         <v-card-title>Create A Branch</v-card-title>
-        <v-text-field class="px-3" placeholder="Branch Name">
+        <v-text-field
+          class="px-3"
+          placeholder="Branch Name"
+          v-model="containerInfo"
+        >
           {{ containerInfo }}
         </v-text-field>
         <div style="display: flex; justify-content: space-between">
@@ -172,28 +176,3 @@ export default Vue.extend({
   },
 });
 </script>
-
-<!-- // {
-//   // container 3
-//   id: 0,
-//   name: "My Container 3",
-//   containerDescription:
-//     "This container is also definitely for something",
-//   cards: [
-//     // list of cards
-//     {
-//       // card 1
-//       id: 0,
-//       name: "My card 1 (container 3)",
-//       description: "Card description",
-//       time: "01/01/2022",
-//     },
-//     {
-//       // card 2
-//       id: 1,
-//       name: "My card 2 (container 3)",
-//       description: "Card 2 description",
-//       time: "01/02/2022",
-//     },
-//   ],
-// }, -->
