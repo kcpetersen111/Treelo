@@ -4,9 +4,14 @@
     <div fab style=" float:right;"> 
       <v-btn @click="deleteContainer()" fab x-small><v-icon>mdi-axe</v-icon></v-btn>
     </div>
-    <v-card-title class="text-h4 purple--text font-weight-bold">
+    <v-card-title class="text-h4 purple--text font-weight-bold" @click="newContainer = true; containerInfo = containerData.name" v-if="!newContainer">
       {{ containerData.name }}
     </v-card-title>
+    <div v-if="newContainer">
+      <v-text-field  v-model="containerInfo" autofocus></v-text-field>
+      <v-btn @click="newContainer = false"><v-icon>mdi-undo</v-icon></v-btn>
+      <v-btn @click="updateContainer()"><v-icon>mdi-sprout</v-icon></v-btn>
+    </div>
     <!--
     <v-card-text>
       {{ containerData.description }}
@@ -72,6 +77,8 @@ export default {
   },
   data: () => ({
     cards: [],
+    newContainer: false,
+    containerInfo: "",
     fetchedCards: [],
     newCard: false,
     cardInfo: "",
@@ -156,6 +163,26 @@ export default {
         this.fetchAllCards();
       } else {
         console.log("ERROR", response.status, response);
+      }
+    },
+    updateContainer: async function(){
+      let info = {
+        name: this.containerInfo,
+      };
+      let response = await fetch(`${URL}/container/${this.containerData._id}`,{
+        method: "PATCH",
+        body: JSON.stringify(info),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      if (response.status == 201){
+        this.fetchContainers();
+        this.newContainer = false;
+      }else{
+        console.log("ERROR: ", response.status);
       }
     },
     // FETCH - Patch new card (callback for card component)

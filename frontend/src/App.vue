@@ -60,18 +60,18 @@
       grow
       >
       <v-btn @click="changeRoute('/login')">
-        <span>Login</span>
-        <v-icon>mdi-login</v-icon>
+        <span class="white--text">Login</span>
+        <v-icon class="white--text">mdi-login</v-icon>
       </v-btn>
 
       <v-btn @click="changeRoute('/contact')">
-        <span>Contact Us</span>
-        <v-icon>mdi-email</v-icon>
+        <span class="white--text">Contact Us</span>
+        <v-icon class="white--text">mdi-email</v-icon>
       </v-btn>
 
       <v-btn @click="changeRoute('/about')">
-        <span>About Us</span>
-        <v-icon>mdi-human-greeting-variant</v-icon>
+        <span class="white--text">About Us</span>
+        <v-icon class="white--text">mdi-human-greeting-variant</v-icon>
       </v-btn>
     </v-bottom-navigation>
   </v-app>
