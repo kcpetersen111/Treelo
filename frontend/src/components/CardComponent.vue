@@ -7,7 +7,8 @@
       <v-card-title
         @click="editCard()"
         v-if="!editing"
-        class="justify-center green--text text--darken-2 font-weight-bold pr-1"
+        class="justify-center green--text text--darken-2 font-weight-bold pr-1 magiccrossout"
+        :class="{done:cardData.done}"
       >
         {{ cardData.name }}
         <!-- {{ card.description }} -->
@@ -22,9 +23,10 @@
           v-model="newCard.name"
           autofocus
         ></v-text-field>
-        <v-btn class="mb-2" @click="deleteCard()">-<v-icon>mdi-axe</v-icon></v-btn>
-        <v-btn class="ml-2 mb-2" @click="updateCardLocal()">+<v-icon>mdi-forest</v-icon></v-btn>
-        <v-btn class="ml-2 mb-2" @click="editCard()"><v-icon>mdi-undo</v-icon></v-btn>
+        <v-btn class="ml-1 mb-2" small @click="cardDone(cardIndex); editing = false;"><v-icon>mdi-check</v-icon></v-btn>
+        <v-btn class="ml-1 mb-2" small @click="deleteCard()">-<v-icon>mdi-axe</v-icon></v-btn>
+        <v-btn class="ml-1 mb-2" small @click="updateCardLocal()">+<v-icon>mdi-forest</v-icon></v-btn>
+        <v-btn class="ml-1 mb-2" small @click="editCard()"><v-icon>mdi-undo</v-icon></v-btn>
       </div>
     </v-card>
 </template>
@@ -35,10 +37,11 @@ export default {
   name: "CardComponent",
   props: {
     fetchCards: Function,
+    cardDone: Function,
     containerID:{},
     cardData: Object,
     cardIndex: Number,
-    updateCard: Function,
+    
   },
   data: function () {
     return {
@@ -80,7 +83,13 @@ export default {
     },
     cancelUpdate: function () {
       this.editing = false;
-    }
+    },
+    
   },
 };
 </script>
+<style>
+  .done{
+    text-decoration: line-through !important;
+  }
+</style>
