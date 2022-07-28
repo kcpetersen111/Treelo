@@ -8,11 +8,11 @@
             @click="moveBoardIndex(-1)"
             ><v-icon style="transform: rotate(270deg);"> mdi-pine-tree</v-icon>
           </v-btn>
-
-          <h1 class="text-h2 blue--text font-weight-bold">
+          <div class="boardName">
+          <h1 class="text-h2 white--text font-weight-bold">
             {{ currentBoard.name }}
           </h1>
-
+          </div>
           <v-btn
             v-if="boards.length > 1 && currentBoardIndex < boards.length - 1"
             @click="moveBoardIndex(1)"
@@ -24,15 +24,15 @@
         </span>
         <BoardComponent :boardData="currentBoard" :fetchBoards="fetchBoards" :key="currentBoardIndex" />
       </div>
-      <div v-if="newBoard">
+      <div v-if="newBoard" class="boardName">
         <span style="display: flex; justify-content:center">
-          <v-text-field v-model="boardInfo" placeholder="Tree Name"></v-text-field>
+          <v-text-field maxlength="25" v-model="boardInfo" placeholder="Tree Name"></v-text-field>
         </span>
-        <v-btn @click="newBoard = false;">
+        <v-btn @click="newBoard = false;" x-small>
           Cancel
         </v-btn>
-        <v-btn @click="postBoard()">
-          Submit
+        <v-btn @click="postBoard()" x-small class="ml-4">
+         Create 
         </v-btn>
       </div>
     </v-container>
@@ -41,25 +41,29 @@
     Show a loading screen if we haven't received a response yet
   -->
     <v-container v-else-if="loggedIn">
-          <v-btn @click="newBoard = true;">
+      <div class="boardName">
+        <h1 class="text-h2 white--text font-weight-bold">Create A New Tree to get started!</h1>
+        <div v-if="newBoard">
+          <span style="display: flex; justify-content:center">
+            <v-text-field maxlength="25" v-model="boardInfo" placeholder="Tree Name"></v-text-field>
+          </span>
+          <v-btn @click="newBoard = false; boardInfo = '';" x-small>
+            Cancel
+          </v-btn>
+          <v-btn @click="postBoard()" x-small class="ml-4">
+           Create 
+          </v-btn>
+        </div>
+      </div>
+          <v-btn v-if="!newBoard" @click="newBoard = true;">
             +<v-icon>mdi-forest</v-icon>
           </v-btn>
-      <h1 class="text-h2 blue--text font-weight-bold">Create A New Tree to get started!</h1>
-      <div v-if="newBoard">
-        <span style="display: flex; justify-content:center">
-          <v-text-field maxlength="30" v-model="boardInfo" placeholder="Tree Name"></v-text-field>
-        </span>
-        <v-btn @click="newBoard = false; boardInfo = '';">
-          Cancel
-        </v-btn>
-        <v-btn @click="postBoard()">
-          Submit
-        </v-btn>
-      </div>
     </v-container>
 
     <v-container v-else>
-      <h1 class="blue--text font-weight-bold">Loading ....</h1>
+      <div class="boardName">
+        <h1 class="white--text font-weight-bold">Loading ....</h1>
+      </div>
     </v-container>
   </div>
 </template>
@@ -177,5 +181,11 @@ export default Vue.extend({
   background-size: cover;
   height: 100%;
 
+}
+.boardName{
+  background-color: rgba(95, 168, 242, 0.98);
+  justify-content: center;
+  margin: 0;
+  padding: 0 20%;
 }
 </style>
