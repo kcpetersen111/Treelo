@@ -16,10 +16,10 @@
       <v-text-field
         class="rounded-pill"
         label="Email"
-        outlined
         color="black"
         v-model="usernameInput"
         :rules="[rules.requiredEmail, rules.email]"
+        outlined
         autofocus
       ></v-text-field>
 
@@ -67,7 +67,7 @@
 
 <script lang="ts">
 // let URL = "http://localhost:8081";
-import {URL} from '../config';
+import { URL } from "../config";
 export default {
   name: "LoginComponent",
   props: {
