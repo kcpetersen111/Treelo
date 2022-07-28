@@ -14,16 +14,37 @@ export const boardSetUp = function(app:any){
         }
         let boards:[typeof Boards];
         try {
-            boards = await Boards.find({creatorID:{$all:req.user.id} }).populate({
-                path:"container",
-                populate:{
-                    path:"events"
-                } 
-            });
+            boards = await Boards.find({creatorID:{$all:req.user.id} });    
 
         } catch (error) {
             res.status(500).json({
                 message:"Internal server error, could not create board",
+                error:error,
+            });
+            return;
+        }
+
+        res.status(200).json(boards);
+    });
+
+    app.get("/board/populated", async (req:Request, res:Response)=>{
+        if (!req.user){
+            res.status(401).json({message:"unauthed"});
+            return;
+        }
+        let boards:[typeof Boards];
+        try {
+            boards = await Boards.find({creatorID:{$all:req.user.id} }).populate({
+                path:"container",
+                populate:{
+                    path:"cards"
+                } 
+            });
+
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                message:"Internal server error",
                 error:error,
             });
             return;
