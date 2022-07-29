@@ -1,11 +1,11 @@
 <template>
   <!-- V-Card for entire container -->
   <v-card style="background-color: rgb(215, 225, 225)">
-    <div fab style="float: right; padding: 0.5rem">
+    <div fab style="float: right">
       <v-tooltip bottom color="primary">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-            class="tree-buttons"
+            class="tree-buttons ma-2"
             v-on="on"
             v-bind="attrs"
             fab
@@ -14,9 +14,10 @@
             ><v-icon>mdi-axe</v-icon></v-btn
           >
         </template>
-        <span>Delete Branch</span>
+        <span>Delete</span>
       </v-tooltip>
     </div>
+
     <v-card-title
       class="text-h4 blue--text font-weight-bold text-wrap container-hover"
       @click="
@@ -27,8 +28,13 @@
     >
       {{ containerData.name }}
     </v-card-title>
+
     <div v-if="newContainer">
-      <v-text-field v-model="containerInfo" autofocus></v-text-field>
+      <v-text-field
+        v-model="containerInfo"
+        autofocus
+        class="font-weight-bold px-6"
+      ></v-text-field>
       <v-tooltip bottom color="primary">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
@@ -54,11 +60,6 @@
         <span>Save Changes</span>
       </v-tooltip>
     </div>
-    <!--
-    <v-card-text>
-      {{ containerData.description }}
-    </v-card-text>
-    -->
 
     <v-list style="background-color: rgb(215, 225, 225)">
       <CardComponent
@@ -100,7 +101,7 @@
           autofocus
         ></v-text-field>
         <v-btn v-if="newCard" @click="newCard = !newCard">Cancel</v-btn>
-        <v-btn v-if="newCard" @click="postCard()">Submit</v-btn>
+        <v-btn v-if="newCard" @click="postCards()">Submit</v-btn>
       </v-card>
     </v-list>
   </v-card>
@@ -213,7 +214,7 @@ export default {
 
       return card;
     },
-    postCard: async function () {
+    postCards: async function () {
       if (this.cardInfo == "") {
         this.newCard = false;
         return;

@@ -1,64 +1,20 @@
 <template>
   <v-card class="justify-center align-center mb-6 mx-4" style="display: flex">
     <!-- IF not editing card -->
-    <v-card-title
-      @click="editCard()"
-      v-if="!editing"
-      class="
-        justify-center
-        green--text
-        text--darken-2
-        font-weight-bold
-        pr-1
-        card-hovering
+
+    <div
+      fab
+      style="
+        position: relative;
+        float: left;
+        margin-right: auto;
+        padding-left: 0.5rem;
       "
-      :class="{ done: cardData.done }"
     >
-      {{ cardData.name }}
-      <!-- {{ card.description }} -->
-    </v-card-title>
-
-    <!-- IF editing card -->
-    <div v-else>
-      <v-text-field
-        @keydown.enter="updateCardLocal()"
-        @keydown.esc="cancelUpdate()"
-        class="green--text text--darken-2 font-weight-bold px-4"
-        v-model="newCard.name"
-        autofocus
-      ></v-text-field>
       <v-tooltip bottom color="primary">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-            class="ml-1 mb-2 tree-buttons"
-            v-on="on"
-            v-bind="attrs"
-            small
-            @click="editCard()"
-            ><v-icon>mdi-undo</v-icon></v-btn
-          >
-        </template>
-        <span>Go Back</span>
-      </v-tooltip>
-
-      <v-tooltip bottom color="primary">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            class="ml-1 mb-2 tree-buttons"
-            v-on="on"
-            v-bind="attrs"
-            small
-            @click="updateCardLocal()"
-            ><v-icon>mdi-sprout</v-icon></v-btn
-          >
-        </template>
-        <span>Save Changes</span>
-      </v-tooltip>
-
-      <v-tooltip bottom color="primary">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            class="ml-1 mb-2 tree-buttons"
+            class="tree-buttons"
             v-on="on"
             v-bind="attrs"
             small
@@ -73,13 +29,67 @@
       </v-tooltip>
     </div>
 
+    <v-card-title
+      @click="editCard()"
+      v-if="!editing"
+      class="
+        justify-center
+        green--text
+        text--darken-2
+        font-weight-bold
+        card-hovering
+      "
+      :class="{ done: cardData.done }"
+    >
+      {{ cardData.name }}
+      <!-- {{ card.description }} -->
+    </v-card-title>
+
+    <!-- IF editing card -->
+    <div v-else class="my-4">
+      <v-text-field
+        @keydown.enter="updateCardLocal()"
+        @keydown.esc="cancelUpdate()"
+        class="green--text text--darken-2 font-weight-bold"
+        v-model="newCard.name"
+        autofocus
+      ></v-text-field>
+      <v-tooltip bottom color="primary">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            class="tree-buttons"
+            v-on="on"
+            v-bind="attrs"
+            small
+            @click="editCard()"
+            ><v-icon>mdi-undo</v-icon></v-btn
+          >
+        </template>
+        <span>Go Back</span>
+      </v-tooltip>
+
+      <v-tooltip bottom color="primary">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            class="tree-buttons"
+            v-on="on"
+            v-bind="attrs"
+            small
+            @click="updateCardLocal()"
+            ><v-icon>mdi-sprout</v-icon></v-btn
+          >
+        </template>
+        <span>Save Changes</span>
+      </v-tooltip>
+    </div>
+
     <div
       fab
       style="
         position: relative;
         float: right;
         margin-left: auto;
-        padding: 0 0.5rem;
+        padding-right: 0.5rem;
       "
     >
       <v-tooltip bottom color="primary">
