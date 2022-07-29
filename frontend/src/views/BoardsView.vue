@@ -82,7 +82,6 @@
                 v-on="on"
                 v-bind="attrs"
                 fab
-                x-small
                 @click="deleteBoardOverlay = true"
                 ><v-icon>mdi-axe</v-icon></v-btn
               >

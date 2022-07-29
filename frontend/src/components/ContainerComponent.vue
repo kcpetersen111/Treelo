@@ -9,7 +9,7 @@
             v-on="on"
             v-bind="attrs"
             fab
-            x-small
+            small
             @click="deleteContainer()"
             ><v-icon>mdi-axe</v-icon></v-btn
           >

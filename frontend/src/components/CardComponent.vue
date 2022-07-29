@@ -17,12 +17,13 @@
             class="tree-buttons"
             v-on="on"
             v-bind="attrs"
-            small
+            x-small
             @click="
               cardDone(cardIndex);
               editing = false;
             "
-            ><v-icon>mdi-check</v-icon>
+            fab
+            ><v-icon small>mdi-check</v-icon>
           </v-btn>
         </template>
         <span>Check As Complete</span>
