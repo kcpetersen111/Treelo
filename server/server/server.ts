@@ -56,7 +56,7 @@ app.post("/users", async (req:Request,res:Response)=>{
         let user = await User.create({
             name:    req.body.name,
             username: req.body.username,
-            password: req.body.password,
+            password: pword,
         });
         res.status(201).json(user);
     }catch(err){
