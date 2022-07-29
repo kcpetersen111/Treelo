@@ -142,13 +142,15 @@ export default {
       },
       {
         name: "Jake",
-        about: "Jake is pretty cool too",
+        about:
+          "Hey there! I'm Jake. 😃 I have a passion for problem solving, especially when it comes to programming and math. To further my understanding, I am studying Computer Science at Utah Tech University. C++ and Python are my favorite languages, but I am comfortable with many languages and stacks. I have a background in IT hardware/software support, and I am excellent at troubleshooting on all major operating systems. In my spare time, I relax by spending time with my friends and family, walking my dog, reading, cooking, and playing various PC games.",
         github: "https://github.com/Legac3e",
         linkedin: "https://www.linkedin.com/in/jake-duckett-720967116/",
         image: "https://cdn.britannica.com/92/142292-004-459092B7.jpg",
         picture:
-          "https://media-exp1.licdn.com/dms/image/D5635AQEQuyWWbeYLlA/profile-framedphoto-shrink_800_800/0/1654923985946?e=1659110400&v=beta&t=tlrL6yh2bzpvrxs3hI59SM4snY1woPdfrrMOuh3Kb0c",
-        resume: "",
+          "https://media-exp1.licdn.com/dms/image/C5603AQG30n1T4BkUMA/profile-displayphoto-shrink_800_800/0/1601955278830?e=1664409600&v=beta&t=X9uS2NDY53COhG-4c4dBVbD6CBkYeUFJfGa8_uog2u0",
+        // "https://media-exp1.licdn.com/dms/image/D5635AQEQuyWWbeYLlA/profile-framedphoto-shrink_800_800/0/1654923985946?e=1659110400&v=beta&t=tlrL6yh2bzpvrxs3hI59SM4snY1woPdfrrMOuh3Kb0c",
+        resume: "https://github.com/Legac3e/Resume",
       },
     ],
     //
