@@ -25,7 +25,12 @@ passport.use(
 
         let pword:boolean = await bcrypt.compare(password,user.password);
         
+        console.log(user);
+        console.log(password);
+        console.log(pword);
+
         if(!pword){
+            console.log(`someone tried to login as ${user.name} but the password did not match the one in the db`)
             return done(null,false);
         }
 
@@ -34,6 +39,7 @@ passport.use(
             return done(null,false);
         }
         //successful attempt
+        console.log("end of localstrat");
         return done(null, user);
     } catch(err){
         //this is for errors
@@ -60,6 +66,8 @@ export const setUpAuth = function(app:any){
 
     app.get("/session",(req:any,res:any)=>{
         if(!req.user){
+            //this console log was not running so im just so confused where the 401 is coming from
+            console.log("In get session req.user does not exist");
             res.status(401).json({message:"unauthed"});
             return;
         }
