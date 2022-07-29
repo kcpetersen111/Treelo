@@ -306,5 +306,6 @@ export default {
 .container-hover:hover {
   background-color: rgb(215, 225, 225);
   opacity: 0.8;
+  cursor: pointer;
 }
 </style>
