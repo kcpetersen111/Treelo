@@ -12,6 +12,17 @@
           :fetchContainers="fetchContainers"
         />
       </v-col>
+
+      <v-col md="4">
+        <v-card class="py-5" style="background-color: rgb(215, 225, 225)">
+          <v-btn
+            @click="newContainer = true"
+            class="tree-buttons"
+            color="blue-grey lighten-3"
+            >Create a branch&nbsp;<v-icon>mdi-source-branch</v-icon>
+          </v-btn>
+        </v-card>
+      </v-col>
     </v-row>
 
     <v-overlay
@@ -34,42 +45,6 @@
           <v-btn small @click="newContainer = false">Cancel</v-btn>
           <v-btn small @click="postContainer()">Submit</v-btn>
         </div>
-      </v-card>
-    </v-overlay>
-
-    <div style="position: fixed; right: 1%; bottom: 10%">
-      <v-btn
-        @click="newContainer = true"
-        class="tree-buttons"
-        color="blue-grey lighten-3"
-        >+<v-icon>mdi-source-branch</v-icon>
-      </v-btn>
-      <v-btn
-        @click="overlay = !overlay"
-        class="tree-buttons"
-        color="blue-grey lighten-3"
-      >
-        -<v-icon>mdi-axe</v-icon></v-btn
-      >
-    </div>
-
-    <v-overlay :value="overlay">
-      <v-card
-        class="pa-16 ma-auto white--text"
-        style="
-          background-image: url('https://images.unsplash.com/photo-1613858636109-354616495373?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80');
-          background-size: cover;
-        "
-      >
-        <v-card-title class="font-weight-bold text-h4"
-          >Are You Sure You want to delete?</v-card-title
-        >
-        <v-card-actions>
-          <v-btn x-large @click="overlay = false">Cancel</v-btn>
-          <v-btn x-large @click="deleteBoard()"
-            ><v-icon>mdi-fire-alert</v-icon></v-btn
-          >
-        </v-card-actions>
       </v-card>
     </v-overlay>
   </v-container>
@@ -124,31 +99,6 @@ export default Vue.extend({
         } else {
           console.log("ERROR", response.status, response);
         }
-      }
-    },
-    deleteBoard: async function () {
-      // let userWantsToDeleteBoard = confirm(
-      //   `Are you sure you want to delete the "${this.boardData.name}" tree?`
-      // );
-      // if (!userWantsToDeleteBoard) return;
-
-      let boardID = this.boardData._id;
-      let response = await fetch(`${URL}/board/${boardID}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
-
-      if (response.status == 200) {
-        console.log("delete successful");
-        // this.boardData = null;
-        // this.boardData = await response.json();
-        // this.$forceUpdate();
-        // this.currentBoardIndex --;
-        // this.boardData.fetchBoards();
-        console.log(this.boardData);
-        this.fetchBoards();
-      } else {
-        console.log("Error while deleting", response.status);
       }
     },
     postContainer: async function () {
