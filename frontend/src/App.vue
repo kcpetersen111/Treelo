@@ -31,7 +31,7 @@
       dark
       src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
     >
-      <v-app-bar-nav-icon @click="openNav()" v-if="username"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="openNav()"></v-app-bar-nav-icon>
 
       <v-toolbar-title class="text-h4 font-weight-bold">
         Treelo
@@ -40,8 +40,27 @@
       <div v-if="username" class="pr-4">
         Hello {{ username.charAt(0).toUpperCase() + username.slice(1) }}!
       </div>
-      <v-btn v-if="username" color="indigo" fab class="mx-auto mr-3" @click="changeRoute('/settings')">
-        <v-icon color="green"> mdi-pine-tree </v-icon>
+
+      <v-btn
+        v-if="username"
+        color="indigo"
+        class="ma-2"
+        @click="changeRoute('/settings')"
+        medium
+        fab
+      >
+        <span
+          class="mt-4"
+          style="
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <v-icon large color="green"> mdi-pine-tree </v-icon>
+          <p class="mt-1" style="font-size: 0.5rem">Settings</p>
+        </span>
       </v-btn>
     </v-app-bar>
 
@@ -49,16 +68,15 @@
       <router-view :key="$route.path" />
     </v-main>
 
-    
-    <v-bottom-navigation 
-    v-if="username == ''"
-    width="100%"
-    style="
+    <v-bottom-navigation
+      v-if="username == ''"
+      width="100%"
+      style="
         background-image: url('https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg');
         background-size: cover;
       "
       grow
-      >
+    >
       <v-btn @click="changeRoute('/login')">
         <span class="white--text">Login</span>
         <v-icon class="white--text">mdi-login</v-icon>
@@ -78,7 +96,7 @@
 </template>
 
 <script lang="ts">
-import {URL} from './config';
+import { URL } from "./config";
 import Vue from "vue";
 
 export default Vue.extend({
@@ -109,8 +127,8 @@ export default Vue.extend({
     ],
   }),
   methods: {
-    changeRoute(route){
-      this.$router.replace({path:route});
+    changeRoute(route) {
+      this.$router.replace({ path: route });
     },
     // will get the name so that it can show up at the top
     kalebsMethod: async function () {
@@ -118,20 +136,23 @@ export default Vue.extend({
         method: "GET",
         credentials: "include",
       });
-      if (response.status != 200 && this.$router.currentRoute.path != '/login') {
-        this.$router.replace({path: "/login"});
+      if (
+        response.status != 200 &&
+        this.$router.currentRoute.path != "/login"
+      ) {
+        this.$router.replace({ path: "/login" });
       } else if (response.status == 200) {
         let body = await response.json();
         this.username = body.name;
-        if (this.$router.currentRoute.path != '/board')
-          this.$router.replace({path: "/board"});
+        if (this.$router.currentRoute.path != "/board")
+          this.$router.replace({ path: "/board" });
       }
     },
     openNav: function () {
-      if (this.username) {
-        this.drawer = !this.drawer;
-      }
-    }
+      // if (this.username) {
+      this.drawer = !this.drawer;
+      // }
+    },
   },
   created() {
     this.kalebsMethod();
