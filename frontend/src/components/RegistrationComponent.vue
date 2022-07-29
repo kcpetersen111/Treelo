@@ -58,7 +58,7 @@
               Sign Up
             </v-btn>
           </v-card-actions>
-          <v-alert v-show="show" tpye="error" dismissible>Test</v-alert>
+          <v-alert v-show="show" type="error" dismissible>That email is taken</v-alert>
         </v-card>
       </v-main>
     </v-parallax>
