@@ -14,7 +14,7 @@
             ><v-icon>mdi-axe</v-icon></v-btn
           >
         </template>
-        <span>Delete</span>
+        <span>Delete Branch</span>
       </v-tooltip>
     </div>
     <v-card-title
@@ -51,7 +51,7 @@
             ><v-icon>mdi-sprout</v-icon></v-btn
           >
         </template>
-        <span>Add Your Changes</span>
+        <span>Save Changes</span>
       </v-tooltip>
     </div>
     <!--
@@ -92,8 +92,6 @@
           hyphens: auto;
         "
       >
-        <!--note-plus-outline-->
-
         <v-text-field
           class="mx-4"
           v-if="newCard"
@@ -102,7 +100,7 @@
           autofocus
         ></v-text-field>
         <v-btn v-if="newCard" @click="newCard = !newCard">Cancel</v-btn>
-        <v-btn v-if="newCard" @click="postCards()">Submit</v-btn>
+        <v-btn v-if="newCard" @click="postCard()">Submit</v-btn>
       </v-card>
     </v-list>
   </v-card>
@@ -215,7 +213,7 @@ export default {
 
       return card;
     },
-    postCards: async function () {
+    postCard: async function () {
       if (this.cardInfo == "") {
         this.newCard = false;
         return;
