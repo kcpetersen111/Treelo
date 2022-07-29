@@ -23,7 +23,7 @@
             @click="newContainer = !newContainer"
             class="tree-buttons justify-center"
             color="blue-grey lighten-3"
-            >Add a container&nbsp;<v-icon>mdi-leaf</v-icon></v-btn
+            >Add A Branch&nbsp;<v-icon>mdi-leaf</v-icon></v-btn
           >
         </v-card>
 
@@ -38,9 +38,9 @@
           "
         >
           <v-text-field
-            class="mx-4"
             v-if="newContainer"
-            placeholder="add container info"
+            class="mx-4"
+            placeholder="Add branch info"
             v-model="containerInfo"
             autofocus
           ></v-text-field>
@@ -51,29 +51,6 @@
         </v-card>
       </v-col>
     </v-row>
-
-    <!-- <v-overlay
-      v-if="newContainer"
-      class="justify-center"
-      :z-index="0"
-      :value="newContainer"
-    >
-      <v-card class="blue pa-8">
-        <v-card-title>Create A Branch</v-card-title>
-        <v-text-field
-          class="px-3"
-          placeholder="Branch Name"
-          v-model="containerInfo"
-          autofocus
-        >
-          {{ containerInfo }}
-        </v-text-field>
-        <div style="display: flex; justify-content: space-between">
-          <v-btn small @click="newContainer = false">Cancel</v-btn>
-          <v-btn small @click="postContainer()">Submit</v-btn>
-        </div>
-      </v-card>
-    </v-overlay> -->
   </v-container>
 </template>
 
