@@ -60,7 +60,7 @@
 
 <script>
 // let URL = "http://localhost:8081";
-import {URL} from '../config';
+import { URL } from "../config";
 export default {
   name: "SettingsComponent",
   props: {
@@ -103,9 +103,10 @@ export default {
         method: "DELETE",
         credentials: "include",
       });
+
       if (response.status == 204) {
-        this.$router.replace({path: "/login"})
-        return;
+        this.username = "";
+        this.$router.replace({ path: "/login" });
       }
     },
   },

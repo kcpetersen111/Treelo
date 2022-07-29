@@ -95,6 +95,7 @@ export default {
     },
     postSession: async function () {
       this.show = false;
+
       let loginCredentials = {
         username: this.usernameInput,
         password: this.passwordInput,
@@ -113,7 +114,7 @@ export default {
       console.log(body);
 
       if (response.status == 201) {
-        console.log(" login was a success");
+        console.log("login was a success");
         this.$router.replace({ path: "/board" });
       } else if (response.status == 401) {
         console.log("Unsuccessful");

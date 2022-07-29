@@ -38,7 +38,10 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <div v-if="username" class="pr-4">
-        Hello {{ username.charAt(0).toUpperCase() + username.slice(1) }}!
+        Hello
+        {{
+          username.charAt(0).toUpperCase() + username.slice(1).toLowerCase()
+        }}!
       </div>
 
       <v-btn
@@ -69,7 +72,7 @@
     </v-main>
 
     <v-bottom-navigation
-      v-if="username == ''"
+      v-show="username == ''"
       width="100%"
       style="
         background-image: url('https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg');
@@ -127,8 +130,13 @@ export default Vue.extend({
     ],
   }),
   methods: {
-    changeRoute(route) {
+    changeRoute: async function (route: String) {
+      this.kalebsMethod();
+
       this.$router.replace({ path: route });
+    },
+    getRoute() {
+      return this.$route.name;
     },
     // will get the name so that it can show up at the top
     kalebsMethod: async function () {
@@ -136,6 +144,7 @@ export default Vue.extend({
         method: "GET",
         credentials: "include",
       });
+
       if (
         response.status != 200 &&
         this.$router.currentRoute.path != "/login"
@@ -144,14 +153,16 @@ export default Vue.extend({
       } else if (response.status == 200) {
         let body = await response.json();
         this.username = body.name;
+        this.$forceUpdate();
+
         if (this.$router.currentRoute.path != "/board")
           this.$router.replace({ path: "/board" });
       }
+
+      console.log(this.username);
     },
     openNav: function () {
-      // if (this.username) {
       this.drawer = !this.drawer;
-      // }
     },
   },
   created() {
