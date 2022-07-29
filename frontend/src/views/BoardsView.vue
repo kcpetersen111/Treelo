@@ -45,6 +45,15 @@
         >
           +<v-icon>mdi-forest</v-icon>
         </v-btn>
+
+        <v-btn
+          v-if="currentBoard.name.length > 0"
+          @click="deleteBoardOverlay = !deleteBoardOverlay"
+          class="tree-buttons"
+          color="blue-grey lighten-3"
+        >
+          -<v-icon>mdi-axe</v-icon></v-btn
+        >
       </div>
 
       <BoardComponent
@@ -99,6 +108,26 @@
         </div>
       </v-card>
     </v-overlay>
+
+    <v-overlay :value="deleteBoardOverlay" v-if="deleteBoardOverlay">
+      <v-card
+        class="pa-16 ma-auto white--text"
+        style="
+          background-image: url('https://images.unsplash.com/photo-1613858636109-354616495373?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80');
+          background-size: cover;
+        "
+      >
+        <v-card-title class="font-weight-bold text-h4"
+          >Are You Sure You want to delete?</v-card-title
+        >
+        <v-card-actions>
+          <v-btn x-large @click="deleteBoardOverlay = false">Cancel</v-btn>
+          <v-btn x-large @click="deleteBoard()"
+            ><v-icon>mdi-fire-alert</v-icon></v-btn
+          >
+        </v-card-actions>
+      </v-card>
+    </v-overlay>
   </div>
 </template>
 
@@ -142,6 +171,7 @@ export default Vue.extend({
     ],
     boardInfo: "",
     newBoard: false,
+    deleteBoardOverlay: false,
   }),
   created() {
     this.fetchBoards();
@@ -220,6 +250,31 @@ export default Vue.extend({
         console.log("ERROR", response.status);
       }
       this.boardInfo = "";
+    },
+    deleteBoard: async function () {
+      this.deleteBoardOverlay = false;
+      // let userWantsToDeleteBoard = confirm(
+      //   `Are you sure you want to delete the "${this.boardData.name}" tree?`
+      // );
+      // if (!userWantsToDeleteBoard) return;
+
+      let boardID = this.currentBoard._id;
+      let response = await fetch(`${URL}/board/${boardID}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+
+      if (response.status == 200) {
+        console.log("delete successful");
+        // this.boardData = null;
+        // this.boardData = await response.json();
+        // this.$forceUpdate();
+        // this.currentBoardIndex --;
+        // this.boardData.fetchBoards();
+        this.fetchBoards();
+      } else {
+        console.log("Error while deleting", response.status);
+      }
     },
   },
 });

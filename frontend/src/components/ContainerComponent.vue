@@ -1,17 +1,21 @@
 <template>
   <!-- V-Card for entire container -->
-  <v-card style="background-color: rgb(215, 225, 225)" >
-    <div fab style="float: right" >
+  <v-card style="background-color: rgb(215, 225, 225)">
+    <div fab style="float: right">
       <v-tooltip bottom color="primary">
-        <template v-slot:activator="{on,attrs}">
-          <v-btn class="tree-buttons"
-          v-on="on"
-          v-bind="attrs"
-          fab x-small
-          @click="deleteContainer()"><v-icon>mdi-axe</v-icon></v-btn>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            class="tree-buttons"
+            v-on="on"
+            v-bind="attrs"
+            fab
+            x-small
+            @click="deleteContainer()"
+            ><v-icon>mdi-axe</v-icon></v-btn
+          >
         </template>
         <span>Delete</span>
-      </v-tooltip>    
+      </v-tooltip>
     </div>
     <v-card-title
       class="text-h4 blue--text font-weight-bold text-wrap container-hover"
@@ -26,20 +30,26 @@
     <div v-if="newContainer">
       <v-text-field v-model="containerInfo" autofocus></v-text-field>
       <v-tooltip bottom color="primary">
-        <template v-slot:activator="{on,attrs}">
-          <v-btn class="tree-buttons"
-          v-on="on"
-          v-bind="attrs"
-          @click="newContainer = false"><v-icon>mdi-undo</v-icon></v-btn>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            class="tree-buttons"
+            v-on="on"
+            v-bind="attrs"
+            @click="newContainer = false"
+            ><v-icon>mdi-undo</v-icon></v-btn
+          >
         </template>
         <span>Undo Changes</span>
       </v-tooltip>
       <v-tooltip bottom color="primary">
-        <template v-slot:activator="{on,attrs}">
-          <v-btn class="tree-buttons"
-          v-on="on"
-          v-bind="attrs"
-          @click="updateContainer()"><v-icon>mdi-sprout</v-icon></v-btn>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            class="tree-buttons"
+            v-on="on"
+            v-bind="attrs"
+            @click="updateContainer()"
+            ><v-icon>mdi-sprout</v-icon></v-btn
+          >
         </template>
         <span>Add Your Changes</span>
       </v-tooltip>
@@ -61,28 +71,39 @@
         :cardDone="cardDone"
         :updateCard="updateCard"
       />
-      <div
-        class="text-right mr-2"
-        style="overflow-wrap: break-word; word-wrap: break-word; hyphens: auto"
+
+      <v-card
+        v-if="newCard == false"
+        class="mx-4 pa-2"
+        style="background-color: rgb(225, 235, 235)"
       >
-        <v-btn
-          class="pa-0 white"
-          elevation="0"
-          x-small
-          v-if="!newCard"
-          @click="newCard = !newCard"
-          ><v-icon>mdi-leaf</v-icon></v-btn
-        ><!--note-plus-outline-->
-      </div>
-      <v-text-field
-        class="mx-4"
-        v-if="newCard"
-        placeholder="add leaf info"
-        v-model="cardInfo"
-        autofocus
-      ></v-text-field>
-      <v-btn v-if="newCard" @click="postCards()">Submit</v-btn>
-      <v-btn v-if="newCard" @click="newCard = !newCard">Cancel</v-btn>
+        <v-btn class="tree-buttons justify-center" @click="newCard = !newCard"
+          >Add a leaf&nbsp;<v-icon>mdi-leaf</v-icon></v-btn
+        >
+      </v-card>
+
+      <v-card
+        v-else
+        class="mx-4 pa-2"
+        style="
+          background-color: white;
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+          hyphens: auto;
+        "
+      >
+        <!--note-plus-outline-->
+
+        <v-text-field
+          class="mx-4"
+          v-if="newCard"
+          placeholder="add leaf info"
+          v-model="cardInfo"
+          autofocus
+        ></v-text-field>
+        <v-btn v-if="newCard" @click="newCard = !newCard">Cancel</v-btn>
+        <v-btn v-if="newCard" @click="postCards()">Submit</v-btn>
+      </v-card>
     </v-list>
   </v-card>
 </template>
@@ -283,8 +304,8 @@ export default {
 .done div div:not(button) {
   /* text-decoration: line-through !important;*/
 }
-.container-hover:hover{
+.container-hover:hover {
   background-color: rgb(215, 225, 225);
-  opacity:0.8;
+  opacity: 0.8;
 }
 </style>
