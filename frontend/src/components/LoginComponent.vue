@@ -35,20 +35,20 @@
 
       <v-card-actions>
         <v-btn
-          id="login-button"
-          class="mr-auto ml-10 mb-2 mt-n4 rounded-sm"
-          elevation="12"
-          @click="postSession()"
-        >
-          Login
-        </v-btn>
-        <v-btn
           id="registration-button"
           class="mr-8 ml-14 mb-2 mt-n4 rounded-sm"
           elevation="12"
           @click="gotoRegister()"
         >
           Register
+        </v-btn>
+        <v-btn
+          id="login-button"
+          class="mr-auto ml-10 mb-2 mt-n4 rounded-sm"
+          elevation="12"
+          @click="postSession()"
+        >
+          Login
         </v-btn>
       </v-card-actions>
 
@@ -90,7 +90,7 @@ export default {
   }),
   methods: {
     gotoRegister() {
-      console.log("GO to Register page!");
+      // console.log("GO to Register page!");
       this.$router.replace({ path: "/registration" });
     },
     postSession: async function () {
