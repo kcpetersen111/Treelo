@@ -14,18 +14,45 @@
       </v-col>
 
       <v-col md="4">
-        <v-card class="py-5" style="background-color: rgb(215, 225, 225)">
+        <v-card
+          v-if="newContainer == false"
+          class="mx-4 pa-2"
+          style="background-color: rgb(225, 235, 235)"
+        >
           <v-btn
-            @click="newContainer = true"
-            class="tree-buttons"
+            @click="newContainer = !newContainer"
+            class="tree-buttons justify-center"
             color="blue-grey lighten-3"
-            >Create a branch&nbsp;<v-icon>mdi-source-branch</v-icon>
-          </v-btn>
+            >Add a container&nbsp;<v-icon>mdi-leaf</v-icon></v-btn
+          >
+        </v-card>
+
+        <v-card
+          v-else
+          class="mx-4 pa-2"
+          style="
+            background-color: white;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+          "
+        >
+          <v-text-field
+            class="mx-4"
+            v-if="newContainer"
+            placeholder="add container info"
+            v-model="containerInfo"
+            autofocus
+          ></v-text-field>
+          <v-btn v-if="newContainer" @click="newContainer = !newContainer"
+            >Cancel</v-btn
+          >
+          <v-btn v-if="newContainer" @click="postContainer()">Submit</v-btn>
         </v-card>
       </v-col>
     </v-row>
 
-    <v-overlay
+    <!-- <v-overlay
       v-if="newContainer"
       class="justify-center"
       :z-index="0"
@@ -46,7 +73,7 @@
           <v-btn small @click="postContainer()">Submit</v-btn>
         </div>
       </v-card>
-    </v-overlay>
+    </v-overlay> -->
   </v-container>
 </template>
 

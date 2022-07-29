@@ -6,7 +6,7 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          background-color: rgba(155, 155, 155, 0.7);
+          background-color: transparent;
         "
       >
         <v-btn
@@ -14,10 +14,8 @@
           color="blue-grey lighten-3"
           v-if="boards.length > 1 && currentBoardIndex > 0"
           @click="moveBoardIndex(-1)"
-        >
-          <v-icon style="transform: rotate(270deg)">mdi-pine-tree</v-icon>
+          ><v-icon style="transform: rotate(270deg)">mdi-pine-tree</v-icon>
         </v-btn>
-
         <div
           v-if="currentBoard.name.length > 0"
           class="text-h2 font-weight-bold"
@@ -27,21 +25,18 @@
         <div v-else class="text-h2 font-weight-bold">
           Create A New Tree to get started!
         </div>
-
         <v-btn
           class="tree-buttons"
           color="blue-grey lighten-3"
           v-if="boards.length > 1 && currentBoardIndex < boards.length - 1"
           @click="moveBoardIndex(1)"
-        >
-          <v-icon style="transform: rotate(90deg)">mdi-pine-tree</v-icon>
+          ><v-icon style="transform: rotate(90deg)">mdi-pine-tree</v-icon>
         </v-btn>
-
         <v-btn
           v-if="!newBoard"
           @click="newBoard = true"
           class="tree-buttons"
-          color="blue-grey ligthen-3"
+          color="blue-grey lighten-3"
         >
           +<v-icon>mdi-forest</v-icon>
         </v-btn>
