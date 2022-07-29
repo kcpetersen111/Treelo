@@ -49,8 +49,8 @@ app.post("/users", async (req:Request,res:Response)=>{
         return;
     }
 
-    // const salt = bcrypt.genSalt(100);
-    // let pword:string = await bcrypt.hash(req.body.password, 12);
+    const salt = bcrypt.genSalt(100);
+    let pword:string = await bcrypt.hash(req.body.password, 12);
 
     try {
         let user = await User.create({
