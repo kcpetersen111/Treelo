@@ -104,7 +104,7 @@ export default {
         credentials: "include",
       });
       if (response.status == 204) {
-        window.location.href = "/login";
+        this.$router.replace({path: "/login"})
         return;
       }
     },

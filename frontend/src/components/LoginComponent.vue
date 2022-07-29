@@ -114,7 +114,7 @@ export default {
 
       if (response.status == 201) {
         console.log(" login was a success");
-        window.location.href = "/board";
+        this.$router.replace({ path: "/board" });
       } else if (response.status == 401) {
         console.log("Unsuccessful");
         this.passwordInput = "";
