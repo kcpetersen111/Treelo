@@ -37,7 +37,7 @@
         Treelo
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <div v-if="username" class="pr-4">
+      <div v-if="username != ''" class="pr-4">
         Hello
         {{
           username.charAt(0).toUpperCase() + username.slice(1).toLowerCase()
@@ -45,7 +45,7 @@
       </div>
 
       <v-btn
-        v-if="username"
+        v-if="username != ''"
         color="indigo"
         class="ma-2"
         @click="changeRoute('/settings')"
@@ -72,7 +72,7 @@
     </v-main>
 
     <v-bottom-navigation
-      v-show="username == ''"
+      v-if="username == ''"
       width="100%"
       style="
         background-image: url('https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg');
@@ -131,7 +131,7 @@ export default Vue.extend({
   }),
   methods: {
     changeRoute: async function (route: String) {
-      this.kalebsMethod();
+      await this.kalebsMethod();
 
       this.$router.replace({ path: route });
     },
@@ -150,23 +150,29 @@ export default Vue.extend({
         this.$router.currentRoute.path != "/login"
       ) {
         this.$router.replace({ path: "/login" });
+        this.username = "";
+        return false;
       } else if (response.status == 200) {
         let body = await response.json();
         this.username = body.name;
-        this.$forceUpdate();
+        console.log(this.username);
 
-        if (this.$router.currentRoute.path != "/board")
-          this.$router.replace({ path: "/board" });
+        return true;
       }
+    },
+    signIn: async function () {
+      let result = await this.kalebsMethod();
 
-      console.log(this.username);
+      if (result && this.$router.currentRoute.path != "/board") {
+        this.$router.replace({ path: "/board" });
+      }
     },
     openNav: function () {
       this.drawer = !this.drawer;
     },
   },
   created() {
-    this.kalebsMethod();
+    this.signIn();
   },
 });
 </script>

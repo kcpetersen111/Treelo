@@ -125,6 +125,7 @@ export default {
       }
       console.log("login was unsuccessful");
       console.log("Error", response.status, response);
+
       this.show = true;
 
       this.passwordInput = "";

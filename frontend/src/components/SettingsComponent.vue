@@ -89,7 +89,7 @@ export default {
         credentials: "include",
       });
       if (response.status == 200) {
-        console.log("updating was a sucess!");
+        console.log("updating was a success!");
         this.updatedEmail = "";
         this.updatedUsername = "";
         this.updatedPassword = "";
