@@ -89,6 +89,8 @@
             <span>Delete Tree</span>
           </v-tooltip>
         </div>
+
+        <div v-else style="margin-left: auto; padding: 0 0.5rem"></div>
       </v-card>
 
       <BoardComponent
