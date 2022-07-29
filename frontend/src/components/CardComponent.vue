@@ -88,7 +88,8 @@
 </template>
 
 <script lang="ts">
-let URL = "http://localhost:8081";
+import {URL} from "../config";
+// let URL = "http://localhost:8081";
 export default {
   name: "CardComponent",
   props: {

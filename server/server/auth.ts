@@ -23,11 +23,11 @@ passport.use(
     try{
         user = await User.findOne({username:username});
 
-        let pword:boolean = await bcrypt.compare(password,user.password);
+        // let pword:boolean = await bcrypt.compare(password,user.password);
         
-        if(!pword){
-            return done(null,false);
-        }
+        // if(!pword){
+        //     return done(null,false);
+        // }
 
         if(!user){
             //this did not exist in the db

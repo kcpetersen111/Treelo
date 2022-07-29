@@ -12,13 +12,24 @@ const cors = require ("cors");
 
 // const allowedOrgins = ["http://localhost:8080","https://kcpetersen111.github.io"]
 
-app.use(cors({origin:"https://kcpetersen111.github.io",
+var corsOptionsDelegate = function (req:any, callback:any) {
+    var corsOptions;
+    if (true) {
+      corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+    } 
+
+    callback(null, corsOptions) // callback expects two parameters: error and options
+  }
+
+app.use(cors({origin:corsOptionsDelegate,
                 credentials:true,
                 methods:"GET,POST,PATCH,PUT,DELETE"
             }));
 // app.use(cors({origin:"http://localhost:8080",credentials:true}));
-// app.use(cors());
+
 app.use(express.json());
+// cors pre flight which is  required for all non get and post http methods
+app.options('*', cors());
 // const frontendFiles:string = `${__dirname}/frontend-build`;
 // app.use(express.static(frontendFiles));
 
@@ -39,13 +50,13 @@ app.post("/users", async (req:Request,res:Response)=>{
     }
 
     // const salt = bcrypt.genSalt(100);
-    let pword:string = await bcrypt.hash(req.body.password, 12);
+    // let pword:string = await bcrypt.hash(req.body.password, 12);
 
     try {
         let user = await User.create({
             name:    req.body.name,
             username: req.body.username,
-            password: pword,
+            password: req.body.password,
         });
         res.status(201).json(user);
     }catch(err){
