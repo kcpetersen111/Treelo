@@ -51,17 +51,15 @@
           Login
         </v-btn>
       </v-card-actions>
-
-      <v-alert
-        v-show="show"
-        type="error"
-        dense
-        transition="scale-transition"
-        dismissible
-        style="border-radius: 25px; border: 2px solid black"
-        >Login Unsuccessful</v-alert
-      >
     </v-card>
+    <v-alert
+      v-show="show"
+      type="error"
+      dense
+      transition="scale-transition"
+      dismissible
+      style="border-radius: 25px; border: 2px solid black"
+    >Login Unsuccessful</v-alert>
   </v-parallax>
 </template>
 
@@ -95,6 +93,7 @@ export default {
     },
     postSession: async function () {
       this.show = false;
+
       let loginCredentials = {
         username: this.usernameInput,
         password: this.passwordInput,
@@ -109,20 +108,28 @@ export default {
         credentials: "include",
       });
 
-      let body = await response.json();
-      console.log(body);
+      
 
       if (response.status == 201) {
-        console.log(" login was a success");
+        console.log("login was a success");
+
+        let body = await response.json();
+        console.log(body);
+
         this.$router.replace({ path: "/board" });
+
+        return;
       } else if (response.status == 401) {
-        console.log("Unsuccessful");
-        this.passwordInput = "";
-        this.usernameInput = "";
-        this.show = true;
+        // nothing special atm
       } else {
-        console.log("Error", response.status, response);
+        // nothing special yet 
       }
+      console.log("login was unsuccessful");
+      console.log("Error", response.status, response);
+      this.show = true;
+
+      this.passwordInput = "";
+      this.usernameInput = "";
     },
   },
 };
