@@ -61,20 +61,19 @@
         "
       >
         <v-card-title
-          v-if="currentBoard.name.length > 0"
           class="text-h2 font-weight-bold blue--text"
+          style="margin-left: auto; padding: 0 0.5rem"
         >
-          {{ currentBoard.name }}
-        </v-card-title>
+          <p v-if="currentBoard.name.length > 0">
+            {{ currentBoard.name }}
+          </p>
 
-        <v-card-title v-else class="text-h2 font-weight-bold blue--text">
-          Create A New Tree to get started!
+          <p v-else>Create A New Tree to get started!</p>
         </v-card-title>
 
         <div
           v-if="deleteBoardOverlay == false && currentBoard.name.length > 0"
-          fab
-          style="float: right"
+          style="margin-left: auto; padding: 0 0.5rem"
         >
           <v-tooltip bottom color="primary">
             <template v-slot:activator="{ on, attrs }">

@@ -1,7 +1,7 @@
 <template>
   <!-- V-Card for entire container -->
   <v-card style="background-color: rgb(215, 225, 225)">
-    <div fab style="float: right">
+    <div fab style="float: right; padding: 0.5rem">
       <v-tooltip bottom color="primary">
         <template v-slot:activator="{ on, attrs }">
           <v-btn

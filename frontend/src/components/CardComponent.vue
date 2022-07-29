@@ -1,7 +1,6 @@
 <template>
-  <v-card class="justify-center mb-6 mx-4" style="display: flex">
+  <v-card class="justify-center align-center mb-6 mx-4" style="display: flex">
     <!-- IF not editing card -->
-
     <v-card-title
       @click="editCard()"
       v-if="!editing"
@@ -19,7 +18,7 @@
       <!-- {{ card.description }} -->
     </v-card-title>
 
-    <!-- IF not editing card -->
+    <!-- IF editing card -->
     <div v-else>
       <v-text-field
         @keydown.enter="updateCardLocal()"
@@ -28,6 +27,34 @@
         v-model="newCard.name"
         autofocus
       ></v-text-field>
+      <v-tooltip bottom color="primary">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            class="ml-1 mb-2 tree-buttons"
+            v-on="on"
+            v-bind="attrs"
+            small
+            @click="editCard()"
+            ><v-icon>mdi-undo</v-icon></v-btn
+          >
+        </template>
+        <span>Go Back</span>
+      </v-tooltip>
+
+      <v-tooltip bottom color="primary">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            class="ml-1 mb-2 tree-buttons"
+            v-on="on"
+            v-bind="attrs"
+            small
+            @click="updateCardLocal()"
+            ><v-icon>mdi-sprout</v-icon></v-btn
+          >
+        </template>
+        <span>Save Changes</span>
+      </v-tooltip>
+
       <v-tooltip bottom color="primary">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
@@ -44,44 +71,30 @@
         </template>
         <span>Check As Complete</span>
       </v-tooltip>
+    </div>
+
+    <div
+      fab
+      style="
+        position: relative;
+        float: right;
+        margin-left: auto;
+        padding: 0 0.5rem;
+      "
+    >
       <v-tooltip bottom color="primary">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-            class="ml-1 mb-2 tree-buttons"
+            class="tree-buttons"
             v-on="on"
             v-bind="attrs"
-            small
+            fab
+            x-small
             @click="deleteCard()"
-            >-<v-icon>mdi-axe</v-icon></v-btn
+            ><v-icon>mdi-axe</v-icon></v-btn
           >
         </template>
-        <span>Delete Card</span>
-      </v-tooltip>
-      <v-tooltip bottom color="primary">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            class="ml-1 mb-2 tree-buttons"
-            v-on="on"
-            v-bind="attrs"
-            small
-            @click="updateCardLocal()"
-            ><v-icon>mdi-sprout</v-icon></v-btn
-          >
-        </template>
-        <span>Add your Changes</span>
-      </v-tooltip>
-      <v-tooltip bottom color="primary">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            class="ml-1 mb-2 tree-buttons"
-            v-on="on"
-            v-bind="attrs"
-            small
-            @click="editCard()"
-            ><v-icon>mdi-undo</v-icon></v-btn
-          >
-        </template>
-        <span>Go Back</span>
+        <span>Delete Leaf</span>
       </v-tooltip>
     </div>
   </v-card>

@@ -38,8 +38,8 @@
           "
         >
           <v-text-field
-            class="mx-4"
             v-if="newContainer"
+            class="mx-4"
             placeholder="add container info"
             v-model="containerInfo"
             autofocus
