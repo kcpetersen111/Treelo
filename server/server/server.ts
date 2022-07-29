@@ -12,8 +12,9 @@ const cors = require ("cors");
 
 // const allowedOrgins = ["http://localhost:8080","https://kcpetersen111.github.io"]
 
-app.use(cors({origin:"https://kcpetersen111.github.io*",
+app.use(cors({origin:"https://kcpetersen111.github.io",
                 credentials:true,
+                methods:"GET,POST,PATCH,PUT,DELETE"
             }));
 // app.use(cors({origin:"http://localhost:8080",credentials:true}));
 // app.use(cors());
@@ -38,7 +39,7 @@ app.post("/users", async (req:Request,res:Response)=>{
     }
 
     // const salt = bcrypt.genSalt(100);
-    let pword = await bcrypt.hash(req.body.password, 12);
+    let pword:string = await bcrypt.hash(req.body.password, 12);
 
     try {
         let user = await User.create({

@@ -25,7 +25,7 @@ passport.use(
 
         let pword:boolean = await bcrypt.compare(password,user.password);
         
-        if(pword){
+        if(!pword){
             return done(null,false);
         }
 
