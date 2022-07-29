@@ -214,6 +214,7 @@ export default Vue.extend({
         this.currentBoard = this.boards[this.currentBoardIndex];
       } else {
         console.log("Error", response.status, response);
+        this.goToLogin();
       }
     },
     moveBoardIndex: function (num: number) {
@@ -275,6 +276,9 @@ export default Vue.extend({
       } else {
         console.log("Error while deleting", response.status);
       }
+    },
+    goToLogin() {
+      this.$router.replace({ path: "/login" });
     },
   },
 });
