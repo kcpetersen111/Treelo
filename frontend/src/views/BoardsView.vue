@@ -1,55 +1,97 @@
 <template>
   <div class="board">
     <v-container v-if="loggedIn" class="flex justify-center align-center">
-      <div
-        style="
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background-color: transparent;
-        "
+      <v-card
+        v-if="newBoard == false"
+        class="mx-auto my-auto mb-2 pa-4"
+        style="width: fit-content"
       >
         <v-btn
-          class="tree-buttons"
-          color="blue-grey lighten-3"
           v-if="boards.length > 1 && currentBoardIndex > 0"
+          class="tree-buttons justify-center mx-2"
+          color="blue-grey lighten-3"
           @click="moveBoardIndex(-1)"
           ><v-icon style="transform: rotate(270deg)">mdi-pine-tree</v-icon>
         </v-btn>
-        <div
-          v-if="currentBoard.name.length > 0"
-          class="text-h2 font-weight-bold"
-        >
-          {{ currentBoard.name }}
-        </div>
-        <div v-else class="text-h2 font-weight-bold">
-          Create A New Tree to get started!
-        </div>
+
         <v-btn
-          class="tree-buttons"
+          class="tree-buttons justify-center mx-2"
+          style="background-color: rgb(180, 190, 190); width: fit-content"
+          @click="newBoard = !newBoard"
+          >Create a new tree&nbsp;<v-icon>mdi-pine-tree</v-icon></v-btn
+        >
+
+        <v-btn
+          class="tree-buttons justify-center mx-2"
           color="blue-grey lighten-3"
           v-if="boards.length > 1 && currentBoardIndex < boards.length - 1"
           @click="moveBoardIndex(1)"
           ><v-icon style="transform: rotate(90deg)">mdi-pine-tree</v-icon>
         </v-btn>
-        <v-btn
-          v-if="!newBoard"
-          @click="newBoard = true"
-          class="tree-buttons"
-          color="blue-grey lighten-3"
-        >
-          +<v-icon>mdi-forest</v-icon>
-        </v-btn>
+      </v-card>
 
-        <v-btn
+      <v-card
+        v-else
+        class="mx-auto my-auto mb-2 py-2"
+        style="
+          background-color: white;
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+          hyphens: auto;
+          max-width: 60%;
+        "
+      >
+        <v-text-field
+          v-if="newBoard"
+          class="mx-4"
+          placeholder="Tree info"
+          v-model="boardInfo"
+          autofocus
+        ></v-text-field>
+        <v-btn v-if="newBoard" @click="newBoard = !newBoard">Cancel</v-btn>
+        <v-btn v-if="newBoard" @click="postBoard()">Submit</v-btn>
+      </v-card>
+
+      <v-card
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: #ffffff99;
+        "
+      >
+        <v-card-title
           v-if="currentBoard.name.length > 0"
-          @click="deleteBoardOverlay = !deleteBoardOverlay"
-          class="tree-buttons"
-          color="blue-grey lighten-3"
+          class="text-h2 font-weight-bold blue--text"
         >
-          -<v-icon>mdi-axe</v-icon></v-btn
+          {{ currentBoard.name }}
+        </v-card-title>
+
+        <v-card-title v-else class="text-h2 font-weight-bold blue--text">
+          Create A New Tree to get started!
+        </v-card-title>
+
+        <div
+          v-if="deleteBoardOverlay == false && currentBoard.name.length > 0"
+          fab
+          style="float: right"
         >
-      </div>
+          <v-tooltip bottom color="primary">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                class="tree-buttons"
+                v-on="on"
+                v-bind="attrs"
+                fab
+                x-small
+                @click="deleteBoardOverlay = true"
+                ><v-icon>mdi-axe</v-icon></v-btn
+              >
+            </template>
+            <span>Delete Tree</span>
+          </v-tooltip>
+        </div>
+      </v-card>
 
       <BoardComponent
         v-if="currentBoard.name.length > 0"
@@ -64,56 +106,25 @@
     -->
     <v-container v-else>
       <div class="boardName">
-        <h1 class="white--text font-weight-bold">Loading ....</h1>
+        <h1 class="white--text font-weight-bold">Loading ...</h1>
       </div>
     </v-container>
 
-    <!--
-    For creating a new tree
-  -->
-    <v-overlay
-      v-if="newBoard"
-      class="justify-center"
-      :z-index="0"
-      :value="newBoard"
-    >
-      <v-card class="blue pa-8">
-        <v-card-title>Create A Tree</v-card-title>
-        <v-text-field
-          class="px-3"
-          maxlength="25"
-          placeholder="Tree Name"
-          v-model="boardInfo"
-          autofocus
-        ></v-text-field>
-        <div style="display: flex; justify-content: space-between">
-          <v-btn
-            class="tree-buttons"
-            @click="
-              newBoard = false;
-              boardInfo = '';
-            "
-            small
-          >
-            Cancel
-          </v-btn>
-          <v-btn @click="postBoard()" small class="tree-buttons">
-            Create
-          </v-btn>
-        </div>
-      </v-card>
-    </v-overlay>
-
-    <v-overlay :value="deleteBoardOverlay" v-if="deleteBoardOverlay">
+    <v-overlay :value="deleteBoardOverlay" v-show="deleteBoardOverlay">
       <v-card
         class="pa-16 ma-auto white--text"
         style="
           background-image: url('https://images.unsplash.com/photo-1613858636109-354616495373?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80');
           background-size: cover;
+          height: 100%;
+          width: 100%;
+          min-height: 50vh;
+          min-width: 50vw;
         "
       >
         <v-card-title class="font-weight-bold text-h4"
-          >Are You Sure You want to delete?</v-card-title
+          >Are You Sure You want to delete the "{{ currentBoard.name }}"
+          tree?</v-card-title
         >
         <v-card-actions>
           <v-btn x-large @click="deleteBoardOverlay = false">Cancel</v-btn>
@@ -261,11 +272,6 @@ export default Vue.extend({
 
       if (response.status == 200) {
         console.log("delete successful");
-        // this.boardData = null;
-        // this.boardData = await response.json();
-        // this.$forceUpdate();
-        // this.currentBoardIndex --;
-        // this.boardData.fetchBoards();
         this.fetchBoards();
       } else {
         console.log("Error while deleting", response.status);
