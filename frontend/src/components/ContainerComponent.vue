@@ -14,7 +14,7 @@
             ><v-icon>mdi-axe</v-icon></v-btn
           >
         </template>
-        <span>Delete</span>
+        <span>Delete Branch</span>
       </v-tooltip>
     </div>
 

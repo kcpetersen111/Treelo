@@ -62,7 +62,7 @@
       >
         <v-card-title
           class="text-h2 font-weight-bold blue--text"
-          style="margin-left: auto; padding: 0 0.5rem"
+          style="margin-left: auto; margin-top: 1rem; padding: 0 0.5rem"
         >
           <p v-if="currentBoard.name.length > 0">
             {{ currentBoard.name }}

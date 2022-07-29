@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 // @ is an alias to /src
 import AboutComponent from "@/components/AboutComponent.vue";
 
@@ -15,3 +15,6 @@ export default {
   },
 };
 </script>
+
+<style>
+</style>
