@@ -20,3 +20,13 @@ createMongo:
 
 mongo:
 	docker start productivityApp-mongo
+
+herokuPush:
+	heroku container:push web --app prod-app-backend
+
+deploy: herokuPush
+	heroku container:release web --app prod-app-backend
+
+login:
+	heroku login
+	heroku container:login

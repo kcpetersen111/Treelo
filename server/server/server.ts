@@ -10,11 +10,16 @@ export const app = express();
 
 const cors = require ("cors");
 
-app.use(cors({origin:"http://localhost:8080",credentials:true}));
+// const allowedOrgins = ["http://localhost:8080","https://kcpetersen111.github.io"]
+
+app.use(cors({origin:"https://kcpetersen111.github.io*",
+                credentials:true,
+            }));
+// app.use(cors({origin:"http://localhost:8080",credentials:true}));
 // app.use(cors());
 app.use(express.json());
-const frontendFiles:string = `${__dirname}/frontend-build`;
-app.use(express.static(frontendFiles));
+// const frontendFiles:string = `${__dirname}/frontend-build`;
+// app.use(express.static(frontendFiles));
 
 import { setUpAuth} from "./auth";
 import { setUpSessionStore} from "./session"
