@@ -1,72 +1,72 @@
 <template>
-  <v-app>
-    <v-parallax
-      src="https://cdn.shopify.com/s/files/1/0326/7189/articles/General_Sherman_tree_2000x.jpg?v=1627936731"
-      height="1000"
+  <v-parallax
+    src="https://cdn.shopify.com/s/files/1/0326/7189/articles/General_Sherman_tree_2000x.jpg?v=1627936731"
+    height="100%"
+  >
+    <v-card
+      class="mx-auto my-auto pb-4 px-7 rounded-xl"
+      color="rgba(255,255,255,.7)"
+      flat
+      width="400"
     >
-      <v-container>
-        <v-card
-          class="mx-auto mt-7 pb-4 px-7 rounded-xl"
-          color="rgba(255,255,255,.7)"
-          flat
-          width="400"
+      <v-card-title style="display: block">
+        <b>Sign in</b>
+      </v-card-title>
+
+      <v-text-field
+        class="rounded-pill"
+        label="Email"
+        color="black"
+        v-model="usernameInput"
+        :rules="[rules.requiredEmail, rules.email]"
+        outlined
+        autofocus
+      ></v-text-field>
+
+      <v-text-field
+        class="rounded-pill"
+        label="Password"
+        outlined
+        color="black"
+        type="password"
+        v-model="passwordInput"
+        :rules="[rules.requiredPassWord]"
+      ></v-text-field>
+
+      <v-card-actions>
+        <v-btn
+          id="registration-button"
+          class="mr-8 ml-14 mb-2 mt-n4 rounded-sm"
+          elevation="12"
+          @click="gotoRegister()"
         >
-          <v-card-title style="display: block">
-            <b>Sign in</b>
-          </v-card-title>
-          <v-text-field
-            class="rounded-pill"
-            label="Email"
-            outlined
-            color="black"
-            v-model="usernameInput"
-            :rules="[rules.requiredEmail, rules.email]"
-            autofocus
-          ></v-text-field>
-          <v-text-field
-            class="rounded-pill"
-            label="Password"
-            outlined
-            color="black"
-            type="password"
-            v-model="passwordInput"
-            :rules="[rules.requiredPassWord]"
-          ></v-text-field>
-          <v-card-actions>
-            <v-btn
-              id="login-button"
-              class="mr-auto ml-10 mb-2 mt-n4 rounded-sm"
-              elevation="12"
-              @click="postSession()"
-            >
-              Login
-            </v-btn>
-            <v-btn
-              id="registration-button"
-              class="mr-8 ml-14 mb-2 mt-n4 rounded-sm"
-              elevation="12"
-              @click="gotoRegister()"
-            >
-              Register
-            </v-btn>
-          </v-card-actions>
-          <v-alert
-            v-show="show"
-            type="error"
-            dense
-            transition="scale-transition"
-            dismissible
-            style="border-radius: 25px; border: 2px solid black"
-            >Login Unsuccessful</v-alert
-          >
-        </v-card>
-      </v-container>
-    </v-parallax>
-  </v-app>
+          Register
+        </v-btn>
+        <v-btn
+          id="login-button"
+          class="mr-auto ml-10 mb-2 mt-n4 rounded-sm"
+          elevation="12"
+          @click="postSession()"
+        >
+          Login
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+    <v-alert
+      v-show="show"
+      type="error"
+      dense
+      transition="scale-transition"
+      dismissible
+      style="border-radius: 25px; border: 2px solid black"
+      >Login Unsuccessful</v-alert
+    >
+  </v-parallax>
 </template>
 
 <script lang="ts">
-let URL = "http://localhost:8081";
+// let URL = "http://localhost:8081";
+import { URL } from "../config";
 export default {
   name: "LoginComponent",
   props: {
@@ -89,34 +89,12 @@ export default {
   }),
   methods: {
     gotoRegister() {
-      console.log("GO to Register page!");
-      window.location.href = "/registration";
-      //make this a route later??
-    },
-    getSession: async function () {
-      let response = await fetch(URL + "/session", {
-        method: "GET",
-        credentials: "include",
-      });
-      //asks if we are logged in
-      if (response.status == 200) {
-        // log in succesful!
-        console.log("logged in");
-        window.location.href = "/board";
-        return;
-      } else if (response.status == 401) {
-        // log in was not succesfull
-        console.log("not logged in");
-      } else {
-        console.log(
-          "There was an error when getting /session",
-          response.status,
-          response
-        );
-      }
+      // console.log("GO to Register page!");
+      this.$router.replace({ path: "/registration" });
     },
     postSession: async function () {
       this.show = false;
+
       let loginCredentials = {
         username: this.usernameInput,
         password: this.passwordInput,
@@ -131,20 +109,27 @@ export default {
         credentials: "include",
       });
 
-      let body = response.json();
-      console.log(body);
-
       if (response.status == 201) {
-        console.log(" login was a success");
-        window.location.href = "/board";
+        console.log("login was a success");
+
+        let body = await response.json();
+        console.log(body);
+
+        this.$router.replace({ path: "/board" });
+
+        return;
       } else if (response.status == 401) {
-        console.log("Unsuccessful");
-        this.passwordInput = "";
-        this.usernameInput = "";
-        this.show = true;
+        // nothing special atm
       } else {
-        console.log("Error", response.status, response);
+        // nothing special yet
       }
+      console.log("login was unsuccessful");
+      console.log("Error", response.status, response);
+
+      this.show = true;
+
+      this.passwordInput = "";
+      this.usernameInput = "";
     },
   },
 };

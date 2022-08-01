@@ -80,7 +80,7 @@ const containerSchema = mongoose.Schema({
     },
     cards:{
         //a list of event ids
-        type:[mongoose.Types.ObjectId],required: false,default:[],
+        type:[mongoose.Types.ObjectId],required: false,default:[],ref:'Cards',
     },
 });
 
@@ -100,7 +100,7 @@ const boardSchema = mongoose.Schema({
     },
     container:{
         //a list of container ids
-        type:[mongoose.Types.ObjectId],required:true,default:[],
+        type:[mongoose.Types.ObjectId],required:true,default:[],ref:'Containers'
     },
 });
 //middle ware

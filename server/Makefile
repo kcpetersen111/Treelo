@@ -1,6 +1,9 @@
 all: run
 
-packages:
+install:
+	npm install
+
+packages: install
 	cp package.json ../server-build/package.json
 	cd ../server-build && npm install	
 	cd ../server-build && npm install typescript --save

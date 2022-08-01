@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app v-cloak>
     <v-navigation-drawer
       v-model="drawer"
       app
@@ -31,17 +31,39 @@
       dark
       src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
     >
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="openNav()"></v-app-bar-nav-icon>
 
       <v-toolbar-title class="text-h4 font-weight-bold">
         Treelo
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <div class="pr-4">
-        Hello {{ username.charAt(0).toUpperCase() + username.slice(1) }}!
+      <div v-if="username != ''" class="pr-4">
+        Hello
+        {{
+          username.charAt(0).toUpperCase() + username.slice(1).toLowerCase()
+        }}!
       </div>
-      <v-btn color="indigo" fab class="mx-auto mr-3" @click="goToSettings()">
-        <v-icon color="green"> mdi-pine-tree </v-icon>
+
+      <v-btn
+        v-if="username != ''"
+        color="indigo"
+        class="ma-2"
+        @click="changeRoute('/settings')"
+        medium
+        fab
+      >
+        <span
+          class="mt-4"
+          style="
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <v-icon large color="green"> mdi-pine-tree </v-icon>
+          <p class="mt-1" style="font-size: 0.5rem">Settings</p>
+        </span>
       </v-btn>
     </v-app-bar>
 
@@ -49,22 +71,35 @@
       <router-view :key="$route.path" />
     </v-main>
 
-    <v-footer
+    <v-bottom-navigation
+      v-if="username == ''"
+      width="100%"
       style="
         background-image: url('https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg');
+        background-size: cover;
       "
+      grow
     >
-      <router-link to="/contact">
-        <v-card>
-          <v-card-title> Contact us. </v-card-title>
-        </v-card>
-      </router-link>
-    </v-footer>
+      <v-btn @click="changeRoute('/login')">
+        <span class="white--text">Login</span>
+        <v-icon class="white--text">mdi-login</v-icon>
+      </v-btn>
+
+      <v-btn @click="changeRoute('/contact')">
+        <span class="white--text">Contact Us</span>
+        <v-icon class="white--text">mdi-email</v-icon>
+      </v-btn>
+
+      <v-btn @click="changeRoute('/about')">
+        <span class="white--text">About Us</span>
+        <v-icon class="white--text">mdi-human-greeting-variant</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
   </v-app>
 </template>
 
 <script lang="ts">
-let URL = "http://localhost:8081";
+import { URL } from "./config";
 import Vue from "vue";
 
 export default Vue.extend({
@@ -73,15 +108,10 @@ export default Vue.extend({
   components: {},
 
   data: () => ({
-    drawer: true,
+    drawer: false,
     userCard: true,
     username: "",
     items: [
-      {
-        title: "Login",
-        link: "/login",
-        icon: "mdi-account-circle",
-      },
       {
         title: "My Board",
         link: "/board",
@@ -100,26 +130,58 @@ export default Vue.extend({
     ],
   }),
   methods: {
-    goToSettings() {
-      window.location.href = "/settings";
+    changeRoute: async function (route: String) {
+      await this.kalebsMethod();
+
+      this.$router.replace({ path: route });
     },
+    getRoute() {
+      return this.$route.name;
+    },
+    // will get the name so that it can show up at the top
     kalebsMethod: async function () {
-      let username = await fetch(URL + "/session", {
+      let response = await fetch(URL + "/session", {
         method: "GET",
         credentials: "include",
       });
-      username = await username.json();
-      this.username = username.name;
-      console.log(this.username);
+
+      if (
+        response.status != 200 &&
+        this.$router.currentRoute.path != "/login"
+      ) {
+        this.$router.replace({ path: "/login" });
+        this.username = "";
+        return false;
+      } else if (response.status == 200) {
+        let body = await response.json();
+        this.username = body.name;
+        console.log(this.username);
+
+        return true;
+      }
+    },
+    signIn: async function () {
+      let result = await this.kalebsMethod();
+
+      if (result && this.$router.currentRoute.path != "/board") {
+        this.$router.replace({ path: "/board" });
+      }
+    },
+    openNav: function () {
+      this.drawer = !this.drawer;
     },
   },
   created() {
-    this.kalebsMethod();
+    this.signIn();
   },
 });
 </script>
 
 <style lang="scss">
+[v-cloak] {
+  display: none;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

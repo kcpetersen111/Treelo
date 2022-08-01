@@ -1,6 +1,6 @@
 <template>
-  <div class="login">
-    <LoginComponent />
+  <div class="login" style="height: 100%">
+    <LoginComponent style="height: 100%" />
   </div>
 </template>
 
@@ -10,6 +10,9 @@ import LoginComponent from "@/components/LoginComponent.vue";
 
 export default {
   name: "LoginView",
+  props: {
+    //
+  },
   components: {
     LoginComponent,
   },

@@ -87,8 +87,8 @@ export const cardSetUp = function(app:any){
        res.status(200).json(card);
     });
 
-    app.get("/board/:boardId/container/:containerId/card",async (req:Request, res:Response) => {
-        const boardId = req.params.boardId;
+    app.get("/container/:containerId/card",async (req:Request, res:Response) => {
+        // const boardId = req.params.boardId;
         const containerId = req.params.containerId;
 
         if(!req.user){
@@ -97,7 +97,7 @@ export const cardSetUp = function(app:any){
         }
         let container;
         try {
-            container = await Containers.findById(containerId);
+            container = await Containers.findById(containerId).populate('cards');
         } catch (error) {
             res.status(500).json(error);
             return;
@@ -113,7 +113,7 @@ export const cardSetUp = function(app:any){
         res.status(200).json(container.cards);
     });
 
-    app.patch("/board/:boardId/container/:containerId/card/:cardId",async (req:Request,res:Response) => {
+    app.patch("/card/:cardId",async (req:Request,res:Response) => {
         if(!req.user){
             res.status(401).json({message:"User is not logged in"});
             return;
@@ -141,6 +141,7 @@ export const cardSetUp = function(app:any){
                     name: req.body.name,
                     date: req.body.date,
                     category: req.body.category,
+                    done: req.body.done,
                 }
                     ,{new:true});
         } catch (error) {
@@ -152,7 +153,7 @@ export const cardSetUp = function(app:any){
         
     });
 
-    app.delete("/board/:boardId/container/:containerId/card/:cardId", async (req:Request, res:Response) => {
+    app.delete("/container/:containerId/card/:cardId", async (req:Request, res:Response) => {
         if(!req.user){
             res.status(401).json({message:"You are not logged."});
             return;
@@ -170,6 +171,7 @@ export const cardSetUp = function(app:any){
             res.status(404).json({message:"Card not found"});
             return;
         }
+        console.log(req.user.id, card.creatorID, req.user.id == card.creatorID);
         if(req.user.id != card.creatorID){
             res.status(403).json({message:"You are not allowed to do that"});
             return;
@@ -178,6 +180,7 @@ export const cardSetUp = function(app:any){
         try {
             container = await Containers.findById(containerId);
         } catch (error) {
+            console.log(error);
             res.status(500).json(error);
             return;
         }
@@ -195,12 +198,14 @@ export const cardSetUp = function(app:any){
                                                 },
                                                 {new:true});
         } catch (error) {
+            console.log(error);
             res.status(500).json(error);
             return;
         }
         try {
             card = await Cards.findByIdAndDelete(cardId);
         } catch (error) {
+            console.log(error);
             res.status(500).json(error);
             return;
         }

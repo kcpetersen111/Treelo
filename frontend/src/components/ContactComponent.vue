@@ -34,7 +34,7 @@
       <v-text-field
         v-model="contactFirstName"
         id="first-name"
-        class="px-7 my-5 mx-auto mr-5"
+        class="px-7 my-5 mx-auto mr-5 white--text"
         style="
           width: 40%;
           display: inline-block;
@@ -51,7 +51,7 @@
       <v-text-field
         v-model="contactLastName"
         id="last-name"
-        class="px-7 mx-auto ml-5"
+        class="px-7 mx-auto ml-5 white--text"
         style="
           width: 40%;
           display: inline-block;
@@ -68,7 +68,7 @@
       <v-text-field
         v-model="contactEmail"
         id="email-text"
-        class="px-9 mb-5 mx-auto"
+        class="px-9 mb-5 mx-auto white--text"
         style="border: 2px solid black; border-radius: 100px; width: 60%"
         dense
         label="Email"
@@ -80,10 +80,9 @@
       <v-textarea
         v-model="contactBody"
         id="text-area"
-        class="px-7 mx-auto"
-        style="width: 80%"
+        class="px-7 mx-auto white--text"
+        style="width: 80%; border: 2px solid black; width: 60%"
         dense
-        v-ripple
         clearable
         color="black"
         full-width
@@ -99,15 +98,15 @@
         >
       </v-card-actions>
     </v-card>
-      <v-alert
-        class="mx-auto"
-        width="50vw"
-        v-show="show"
-        type="success"
-        dense
-        transition="scale-transition"
-        dismissible
-        style="border-radius: 25px; border: 2px solid black"
+    <v-alert
+      class="mx-auto"
+      width="50vw"
+      v-show="show"
+      type="success"
+      dense
+      transition="scale-transition"
+      dismissible
+      style="border-radius: 25px; border: 2px solid black"
       >Thanks for contacting us!</v-alert
     >
     <!-- </v-card> -->
@@ -115,7 +114,8 @@
 </template>
 
 <script lang="ts">
-let URL = "http://localhost:8081";
+// let URL = "http://localhost:8081";
+import {URL} from '../config';
 import Vue from "vue";
 export default Vue.extend({
   name: "ContactComponent",
@@ -127,38 +127,38 @@ export default Vue.extend({
     contactFirstName: "",
     contactLastName: "",
     contactEmail: "",
-    contactBody:"",
+    contactBody: "",
     show: false,
   }),
-  methods:{
-    postContact: async function(){
+  methods: {
+    postContact: async function () {
       this.show = false;
       let newContact = {
         first: this.contactFirstName,
         last: this.contactLastName,
         email: this.contactEmail,
-        description: this.contactBody
-      }
-      let response = await fetch(URL + "/contact",{
+        description: this.contactBody,
+      };
+      let response = await fetch(URL + "/contact", {
         method: "POST",
         body: JSON.stringify(newContact),
-        headers:{
-          "Content-Type" : "application/json"
+        headers: {
+          "Content-Type": "application/json",
         },
-        credentials: "include"
+        credentials: "include",
       });
-      if(response.status == 201){
-        console.log("contact was a sucess!")
+      if (response.status == 201) {
+        console.log("contact was a sucess!");
         this.contactFirstName = "";
         this.contactLastName = "";
         this.contactEmail = "";
         this.contactBody = "";
         this.show = true;
-      }else{
-        console.log("Error",response.status,response);
+      } else {
+        console.log("Error", response.status, response);
       }
-    }
-  }
+    },
+  },
 });
 </script>
 <style>
@@ -167,10 +167,9 @@ export default Vue.extend({
 #email-text,
 #text-area {
   text-align: center;
-  color: black;
-  background-image: url(https://media.istockphoto.com/vectors/abstract-geometric-background-mosaic-with-triangle-patterns-brown-vector-id1223873773?k=20&m=1223873773&s=612x612&w=0&h=JWs86Y6dHrbLQGhl1Grp9j18bWiCPHclWEZDOKR4EW4=);
-  opacity: 0.6;
+  color: white;
 }
+
 video {
   object-fit: cover;
   width: 100vw;

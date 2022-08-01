@@ -110,4 +110,4 @@ dist
 build/
 server-build/
 frontend-build/
-
+.vscode
