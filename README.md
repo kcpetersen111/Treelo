@@ -1,35 +1,24 @@
 # productivityApp
-The productivity app for code school
+A productivity based app based on trello. This app was made as the final project in the CodeSchool web development boot camp. 
 
-Our current plan for the stack is to use vuedify for the front end and node with typescript for the backend with mongodb as the database.
+# stack
+
+Our stack for the frontend is Vuedify and Typescript.
+
+Our stack for the backend is Typescript, Nodejs, Expressjs, and Mongodb.
 
 # Running
 ## make
-        compile and run
-
-## make build
-        compile the typescript
-    
-## make run
-        run the compiled files
-    
-## make clean
-        delete the compiled files
-
-## make createMongo
-        creates a new mongodb instance
-
-## make mongo
-        starts up a mongodb 
-
-# Resources:
-## Users:
-        email, username, phone number
-## events: 
-        name, date, priority, done, location, category, time
+        compile and run frontend and backend
+## make runFrontend
+        will build and serve the frontend
+## make runBackend
+        will build and start the backend
+## make backend-docker:
+        will build the docker file for the backend 
 
 
-# Stretch goals:
+<!-- # Stretch goals:
     Send Emails
     mobile app
     store notes
@@ -39,4 +28,4 @@ Our current plan for the stack is to use vuedify for the front end and node with
     add nots to events
     add subscription events
     "I dont have anything to do" button
-    different folders for notes
+    different folders for notes -->

@@ -1,9 +1,10 @@
 # This is for the dockerfile and will not work outside of docker
-all:
+all: runFrontend runBackend
 
 build: docker
 
-
+runFrontend:
+	cd ./frontend && make
 
 #backend
 runBackend: backend
