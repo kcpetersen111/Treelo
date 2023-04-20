@@ -16,6 +16,7 @@ Our stack for the backend is Typescript, Nodejs, Expressjs, and Mongodb.
         will build and start the backend
 ## make backend-docker:
         will build the docker file for the backend 
+        `docker run -p 8081:8081 productivity-app-backend1`
 
 
 <!-- # Stretch goals:
