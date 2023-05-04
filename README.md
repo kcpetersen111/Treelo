@@ -32,4 +32,4 @@ Our stack for the backend is Typescript, Nodejs, Expressjs, and Mongodb.
     different folders for notes -->
 
 
-    ![About Us](./aboutUs.png.png)
+![About Us](./aboutUs.png.png)
