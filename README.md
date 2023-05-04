@@ -30,3 +30,6 @@ Our stack for the backend is Typescript, Nodejs, Expressjs, and Mongodb.
     add subscription events
     "I dont have anything to do" button
     different folders for notes -->
+
+
+    ![About Us](./aboutUs.png.png)
